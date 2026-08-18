@@ -6,77 +6,122 @@
 <title>五年级上册暑假预习中心</title>
 <style>
   :root{
-    --bg:#f4f6fb; --card:#ffffff; --ink:#27324d; --muted:#6b7692;
-    --blue:#2f6fed; --orange:#ff8f3d; --green:#2fa36b; --red:#e0526b; --purple:#8e6fc9;
-    --line:#e3e8f2; --shadow:0 2px 10px rgba(39,50,77,.08);
+    --bg:#ffffff; --bg-secondary:#f5f5f7; --bg-dark:#1d1d1f;
+    --ink:#1d1d1f; --muted:#6e6e73; --faint:#86868b;
+    --blue:#0071e3; --link:#0066cc;
+    --orange:#ff9500; --green:#34c759; --red:#ff3b30; --purple:#af52de; --pink:#ff2d55;
+    --line:rgba(0,0,0,.08);
+    --radius-md:12px; --radius-lg:18px; --radius-pill:980px;
+    --shadow:0 2px 12px rgba(0,0,0,.06); --shadow-lg:0 8px 30px rgba(0,0,0,.10);
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); line-height:1.65;}
-  header{background:linear-gradient(135deg,#2f6fed,#5b8cff); color:#fff; padding:28px 20px 22px; text-align:center;}
-  header h1{font-size:26px; letter-spacing:1px;}
-  header p{margin-top:6px; font-size:14px; opacity:.92;}
-  nav{position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid var(--line); display:flex; overflow-x:auto; padding:0 8px;}
-  nav button{flex:0 0 auto; border:none; background:none; padding:12px 16px; font-size:15px; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; white-space:nowrap;}
+  body{font-family:var(--font); background:var(--bg-secondary); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  ::selection{background:rgba(0,113,227,.18);}
+  header{position:relative; overflow:hidden; background:linear-gradient(135deg,#0047ab 0%,#0066cc 100%); color:#fff; padding:34px 20px 28px; text-align:center;}
+  header::after{content:""; position:absolute; inset:-30% -20%; background:linear-gradient(135deg,transparent 42%,rgba(255,255,255,.07) 50%,transparent 58%); pointer-events:none;}
+  header h1{position:relative; font-size:30px; font-weight:700; letter-spacing:-.02em;}
+  header p{position:relative; margin-top:8px; font-size:14px; color:rgba(255,255,255,.85);}
+  nav{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.82); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--line); display:flex; overflow-x:auto; padding:0 10px;}
+  nav button{flex:0 0 auto; border:none; background:none; padding:13px 15px; font-size:14px; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; white-space:nowrap; font-family:inherit;}
   nav button.on{color:var(--blue); border-bottom-color:var(--blue); font-weight:600;}
-  main{max-width:1000px; margin:0 auto; padding:20px 16px 60px;}
+  button:focus-visible, a:focus-visible, summary:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+  main{max-width:1040px; margin:0 auto; padding:24px 16px 64px;}
   .tab-section{display:none;}
   .tab-section.on{display:block;}
-  h2{font-size:21px; margin:8px 0 14px;}
-  h3{font-size:17px; margin:0 0 8px;}
-  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:var(--shadow); margin-bottom:14px;}
-  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px;}
-  .mini{border:1px solid var(--line); border-radius:12px; padding:10px 12px; cursor:pointer; background:#fff; transition:.15s;}
-  .mini:hover{transform:translateY(-2px); box-shadow:var(--shadow);}
+  h2{font-size:24px; font-weight:700; letter-spacing:-.02em; margin:10px 0 16px;}
+  h3{font-size:18px; font-weight:600; margin:0 0 8px; letter-spacing:-.01em;}
+  .card{background:#fff; border:1px solid var(--line); border-radius:var(--radius-lg); padding:18px; box-shadow:var(--shadow); margin-bottom:14px;}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px;}
+  .mini{border:1px solid var(--line); border-radius:16px; padding:12px 14px; cursor:pointer; background:#fff; transition:transform .3s cubic-bezier(.25,.1,.25,1), box-shadow .3s; box-shadow:var(--shadow);}
+  .mini:hover{transform:translateY(-3px); box-shadow:var(--shadow-lg);}
   .mini .d{font-weight:700; font-size:15px;}
   .mini .w{font-size:12px; color:var(--muted); margin-left:4px;}
   .mini .s{font-size:13px; color:var(--muted); margin-top:3px;}
-  .tag{display:inline-block; font-size:12px; padding:2px 8px; border-radius:20px; color:#fff; margin-right:4px;}
+  .tag{display:inline-block; font-size:12px; padding:3px 10px; border-radius:20px; color:#fff; font-weight:600; margin-right:4px;}
   .t-math{background:var(--orange);} .t-eng{background:var(--green);} .t-chi{background:var(--red);} .t-wk{background:var(--purple);} .t-bonus{background:var(--blue);}
-  .daybar{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;}
-  .daybar button{border:1px solid var(--line); background:#fff; border-radius:20px; padding:6px 12px; cursor:pointer; font-size:14px;}
+  .daybar{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+  .daybar button{border:1px solid var(--line); background:#fff; border-radius:var(--radius-pill); padding:7px 14px; cursor:pointer; font-size:14px; color:var(--ink); transition:all .2s;}
+  .daybar button:hover{border-color:var(--blue); color:var(--blue);}
   .daybar button.on{background:var(--blue); color:#fff; border-color:var(--blue);}
-  .subject{border-radius:12px; padding:14px 16px; margin-bottom:12px; border:1px solid var(--line);}
-  .subject ul{margin:8px 0 0 18px;}
-  .subject li{margin:4px 0;}
+  .subject{border-radius:16px; padding:16px 18px; margin-bottom:12px; border:1px solid var(--line); background:#fff; box-shadow:var(--shadow);}
+  .subject .head{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .subject ul{margin:10px 0 0 18px;}
+  .subject li{margin:5px 0;}
+  .task-item .task-link{color:var(--blue); font-weight:600; text-decoration:none; white-space:nowrap;}
+  .task-item .task-link:hover{text-decoration:underline;}
   audio{width:100%; max-width:360px; height:34px; margin:4px 0; display:block;}
-  .audio-track{display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:#fff;}
+  .audio-track{display:flex; align-items:center; gap:10px; padding:12px 14px; border:1px solid var(--line); border-radius:14px; margin-bottom:8px; background:#fff; transition:transform .25s, box-shadow .25s;}
+  .audio-track:hover{transform:translateY(-1px); box-shadow:var(--shadow);}
   .audio-track .num{font-weight:700; color:var(--blue); min-width:34px;}
   .audio-track .meta{flex:1; min-width:0;}
   .audio-track .meta .nm{font-weight:600; font-size:14px;}
   .audio-track .meta .ds{font-size:12px; color:var(--muted);}
   .audio-track audio{width:200px; flex:0 0 auto;}
-  details{border:1px solid var(--line); border-radius:10px; padding:8px 12px; margin:6px 0; background:#fff;}
+  details{border:1px solid var(--line); border-radius:var(--radius-md); padding:9px 13px; margin:6px 0; background:#fff;}
   details summary{cursor:pointer; font-weight:600; color:var(--blue);}
-  .ans{margin-top:6px; color:#444; font-size:14px; white-space:pre-line;}
-  .method{display:flex; gap:10px; padding:10px 0; border-bottom:1px dashed var(--line);}
+  .ans{margin-top:6px; color:#515154; font-size:14px; white-space:pre-line;}
+  .method{display:flex; gap:12px; padding:11px 0; border-bottom:1px solid var(--line);}
   .method:last-child{border-bottom:none;}
-  .method .no{flex:0 0 30px; height:30px; border-radius:50%; background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700;}
-  table{width:100%; border-collapse:collapse; font-size:14px;}
-  th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top;}
-  th{background:#eef3ff;}
+  .method .no{flex:0 0 30px; height:30px; border-radius:50%; background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px;}
+  table{width:100%; border-collapse:separate; border-spacing:0; font-size:14px;}
+  th,td{border-bottom:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:top;}
+  th{background:var(--bg-secondary); font-weight:600;}
+  tr:last-child td{border-bottom:none;}
   .note{font-size:13px; color:var(--muted);}
-  .pill{display:inline-block; background:#eef3ff; color:var(--blue); border-radius:8px; padding:2px 8px; font-size:13px; margin:2px 4px 2px 0;}
-  .word{display:flex; align-items:center; gap:8px; padding:7px 10px; border:1px solid var(--line); border-radius:10px; margin:5px 0; background:#fbfcff; flex-wrap:wrap;}
-  .word .play{width:30px; height:30px; border:none; border-radius:50%; background:var(--blue); color:#fff; font-size:13px; cursor:pointer; flex:0 0 auto;}
+  .pill{display:inline-block; background:rgba(0,113,227,.10); color:var(--blue); border-radius:8px; padding:2px 9px; font-size:13px; margin:2px 4px 2px 0; font-weight:500;}
+  .word{display:flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--line); border-radius:var(--radius-md); margin:6px 0; background:#fff; flex-wrap:wrap; transition:box-shadow .2s;}
+  .word:hover{box-shadow:var(--shadow);}
+  .play{display:flex; align-items:center; justify-content:center; border:none; border-radius:50%; background:var(--blue); color:#fff; width:34px; height:34px; cursor:pointer; flex:0 0 auto; transition:transform .2s, box-shadow .2s; box-shadow:0 2px 8px rgba(0,113,227,.35);}
+  .play:hover{transform:scale(1.08);}
+  .play-lg{width:44px; height:44px; box-shadow:0 4px 14px rgba(0,113,227,.4);}
+  .play svg{display:block;}
   .word .pos{font-size:12px; color:var(--muted);}
-  .word .mean{color:#333;}
-  .word .chk{margin-left:auto; font-size:13px; display:flex; align-items:center; gap:4px; cursor:pointer;}
+  .word .mean{color:#3a3a3c;}
+  .word .st{display:flex; gap:6px; margin-left:auto; flex-wrap:wrap;}
+  .st-btn{border:1px solid var(--line); background:#fff; border-radius:var(--radius-pill); padding:3px 12px; font-size:12px; cursor:pointer; color:var(--muted); transition:all .2s;}
+  .st-btn:hover{border-color:var(--blue); color:var(--blue);}
+  .st-btn.on-master{background:var(--green); color:#fff; border-color:var(--green);}
+  .st-btn.on-review{background:var(--orange); color:#fff; border-color:var(--orange);}
   .task-item{display:flex; gap:8px; align-items:flex-start; cursor:pointer; margin:4px 0;}
-  .task-item input{margin-top:4px; width:16px; height:16px; accent-color:var(--blue); flex:0 0 auto;}
+  .task-item input{margin-top:4px; width:17px; height:17px; accent-color:var(--blue); flex:0 0 auto;}
   .task-item.done{color:var(--muted); text-decoration:line-through;}
-  #dayEncourage{background:#eaf7f0; border:1px solid #b9e6cf; border-radius:12px; padding:12px 16px; margin-top:10px; font-weight:600; color:#1f7a4d; display:none;}
+  #dayEncourage{background:rgba(52,199,89,.10); border:1px solid rgba(52,199,89,.35); border-radius:var(--radius-md); padding:13px 16px; margin-top:10px; font-weight:600; color:#1f8a4c; display:none;}
   #dayEncourage.show{display:block;}
-  .progress{height:10px; background:#e7ecf5; border-radius:8px; overflow:hidden; margin:6px 0;}
-  .progress .bar{height:100%; width:0; background:linear-gradient(90deg,#2fa36b,#5bd08f); transition:width .3s;}
-  .flashcard{min-height:120px; border:2px dashed var(--blue); border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; cursor:pointer; padding:16px; background:#fff; font-size:22px; font-weight:700; margin:10px 0;}
-  .flashcard .fc-back p{font-size:16px; font-weight:400; color:#333; margin-top:4px;}
-  .btn{border:none; border-radius:10px; padding:9px 18px; font-size:15px; cursor:pointer; margin:4px; font-weight:600;}
-  .btn-green{background:#2fa36b; color:#fff;} .btn-gray{background:#e7ecf5; color:#27324d;} .btn-blue{background:var(--blue); color:#fff;}
-  footer{text-align:center; color:var(--muted); font-size:13px; padding:24px 12px 40px;}
+  .progress{height:8px; background:#e9e9eb; border-radius:8px; overflow:hidden; margin:8px 0;}
+  .progress .bar{height:100%; width:0; background:var(--green); transition:width .3s;}
+  .flashcard{min-height:130px; border:1px solid rgba(0,113,227,.28); border-radius:20px; display:flex; align-items:center; justify-content:center; text-align:center; cursor:pointer; padding:18px; background:#f5f9ff; font-size:22px; font-weight:700; margin:12px 0; transition:background .2s;}
+  .flashcard:hover{background:#eaf4ff;}
+  .flashcard .fc-back p{font-size:16px; font-weight:400; color:#3a3a3c; margin-top:4px;}
+  .btn{border:none; border-radius:var(--radius-pill); padding:10px 22px; font-size:14px; cursor:pointer; margin:4px; font-weight:600; font-family:inherit; transition:transform .15s, opacity .15s;}
+  .btn:active{transform:scale(.97);}
+  .btn-green{background:var(--green); color:#fff;} .btn-gray{background:#e9e9eb; color:var(--ink);} .btn-blue{background:var(--blue); color:#fff;}
+  .btn-red{background:var(--red); color:#fff;} .btn-orange{background:var(--orange); color:#fff;}
+  .rate-btns{text-align:center; margin-top:10px;}
+  .rate-btns .btn:disabled{opacity:.4; cursor:not-allowed;}
+  .btn-sm{padding:4px 13px; font-size:12px; margin:2px;}
+  .btn-red.marked{background:var(--green);}
+  h4{font-size:15px; font-weight:700; margin:16px 0 8px; color:#1d1d1f;}
+  .oral-grid{display:flex; flex-wrap:wrap; gap:4px 18px; margin:6px 0 4px;}
+  .oral-cell{font-size:15px; min-width:150px;}
+  .oral-blank{display:inline-block; width:58px; border-bottom:1.5px solid #c7c7cc;}
+  .math-q{display:flex; align-items:flex-start; gap:8px; padding:8px 2px; border-bottom:1px solid var(--line); flex-wrap:wrap;}
+  .math-q:last-child{border-bottom:none;}
+  .math-q .mq{flex:1; min-width:200px; font-size:15px; padding-top:2px;}
+  .mq-actions{display:flex; align-items:center; gap:8px;}
+  .mq-ans{display:inline-block; border:none; background:rgba(0,113,227,.08); border-radius:var(--radius-pill); padding:2px 13px; margin:0;}
+  .mq-ans summary{color:var(--blue); font-size:12px; padding:3px 0;}
+  .mq-ans .ans{font-size:14px;}
+  .wrong-item{display:flex; align-items:flex-start; gap:8px; padding:9px 2px; border-bottom:1px solid var(--line); flex-wrap:wrap;}
+  .wrong-item:last-child{border-bottom:none;}
+  .wrong-item .mq{flex:1; min-width:220px; font-size:14px;}
+  .wrong-ans{color:#1f8a4c; font-weight:600; font-size:13px; padding-top:2px;}
+  footer{text-align:center; color:var(--muted); font-size:13px; padding:28px 12px 48px;}
   @media (max-width:640px){
     .audio-track{flex-wrap:wrap;}
     .audio-track audio{width:100%;}
-    header h1{font-size:21px;}
+    header h1{font-size:23px;}
+    h2{font-size:21px;}
   }
 </style>
 </head>
@@ -92,7 +137,7 @@
   <button data-tab="days">每日任务</button>
   <button data-tab="audio">英语音频</button>
   <button data-tab="words">单词记忆</button>
-  <button data-tab="practice">每日一练</button>
+  <button data-tab="math">数学练习</button>
   <button data-tab="methods">科学方法</button>
   <button data-tab="points">积分加分</button>
   <button data-tab="review">复习表</button>
@@ -104,8 +149,8 @@
   <section id="home" class="tab-section on">
     <h2>使用说明</h2>
     <div class="card">
-      <p>这个网页是给孩子的预习控制台，点上面的按钮切换板块。每天的任务在 <b>每日任务</b> 里，点日期就能看到当天的数学、英语、语文安排；英语音频可以在 <b>每日任务</b> 或 <b>英语音频</b> 里直接播放；<b>每日一练</b> 是每天的计算练习（含答案，做完再对）；<b>积分加分</b> 里有周末加分项目和积分规则。</p>
-      <p class="note" style="margin-top:8px">离线可用：直接用浏览器打开 index.html 即可，不需要联网。音频文件在同目录"英语音频"文件夹里。</p>
+      <p>这个网页是给孩子的预习控制台，点上面的按钮切换板块。每天的任务在 <b>每日任务</b> 里，点日期就能看到当天的数学、英语、语文安排；英语音频可以在 <b>每日任务</b> 或 <b>英语音频</b> 里直接播放；<b>数学练习</b> 是每天的真题计算题包（口算 10＋竖式 4＋递等式 4＋列式 2，共 20 题），抄到练习本上做，做完对答案、错题进错题本；<b>积分加分</b> 里有周末加分项目和积分规则。</p>
+      <p class="note" style="margin-top:8px">离线可用：直接用浏览器打开 index.html 即可，不需要联网。音频文件在上一级"英语音频"文件夹里。</p>
     </div>
     <h2>14 天总览（点日期看当天任务）</h2>
     <div class="grid" id="overviewGrid"></div>
@@ -131,23 +176,30 @@
   <section id="words" class="tab-section">
     <h2>英语单词 · 艾宾浩斯记忆系统</h2>
     <div class="card">
-      <p>词库来自课本书末 "Words to use"（Unit 1–5 共 61 词）+ Starter 预热词（序数词、月份 22 词）。每天的新词和第 1/2/4/7 天的复习自动排好，点日期查看；每个词都能点 ▶ 听发音（微软 Jenny 女声），勾选"掌握"自动保存进度。</p>
+      <p>词库来自课本书末 "Words to use"（Unit 1–5 共 61 词）+ Starter 预热词。每天的新词按艾宾浩斯 +1/2/4/7 天自动排复习；每个词可以标 <b>✅掌握</b>（长期记住，跳过复习）或 <b>🔁再复习</b>（进入"待复习清单"，每天出现直到练会）。<b>再点一次同一个按钮即可取消标记。</b></p>
       <div class="progress"><div class="bar" id="wordBar"></div></div>
-      <p><b id="wordProg">已掌握 0 / 61</b>（统计 Unit 1–5 词库）</p>
+      <p><b id="wordProg">已掌握 0 / 83 · 待复习 0 个</b></p>
     </div>
     <div class="daybar" id="wordDaybar"></div>
     <div id="wordDayPanel"></div>
-    <div class="card">
+      <div class="card">
       <h3>闪卡练习（今日新词 + 复习词）</h3>
       <div id="flashWrap">
         <div class="flashcard" id="flashCard"></div>
         <p style="text-align:center"><span id="flashProg"></span></p>
-        <p style="text-align:center">
-          <button class="btn btn-green" onclick="knowFlash()">认识 ✓</button>
-          <button class="btn btn-gray" onclick="retryFlash()">再看一遍 🔁</button>
-          <button class="btn btn-blue" onclick="startFlash()">重新开始</button>
+        <p class="note" style="text-align:center">先看英文想中文 → 点卡片翻面 → 再选评级</p>
+        <p class="rate-btns">
+          <button class="btn btn-red" disabled onclick="rateFlash('again')">忘了 🔁</button>
+          <button class="btn btn-orange" disabled onclick="rateFlash('hard')">不熟 😐</button>
+          <button class="btn btn-green" disabled onclick="rateFlash('good')">认识 ✅</button>
+          <button class="btn btn-blue" disabled onclick="rateFlash('easy')">太简单 ⚡</button>
         </p>
-        <p class="note" style="text-align:center">点卡片翻面看中文意思；听完发音再判断认不认识。</p>
+        <p style="text-align:center">
+          <button class="btn btn-gray" onclick="startFlash()">🔁 重新开始闪卡</button>
+          <button class="btn btn-red" onclick="resetToday()">🔄 重置今天</button>
+        </p>
+        <p class="note" style="text-align:center">"重新开始闪卡"只重开本局练习，不影响标记；"重置今天"撤销今天点过的掌握/再复习并清空今日任务打勾，之前几天的记录保留。</p>
+        <p class="note" style="text-align:center">忘了/不熟 → 自动标"再复习"，今天会再练；同一个词一天最多练 3 次，还不会就进待复习清单明天再战。</p>
       </div>
     </div>
     <details>
@@ -156,26 +208,43 @@
     </details>
   </section>
 
-  <!-- ============ 每日一练 ============ -->
-  <section id="practice" class="tab-section">
-    <h2>每日一练（10 天计算练习）</h2>
+  <!-- ============ 数学练习（真题题包） ============ -->
+  <section id="math" class="tab-section">
+    <h2>数学计算 · 真题练习</h2>
     <div class="card note">
-      按"四年级计算要求 + 五年级小数乘除法"混编：口算、竖式、简便计算、混合运算、应用题各 1–2 道。先做完，再点开答案对。全对可加积分。
+      每日题包：<b>口算 10 题＋竖式 4 题（乘除各 2）＋递等式 4 题（简便/混合各 2）＋列式计算 2 题，共 20 题</b>，全部来自上海各校真实试卷。
+      口算直接看平板口答；竖式、递等式、列式<b>抄到练习本上做</b>（考试也是先抄题再列式）。做完点"👁 显示全部答案"统一核对（再点隐藏）；做错的题点"做错了"进错题本（<b>再点一次取消</b>），周末家长带着重做。
     </div>
-    <div class="card">
-      <h3>运算律 · 速查卡（做"运算律"题前先看）</h3>
-      <table>
-        <tr><th>名称</th><th>公式</th><th>例子</th></tr>
-        <tr><td>乘法交换律</td><td>a×b ＝ b×a</td><td>2.5×3.8×4 ＝ 2.5×4×3.8</td></tr>
-        <tr><td>乘法结合律</td><td>(a×b)×c ＝ a×(b×c)</td><td>2.5×3.6×0.4 ＝ 3.6×(2.5×0.4)</td></tr>
-        <tr><td>乘法分配律</td><td>a×(b＋c) ＝ a×b＋a×c；a×(b−c) ＝ a×b−a×c</td><td>6.5×10.2 ＝ 6.5×10＋6.5×0.2</td></tr>
-        <tr><td>除法运算性质</td><td>a÷b÷c ＝ a÷(b×c)；(a＋b)÷c ＝ a÷c＋b÷c</td><td>12.6÷2.5÷0.4 ＝ 12.6÷(2.5×0.4)</td></tr>
-        <tr><td>商不变性质</td><td>被除数、除数同时乘或除以相同的数（0 除外），商不变</td><td>4.5÷0.25 ＝ (4.5×4)÷(0.25×4) ＝ 18÷1</td></tr>
-        <tr><td>减法运算性质</td><td>a−b−c ＝ a−(b＋c)；a−(b−c) ＝ a−b＋c</td><td>18.4−3.7−6.3 ＝ 18.4−(3.7＋6.3)</td></tr>
-      </table>
-      <p class="note" style="margin-top:6px">每道"运算律"题做完，要能说出用了哪条律/性质。</p>
+    <div class="card" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+      <button class="btn btn-blue" onclick="printMath()">🖨 打印今日练习纸</button>
+      <button class="btn btn-gray" onclick="printMath(true)">📄 打印今日答案</button>
+      <button class="btn btn-gray" id="toggleAnsBtn" onclick="toggleAllAnswers()">👁 显示全部答案</button>
+      <button class="btn btn-orange" onclick="scrollToWrong()">📕 打开错题本（<span id="wrongCount">0</span>）</button>
+      <span class="note">点击后打开打印预览窗口（A4），窗口会自动弹出系统打印；若没弹出，点窗口顶部"🖨 打印"按钮。Chrome / Edge / Safari 通用。</span>
     </div>
-    <div id="practiceList"></div>
+    <div class="daybar" id="mathDaybar"></div>
+    <div id="mathPanel"></div>
+    <details>
+      <summary style="cursor:pointer;font-weight:600;color:var(--blue);padding:8px 0">运算律 · 速查卡（做"简便运算"题前先看）</summary>
+      <div class="card">
+        <table>
+          <tr><th>名称</th><th>公式</th><th>例子</th></tr>
+          <tr><td>乘法交换律</td><td>a×b ＝ b×a</td><td>2.5×3.8×4 ＝ 2.5×4×3.8</td></tr>
+          <tr><td>乘法结合律</td><td>(a×b)×c ＝ a×(b×c)</td><td>2.5×3.6×0.4 ＝ 3.6×(2.5×0.4)</td></tr>
+          <tr><td>乘法分配律</td><td>a×(b＋c) ＝ a×b＋a×c；a×(b−c) ＝ a×b−a×c</td><td>6.5×10.2 ＝ 6.5×10＋6.5×0.2</td></tr>
+          <tr><td>除法运算性质</td><td>a÷b÷c ＝ a÷(b×c)；(a＋b)÷c ＝ a÷c＋b÷c</td><td>12.6÷2.5÷0.4 ＝ 12.6÷(2.5×0.4)</td></tr>
+          <tr><td>商不变性质</td><td>被除数、除数同时乘或除以相同的数（0 除外），商不变</td><td>4.5÷0.25 ＝ (4.5×4)÷(0.25×4) ＝ 18÷1</td></tr>
+          <tr><td>减法运算性质</td><td>a−b−c ＝ a−(b＋c)；a−(b−c) ＝ a−b＋c</td><td>18.4−3.7−6.3 ＝ 18.4−(3.7＋6.3)</td></tr>
+        </table>
+        <p class="note" style="margin-top:6px">每道"简便运算"题做完，要能说出用了哪条律/性质。</p>
+      </div>
+    </details>
+    <details>
+      <summary style="cursor:pointer;font-weight:600;color:var(--blue);padding:8px 0">查看全部 110 道真题（按四类）</summary>
+      <div id="mathList"></div>
+    </details>
+    <h2 style="margin-top:24px">错题本 <span class="note">（自动收集，周末家长查漏补缺）</span></h2>
+    <div id="wrongBook" class="card"><p class="note">还没有错题，继续保持！💪</p></div>
   </section>
 
   <!-- ============ 科学方法 ============ -->
@@ -237,12 +306,18 @@
 
 </main>
 
-<footer>五年级上册暑假预习中心 V2 ｜ 语文统编版五上 · 数学/英语沪教版五四学制五上 ｜ 打开即用，离线可看</footer>
+<footer>五年级上册暑假预习中心 V1.2 ｜ 语文统编版五上 · 数学/英语沪教版五四学制五上 ｜ 打开即用，离线可看</footer>
 
 <script src="wordbank.js"></script>
+<script src="真题题库.js"></script>
 <script>
 const AUDIO_BASE = "英语音频/";
 const audioSrc = (name) => AUDIO_BASE + encodeURIComponent(name);
+
+const PLAY_SVG = `<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
+
+/* 每日一练日期 -> 练习编号（周末无练习） */
+const PRACTICE_DAY = {"8/18":1,"8/19":2,"8/20":3,"8/21":4,"8/24":5,"8/25":6,"8/26":7,"8/27":8,"8/28":9,"8/31":10};
 
 const AUDIO = [
   {n:1, label:"Starter · At School", file:"01 Starter - At School.mp3", desc:"上学场景 4 组对话"},
@@ -325,78 +400,7 @@ const DAYS = [
    chinese:{t:"快乐读书吧 + 第一单元复习", tasks:["启动《中国民间故事》阅读（每天 15 分钟）","第一单元生字听写（第 7 天节点）","默写《示儿》检查","核对开学物品清单"]}}
 ];
 
-const PRACTICE = [
-  {day:1, date:"8/18", items:[
-    {t:"口算", q:"0.4×0.5＝　　2.5×0.4＝　　1.25×8＝　　0.6×1.5＝", a:"0.2　1　10　0.9"},
-    {t:"竖式", q:"2.05×3.6＝　　15.6÷12＝", a:"7.38　1.3"},
-    {t:"简便计算", q:"2.5×3.7×0.4＝　　0.99×5.8＝", a:"3.7（2.5×0.4 凑 1）　5.742（0.99＝1−0.01）"},
-    {t:"运算律", q:"1.25×4.7×8＝（先想：先算哪两个数最方便？用了什么律？）", a:"1.25×8×4.7＝10×4.7＝47（乘法交换律＋结合律）"},
-    {t:"混合运算", q:"6.4×1.5 − 3.6÷1.2＝", a:"9.6 − 3 ＝ 6.6"},
-    {t:"应用题", q:"每千克苹果 8.6 元，买 2.5 千克要多少元？", a:"8.6×2.5 ＝ 21.5 元"}]},
-  {day:2, date:"8/19", items:[
-    {t:"口算", q:"0.25×0.4＝　　1.6×0.5＝　　7.2÷0.9＝　　0.48÷0.8＝", a:"0.1　0.8　8　0.6"},
-    {t:"竖式", q:"4.8×1.25＝　　25.2÷0.6＝", a:"6　42"},
-    {t:"简便计算", q:"12.5×0.96×0.8＝　　3.8×9.9＋0.38＝", a:"9.6（12.5×0.8 凑 10）　38（3.8×9.9＋3.8×0.1）"},
-    {t:"运算律", q:"7.5×10.1＝（把 10.1 拆开，用了什么律？）", a:"7.5×10＋7.5×0.1＝75＋0.75＝75.75（乘法分配律）"},
-    {t:"混合运算", q:"(7.2＋2.8)×0.25÷2＝", a:"10×0.25÷2 ＝ 1.25"},
-    {t:"应用题", q:"长方形草地长 12.5 米，宽 8.4 米，面积是多少平方米？", a:"12.5×8.4 ＝ 105 平方米"}]},
-  {day:3, date:"8/20", items:[
-    {t:"口算", q:"3.6÷1.2＝　　0.75×4＝　　1.2×0.8＝　　5.4÷0.6＝", a:"3　3　0.96　9"},
-    {t:"竖式", q:"0.86×0.35＝　　34.8÷1.6＝", a:"0.301　21.75"},
-    {t:"简便计算", q:"4.5×10.2＝　　1.25×2.5×32＝", a:"45.9（4.5×10＋4.5×0.2）　100（1.25×8 × 2.5×4）"},
-    {t:"运算律", q:"12.6÷2.5÷0.4＝（连续除以两个数可以怎么合并？）", a:"12.6÷(2.5×0.4)＝12.6÷1＝12.6（除法运算性质）"},
-    {t:"混合运算", q:"3.2×5 − 8.4÷1.2＝", a:"16 − 7 ＝ 9"},
-    {t:"应用题", q:"拖拉机 0.5 小时耕地 0.4 公顷，照这样计算，2.5 小时耕地多少公顷？", a:"0.4÷0.5×2.5 ＝ 2 公顷"}]},
-  {day:4, date:"8/21", items:[
-    {t:"口算", q:"0.56÷0.8＝　　4.5×0.6＝　　0.3×0.3＝　　6.4÷0.08＝", a:"0.7　2.7　0.09　80"},
-    {t:"竖式", q:"5.76×0.25＝　　9.1÷2.6＝", a:"1.44　3.5"},
-    {t:"简便计算", q:"(1.25＋2.5)×8＝　　8.8×1.25＝", a:"30（10＋20）　11（(8＋0.8)×1.25）"},
-    {t:"运算律", q:"18.4−3.7−6.3＝（连续减去两个数可以怎么算？）", a:"18.4−(3.7＋6.3)＝18.4−10＝8.4（减法运算性质）"},
-    {t:"混合运算", q:"4.8÷0.4＋6.5×2＝", a:"12＋13 ＝ 25"},
-    {t:"应用题", q:"丝带每米 2.4 元，买 0.75 米需要多少元？", a:"2.4×0.75 ＝ 1.8 元"}]},
-  {day:5, date:"8/24", items:[
-    {t:"口算", q:"0.25×16＝　　2.8÷0.7＝　　0.45÷0.9＝　　1.5×0.6＝", a:"4　4　0.5　0.9"},
-    {t:"竖式", q:"3.14×2.5＝　　21.6÷3.6＝", a:"7.85　6"},
-    {t:"简便计算", q:"7.2×6.8＋7.2×3.2＝　　0.125×0.25×80＝", a:"72（7.2×10）　2.5（0.125×80×0.25）"},
-    {t:"运算律", q:"4.8×6.7＋4.8×3.3＝（公因数是谁？用了什么律？）", a:"4.8×(6.7＋3.3)＝4.8×10＝48（乘法分配律）"},
-    {t:"混合运算", q:"10.5 − 2.5×0.4÷0.5＝", a:"10.5 − 2 ＝ 8.5"},
-    {t:"应用题", q:"声音在空气中每秒传播约 0.34 千米，4.5 秒传播多少千米？", a:"0.34×4.5 ＝ 1.53 千米"}]},
-  {day:6, date:"8/25", items:[
-    {t:"口算", q:"0.6×0.7＝　　9.6÷0.3＝　　2.5×0.8＝　　1.44÷1.2＝", a:"0.42　32　2　1.2"},
-    {t:"竖式", q:"6.5×0.48＝　　18.9÷0.45＝", a:"3.12　42"},
-    {t:"简便计算", q:"3.6×101 − 3.6＝　　2.5×7.6×0.4＝", a:"360（3.6×100）　7.6"},
-    {t:"运算律", q:"4.5÷0.25＝（用商不变性质，把 0.25 变成整数）", a:"(4.5×4)÷(0.25×4)＝18÷1＝18（商不变性质）"},
-    {t:"混合运算", q:"1.25×8÷0.25＝", a:"10÷0.25 ＝ 40"},
-    {t:"应用题", q:"一件衣服原价 120 元，打八五折（乘 0.85）后卖多少元？", a:"120×0.85 ＝ 102 元"}]},
-  {day:7, date:"8/26", items:[
-    {t:"口算", q:"0.12×5＝　　7.5÷1.5＝　　4.2×0.01＝　　3.6÷0.04＝", a:"0.6　5　0.042　90"},
-    {t:"竖式", q:"8.4×0.65＝　　0.98÷3.5＝", a:"5.46　0.28"},
-    {t:"简便计算", q:"5.6×9.9＝　　1.6×2.5×0.125×4＝", a:"55.44（5.6×10−0.56）　2（0.2×10）"},
-    {t:"运算律", q:"12.9−(2.9＋3.5)＝（去掉括号试试，用了什么性质？）", a:"12.9−2.9−3.5＝10−3.5＝6.5（减法运算性质）"},
-    {t:"混合运算", q:"48÷1.6 − 3.5×2＝", a:"30 − 7 ＝ 23"},
-    {t:"应用题", q:"一组 5 人共投中 27 个球，二组 4 人共投中 22 个球，哪组平均成绩高？", a:"一组 27÷5＝5.4；二组 22÷4＝5.5，二组略高"}]},
-  {day:8, date:"8/27", items:[
-    {t:"口算", q:"0.32×0.5＝　　8.8÷0.8＝　　0.25×0.4＝　　6.3÷0.07＝", a:"0.16　11　0.1　90"},
-    {t:"竖式", q:"12.5×0.64＝　　0.672÷4.2＝", a:"8　0.16"},
-    {t:"简便计算", q:"9.9×8.7＋0.87＝　　2.4×12.5＝", a:"87（8.7×(9.9＋0.1)）　30"},
-    {t:"运算律", q:"3.6÷0.4÷0.9＝（两个除数相乘是多少？）", a:"3.6÷(0.4×0.9)＝3.6÷0.36＝10（除法运算性质）"},
-    {t:"混合运算", q:"(3.6＋1.4)÷0.5×2＝", a:"10÷0.5×2 ＝ 40"},
-    {t:"应用题", q:"平行四边形菜地底 24 米、高 18 米，每平方米收菜 3.5 千克，共收多少千克？", a:"24×18×3.5 ＝ 1512 千克"}]},
-  {day:9, date:"8/28", items:[
-    {t:"口算", q:"0.7×0.9＝　　5.5÷0.5＝　　4.8×0.25＝　　2.6÷1.3＝", a:"0.63　11　1.2　2"},
-    {t:"竖式", q:"3.7×0.54＝　　26.88÷0.96＝", a:"1.998　28"},
-    {t:"简便计算", q:"1.01×7.8＝　　0.8×4.7×1.25＝", a:"7.878（7.8＋0.078）　4.7"},
-    {t:"运算律", q:"(8.4＋5.6)÷1.4＝（括号里的数能分别除以 1.4 吗？）", a:"8.4÷1.4＋5.6÷1.4＝6＋4＝10（除法运算性质）"},
-    {t:"混合运算", q:"6.4×1.5＋3.6×1.5＝", a:"(6.4＋3.6)×1.5 ＝ 15"},
-    {t:"应用题", q:"梯形上底 8 米、下底 12 米、高 6 米，面积是多少平方米？", a:"(8＋12)×6÷2 ＝ 60 平方米"}]},
-  {day:10, date:"8/31", items:[
-    {t:"口算", q:"0.45×0.2＝　　9.9÷0.9＝　　3.5×0.4＝　　0.72÷0.6＝", a:"0.09　11　1.4　1.2"},
-    {t:"竖式", q:"7.06×0.35＝　　3.51÷2.7＝", a:"2.471　1.3"},
-    {t:"简便计算", q:"4.6×2.5×0.4＝　　12.5×88＝", a:"4.6　1100（12.5×8×11）"},
-    {t:"运算律", q:"8.4÷0.35＝（商不变性质，把除数变成整数）", a:"(8.4×100)÷(0.35×100)＝840÷35＝24（商不变性质）"},
-    {t:"混合运算", q:"2.5×4÷2.5×4＝", a:"10÷2.5×4 ＝ 16（注意：按顺序算，不能先约分！）"},
-    {t:"应用题", q:"妈妈带 50 元买 2 盒牛奶（每盒 12.5 元），剩下的钱买每本 5 元的练习本，最多买几本？", a:"(50 − 12.5×2)÷5 ＝ 5 本（去尾法）"}]}
-];
+/* 真题数据在外部文件：真题题库.js（ZHEN_BANK，110 题，四类） */
 
 const METHODS = [
   ["费曼学习法","每天最后 5 分钟，把今天学的东西讲给家人听或录音。讲不清楚的地方＝没真懂，标记后重学。"],
@@ -439,13 +443,16 @@ function renderDaybar(){
 }
 
 function renderDayPanel(date){
+  currentDayDate = date;
   const d = DAYS.find(x => x.date === date);
   const panel = document.getElementById("dayPanel");
   const btns = document.querySelectorAll("#daybar button");
   btns.forEach(b => b.classList.toggle("on", b.dataset.date === date));
-  const taskLi = (subj, tasks) => tasks.map((t,i) =>
-    `<li><label class="task-item ${taskDone(date,subj,i)?"done":""}"><input type="checkbox" data-k="${date}|${subj}|${i}" ${taskDone(date,subj,i)?"checked":""} onchange="toggleTask('${date}','${subj}',${i},this.checked)">${esc(t)}</label></li>`
-  ).join("");
+  const taskItem = (subj, t, i) => {
+    const html = typeof t === "string" ? esc(t) : t.html;
+    return `<li><label class="task-item ${taskDone(date,subj,i)?"done":""}"><input type="checkbox" data-k="${date}|${subj}|${i}" ${taskDone(date,subj,i)?"checked":""} onchange="toggleTask('${date}','${subj}',${i},this.checked)">${html}</label></li>`;
+  };
+  const taskLi = (subj, tasks) => tasks.map((t,i) => taskItem(subj, t, i)).join("");
   if(d.type === "work"){
     const mkAudio = (files) => files.map(f => {
       const info = AUDIO.find(a => a.file === f);
@@ -453,19 +460,36 @@ function renderDayPanel(date){
               <div class="note">${info ? info.label + " · " + info.desc : f}</div>`;
     }).join("");
     const wordInfo = getWordInfo(date);
+    const practiceDay = PRACTICE_DAY[date];
+    const mathTasks = d.math.tasks.map(t => {
+      let html = esc(t);
+      if(practiceDay && t.startsWith("每日一练")){
+        html = esc("计算题：完成今日数学练习 20 题（口算 10＋竖式 4＋递等式 4＋列式 2）") + ` <a class="task-link" href="#" onclick="event.preventDefault();event.stopPropagation();openMathDay('${d.date}');return false">去练习</a>`;
+      }
+      return {html, skip: t.startsWith("口算")};
+    });
+    const mathTasksFiltered = mathTasks.filter(t => !t.skip);
+    const mathTaskHtml = mathTasksFiltered.map((t,i) => taskItem("math", t, i)).join("");
+    const englishTasks = d.english.tasks.slice();
+    if(wordInfo.ok){
+      englishTasks.push({html: `今日单词：${wordInfo.newN} 个新词 + ${wordInfo.reviewN} 个复习词<a class="task-link" href="#" onclick="event.preventDefault();event.stopPropagation();openWordDay('${d.date}');return false">去背单词</a>`});
+    }
     panel.innerHTML = `
-      <div class="subject" style="border-left:6px solid var(--orange)">
-        <span class="tag t-math">数学</span><h3 style="display:inline;margin-left:6px">${esc(d.math.t)}</h3>
-        <ul>${taskLi("math", d.math.tasks)}</ul>
-        <p class="note" style="margin-top:6px">配套练习：<b>每日一练 Day ${date2day(d.date)}</b></p>
+      <div class="subject">
+        <div class="head">
+          <span class="tag t-math">数学</span><h3 style="margin:0">${esc(d.math.t)}</h3>
+        </div>
+        <ul>${mathTaskHtml}</ul>
       </div>
-      <div class="subject" style="border-left:6px solid var(--green)">
-        <span class="tag t-eng">英语</span><h3 style="display:inline;margin-left:6px">${esc(d.english.t)}</h3>
-        <ul>${taskLi("english", d.english.tasks)}</ul>
-        ${wordInfo.ok ? `<p class="note" style="margin-top:6px">今日单词：${wordInfo.newN} 个新词 + ${wordInfo.reviewN} 个复习词（<a href="#" onclick="openWordDay('${d.date}');return false">打开单词记忆</a>）</p>` : ""}
+      <div class="subject">
+        <div class="head">
+          <span class="tag t-eng">英语</span><h3 style="margin:0">${esc(d.english.t)}</h3>
+        </div>
+        <ul>${taskItem("english", englishTasks[0], 0)}</ul>
         <div style="margin-top:8px">${mkAudio(d.english.audio)}</div>
+        <ul>${englishTasks.slice(1).map((t,i) => taskItem("english", t, i + 1)).join("")}</ul>
       </div>
-      <div class="subject" style="border-left:6px solid var(--red)">
+      <div class="subject">
         <span class="tag t-chi">语文</span><h3 style="display:inline;margin-left:6px">${esc(d.chinese.t)}</h3>
         <ul>${taskLi("chinese", d.chinese.tasks)}</ul>
       </div>
@@ -474,7 +498,7 @@ function renderDayPanel(date){
       <div id="dayEncourage"></div>`;
   } else {
     panel.innerHTML = `
-      <div class="subject" style="border-left:6px solid var(--purple)">
+      <div class="subject">
         <span class="tag t-wk">周末</span><h3 style="display:inline;margin-left:6px">${d.date} ${d.dow}</h3>
         <ul style="margin-top:8px">${taskLi("check", [d.check])}</ul>
       </div>
@@ -562,17 +586,246 @@ function renderAudio(){
      </div>`).join("");
 }
 
-function renderPractice(){
-  const list = document.getElementById("practiceList");
-  list.innerHTML = PRACTICE.map(p => `
-    <div class="card">
-      <h3>Day ${p.day}（${p.date}）</h3>
-      ${p.items.map(it => `
-        <div style="margin:8px 0">
-          <span class="pill">${esc(it.t)}</span> ${esc(it.q)}
-          <details><summary>答案</summary><div class="ans">${esc(it.a)}</div></details>
-        </div>`).join("")}
-    </div>`).join("");
+/* ================= 数学练习：真题题包 ================= */
+let currentMathDate = "8/18";
+
+const MATH_CAT_NAME = {oral:"口算", vertical:"竖式", step:"递等式", text:"列式"};
+const MATH_SRC_NAME = {
+  A:"2022-2023 浦东明珠小学五上期中", B:"2023-2024 浦东新区五上期中",
+  C:"2022-2023 浦东实验小学五上期中", D:"2021-2022 浦东新区五上期末",
+  E:"2024-2025 沪教版五上《小数乘除法》同步练习", F:"2022-2023 奉贤西渡学校五上期末",
+  G:"2021-2022 杨浦回民小学五上期末", H:"2020-2021 嘉定区五下期末",
+  I:"2018-2019 嘉定安亭小学五下月考", J:"2018-2019 浦东新区五下第一次月考"
+};
+
+function mathSeed(date){
+  let s = 0;
+  for(let i = 0; i < date.length; i++) s = (s * 31 + date.charCodeAt(i)) % 2147483647;
+  return s || 7;
+}
+
+function seededPick(arr, n, seed, filter){
+  const pool = arr.map(it => it).filter(it => !filter || filter(it));
+  let s = seed;
+  const rnd = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+  const out = [];
+  while(out.length < n && pool.length){
+    const idx = Math.floor(rnd() * pool.length);
+    out.push(pool.splice(idx, 1)[0]);
+  }
+  return out;
+}
+
+/* 每天固定题包：同一天刷新不换题，不同日期自动换题 */
+function getMathPack(date){
+  const seed = mathSeed(date);
+  return {
+    oral: seededPick(ZHEN_BANK.oral, 10, seed),
+    vertical: [
+      ...seededPick(ZHEN_BANK.vertical, 2, seed + 1, it => it.tag === "乘"),
+      ...seededPick(ZHEN_BANK.vertical, 2, seed + 2, it => it.tag === "除")
+    ],
+    step: [
+      ...seededPick(ZHEN_BANK.step, 2, seed + 3, it => it.tag === "简"),
+      ...seededPick(ZHEN_BANK.step, 2, seed + 4, it => it.tag === "混合")
+    ],
+    text: seededPick(ZHEN_BANK.text, 2, seed + 5)
+  };
+}
+
+function renderMathDaybar(){
+  const bar = document.getElementById("mathDaybar");
+  bar.innerHTML = Object.keys(PRACTICE_DAY).map(d => `<button data-date="${d}" onclick="openMathDay('${d}')">${d}</button>`).join("");
+}
+
+function mathQItem(date, cat, it, i){
+  const marked = getWrong().some(w => w.date === date && w.cat === cat && w.i === i);
+  return `<div class="math-q" data-date="${date}" data-cat="${cat}" data-i="${i}">
+    <span class="pill">${MATH_CAT_NAME[cat]}</span>
+    <span class="mq">${esc(it.q)}</span>
+    <span class="mq-actions">
+      <details class="mq-ans"><summary>答案</summary><div class="ans">${esc(it.a)}</div></details>
+      <button class="btn btn-red btn-sm ${marked ? "marked" : ""}" onclick="markWrong('${date}','${cat}',${i})">${marked ? "已记录" : "做错了"}</button>
+    </span>
+  </div>`;
+}
+
+function renderMathPanel(date){
+  currentMathDate = date;
+  document.querySelectorAll("#mathDaybar button").forEach(b => b.classList.toggle("on", b.dataset.date === date));
+  const day = PRACTICE_DAY[date] || 0;
+  const pack = getMathPack(date);
+  const box = document.getElementById("mathPanel");
+  box.innerHTML = `<div class="card">
+    <h3>今日题包（${date} · Day ${day}）：20 题</h3>
+    <p class="note">题库共 ${ZHEN_TOTAL} 道上海真题（口算 ${ZHEN_COUNT.oral}／竖式 ${ZHEN_COUNT.vertical}／递等式 ${ZHEN_COUNT.step}／列式 ${ZHEN_COUNT.text}）。按日期随机抽题：同一天刷新不变，换一天自动换题。口算口答；其余抄到练习本上写过程，做完再点开答案。</p>
+    <h4>一、口算（10 题 · 限时 3 分钟）</h4>
+    <div class="oral-grid">${pack.oral.map((it,i)=>`<div class="oral-cell">${i+1}. ${esc(it.q)}＝<span class="oral-blank"></span></div>`).join("")}</div>
+    <h4>二、竖式计算（4 题 · 乘除各 2，抄题列竖式）</h4>
+    ${pack.vertical.map((it,i)=>mathQItem(date,"vertical",it,i)).join("")}
+    <h4>三、递等式（4 题 · 简便 2＋混合 2，写完整过程）</h4>
+    ${pack.step.map((it,i)=>mathQItem(date,"step",it,i)).join("")}
+    <h4>四、列式计算（2 题 · 先列式再计算）</h4>
+    ${pack.text.map((it,i)=>mathQItem(date,"text",it,i)).join("")}
+  </div>`;
+}
+
+function renderMathList(){
+  const list = document.getElementById("mathList");
+  const cats = [["oral","口算"],["vertical","竖式计算"],["step","递等式"],["text","列式计算"]];
+  list.innerHTML = cats.map(([k,name]) => `
+    <details class="card" style="padding:12px 16px">
+      <summary style="cursor:pointer;font-weight:600;color:var(--blue)">${name}（${ZHEN_BANK[k].length} 题）</summary>
+      <table style="margin-top:8px"><tr><th>#</th><th>题目</th><th>答案</th><th>出处</th></tr>
+        ${ZHEN_BANK[k].map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.q)}</td><td>${esc(it.a)}</td><td class="note">${esc(MATH_SRC_NAME[it.src] || it.src)}</td></tr>`).join("")}
+      </table>
+    </details>`).join("");
+}
+
+/* ---------- 错题本 ---------- */
+function getWrong(){
+  try{ return JSON.parse(localStorage.getItem("mathWrong") || "[]"); }catch(e){ return []; }
+}
+function saveWrong(list){
+  try{ localStorage.setItem("mathWrong", JSON.stringify(list)); }catch(e){}
+}
+function markWrong(date, cat, i){
+  const pack = getMathPack(date);
+  const arr = {oral: pack.oral, vertical: pack.vertical, step: pack.step, text: pack.text};
+  const it = arr[cat] && arr[cat][i];
+  if(!it) return;
+  const list = getWrong();
+  const idx = list.findIndex(w => w.date === date && w.cat === cat && w.i === i);
+  const btn = document.querySelector(`#mathPanel .math-q[data-date="${date}"][data-cat="${cat}"][data-i="${i}"] .btn-red`);
+  if(idx >= 0){
+    /* 再点一次：取消记录 */
+    list.splice(idx, 1);
+    saveWrong(list);
+    renderWrongBook();
+    if(btn){ btn.textContent = "做错了"; btn.classList.remove("marked"); }
+    return;
+  } else {
+    list.push({
+      id: Date.now() + "-" + Math.random().toString(36).slice(2, 8),
+      date, cat, i,
+      q: it.q, a: it.a, src: it.src
+    });
+    saveWrong(list);
+    renderWrongBook();
+    if(btn){ btn.textContent = "已记录"; btn.classList.add("marked"); }
+  }
+}
+function removeWrong(id){
+  saveWrong(getWrong().filter(w => w.id !== id));
+  renderWrongBook();
+}
+function clearWrong(){
+  if(!confirm("确定清空错题本吗？")) return;
+  saveWrong([]);
+  renderWrongBook();
+}
+function renderWrongBook(){
+  const list = getWrong();
+  const c = document.getElementById("wrongCount");
+  if(c) c.textContent = list.length;
+  const box = document.getElementById("wrongBook");
+  if(!box) return;
+  if(!list.length){
+    box.innerHTML = `<p class="note">还没有错题，继续保持！💪</p>`;
+    return;
+  }
+  box.innerHTML = list.map(w => `
+    <div class="wrong-item">
+      <span class="pill">${esc(w.date)} · ${MATH_CAT_NAME[w.cat] || w.cat}</span>
+      <span class="mq">${esc(w.q)}</span>
+      <span class="wrong-ans">答案：${esc(w.a)}</span>
+      <span class="note">出处：${esc(MATH_SRC_NAME[w.src] || w.src)}</span>
+      <button class="btn btn-green btn-sm" onclick="removeWrong('${w.id}')">已订正 ✓</button>
+    </div>`).join("")
+    + `<p style="margin-top:10px"><button class="btn btn-gray btn-sm" onclick="clearWrong()">清空错题本</button></p>`;
+}
+function scrollToWrong(){
+  renderWrongBook();
+  document.getElementById("wrongBook").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+/* ---------- 全部答案显示 / 隐藏 ---------- */
+let allAnsShown = false;
+function toggleAllAnswers(){
+  allAnsShown = !allAnsShown;
+  document.querySelectorAll("#mathPanel .mq-ans").forEach(d => { d.open = allAnsShown; });
+  const btn = document.getElementById("toggleAnsBtn");
+  if(btn) btn.textContent = allAnsShown ? "🙈 隐藏全部答案" : "👁 显示全部答案";
+}
+
+/* ---------- 打印练习纸 / 答案 ---------- */
+function printMath(withAnswers){
+  const date = currentMathDate;
+  const pack = getMathPack(date);
+  const day = PRACTICE_DAY[date] || 0;
+  const w = window.open("", "_blank", "width=840,height=1000");
+  if(!w){
+    alert("打印窗口被浏览器拦截了。请允许本站弹出窗口后重试；或者在浏览器菜单中选择“打印”。");
+    return;
+  }
+  const css = `
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;color:#1d1d1f;padding:64px 30px 28px;max-width:760px;margin:0 auto;line-height:1.7;}
+    h1{font-size:21px;text-align:center;margin:0 0 4px;}
+    .meta{text-align:center;font-size:13px;color:#6e6e73;margin-bottom:16px;}
+    .info{display:flex;justify-content:space-between;font-size:13px;border-bottom:1px solid #d2d2d7;padding-bottom:8px;margin-bottom:14px;}
+    h2{font-size:16px;margin:18px 0 8px;border-left:4px solid #0071e3;padding-left:8px;}
+    .oral-grid{display:flex;flex-wrap:wrap;}
+    .oral-cell{width:33.3%;font-size:14px;margin:5px 0;}
+    .oral-blank{display:inline-block;width:60px;border-bottom:1px solid #1d1d1f;}
+    .v-item{margin:8px 0 14px;font-size:14px;}
+    .v-box{height:110px;border:1px solid #c7c7cc;border-radius:8px;margin-top:4px;}
+    .s-item{margin:6px 0 16px;font-size:14px;}
+    .s-lines{height:52px;border-bottom:1px solid #c7c7cc;margin-top:4px;}
+    .ans-block{font-size:14px;margin:5px 0;}
+    .page-break{page-break-before:always;}
+    .toolbar{position:fixed;top:0;left:0;right:0;background:#1d1d1f;padding:10px 16px;display:flex;justify-content:center;align-items:center;gap:12px;z-index:10;}
+    .toolbar button{border:none;border-radius:980px;background:#0071e3;color:#fff;padding:8px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+    .toolbar .close{background:#6e6e73;}
+    .toolbar .tip{color:rgba(255,255,255,.75);font-size:12px;}
+    @media print{ .toolbar{display:none;} body{padding:0;} }
+  `;
+  let body = `<div class="toolbar">
+      <button id="printBtn" onclick="window.print()">🖨 打印</button>
+      <button class="close" onclick="window.close()">✕ 关闭</button>
+      <span class="tip">若没有弹出打印窗口，请点“🖨 打印”</span>
+    </div>
+    <h1>五年级数学计算练习</h1>
+    <div class="meta">${date} · Day ${day} ｜ 口算 10 ＋ 竖式 4 ＋ 递等式 4 ＋ 列式 2 ＝ 20 题</div>
+    <div class="info"><span>姓名：＿＿＿＿＿＿＿</span><span>日期：＿＿＿＿＿＿＿</span><span>用时：＿＿＿分钟</span></div>`;
+  body += `<h2>一、口算（10 题 · 限时 3 分钟）</h2><div class="oral-grid">`
+    + pack.oral.map((it,i)=>`<div class="oral-cell">${i+1}. ${esc(it.q)}＝<span class="oral-blank"></span></div>`).join("")
+    + `</div>`;
+  body += `<h2>二、竖式计算（4 题 · 乘除各 2，请列竖式）</h2>`
+    + pack.vertical.map((it,i)=>`<div class="v-item">${i+1}. ${esc(it.q)}<div class="v-box"></div></div>`).join("");
+  body += `<h2>三、递等式计算（4 题 · 简便 2＋混合 2，写完整过程）</h2>`
+    + pack.step.map((it,i)=>`<div class="s-item">${i+1}. ${esc(it.q)}<div class="s-lines"></div></div>`).join("");
+  body += `<h2>四、列式计算（2 题 · 先列式再计算）</h2>`
+    + pack.text.map((it,i)=>`<div class="s-item">${i+1}. ${esc(it.q)}<div class="s-lines"></div><div class="s-lines"></div></div>`).join("");
+  if(withAnswers){
+    body += `<div class="page-break"><h2>答案（家长保存，别让孩子先看）</h2>`;
+    body += `<h2>一、口算</h2><div class="ans-block">${pack.oral.map((it,i)=>`${i+1}. ${esc(it.a)}`).join("　")}</div>`;
+    body += `<h2>二、竖式</h2>` + pack.vertical.map((it,i)=>`<div class="ans-block">${i+1}. ${esc(it.a)}</div>`).join("");
+    body += `<h2>三、递等式</h2>` + pack.step.map((it,i)=>`<div class="ans-block">${i+1}. ${esc(it.a)}</div>`).join("");
+    body += `<h2>四、列式</h2>` + pack.text.map((it,i)=>`<div class="ans-block">${i+1}. ${esc(it.a)}（${esc(it.expr)}）</div>`).join("");
+    body += `</div>`;
+  }
+  w.document.write(`<html><head><meta charset="UTF-8"><title>数学练习打印 ${date}</title><style>${css}</style></head><body>${body}</body></html>`);
+  w.document.close();
+  w.focus();
+  /* 双保险：按钮绑定 + 延迟自动打印（Chrome/Edge/Safari 通用） */
+  try{
+    const printBtn = w.document.getElementById("printBtn");
+    if(printBtn){
+      printBtn.onclick = function(){ try{ w.focus(); w.print(); }catch(e){} };
+    }
+  }catch(e){}
+  setTimeout(() => { try{ w.focus(); w.print(); }catch(e){} }, 600);
 }
 
 function renderMethods(){
@@ -584,7 +837,7 @@ function renderMethods(){
 function renderBonus(){
   const list = document.getElementById("bonusList");
   list.innerHTML = BONUS.map(b =>
-    `<div style="padding:6px 0;border-bottom:1px dashed var(--line)">
+    `<div style="padding:6px 0;border-bottom:1px solid var(--line)">
        <span class="tag ${b[0]==="数学"?"t-math":b[0]==="英语"?"t-eng":b[0]==="语文"?"t-chi":"t-wk"}">${b[0]}</span>
        <span>${esc(b[1])}</span>
      </div>`).join("");
@@ -594,7 +847,7 @@ function renderBonus(){
 function switchTab(tab){
   document.querySelectorAll("#nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
   document.querySelectorAll(".tab-section").forEach(s => s.classList.toggle("on", s.id === tab));
-  if(tab === "days" && !document.querySelector("#daybar button.on")) renderDayPanel(DAYS[0].date);
+  if(tab === "days") renderDayPanel(currentDayDate);
   if(tab === "words" && !WORD_SYSTEM_OK) renderWordMissing();
 }
 
@@ -626,6 +879,12 @@ function wordAid(group, idx){
   }
   return aid;
 }
+
+const WORD_ALL = {};
+WORD_GROUPS.forEach(g => WORD_BANK[g.key].forEach((e, i) => {
+  const id = g.key + "_" + (i + 1);
+  WORD_ALL[id] = {...e, id, aid: wordAid(g.key, i)};
+}));
 
 let WORD_SYSTEM_OK = false;
 let WORD_DAY_DATA = [];
@@ -665,15 +924,89 @@ function getWordInfo(date){
   return {newN: nd ? nd.words.length : 0, reviewN: rv.reduce((s,r)=>s+r.words.length,0), ok:true};
 }
 
-function getMastered(){ try{ return JSON.parse(localStorage.getItem("wordMastered")||"[]"); }catch(e){ return []; } }
-function setMastered(id, on){
-  let arr = getMastered();
-  if(on){ if(!arr.includes(id)) arr.push(id); }
-  else { arr = arr.filter(x => x !== id); }
-  try{ localStorage.setItem("wordMastered", JSON.stringify(arr)); }catch(e){}
+function getMasteredMap(){
+  try{
+    const v = JSON.parse(localStorage.getItem("wordMastered") || "{}");
+    if(Array.isArray(v)){ // 旧版数组数据迁移：标记时间未知，按"今天"处理，重置今天可清掉
+      const o = {};
+      v.forEach(id => o[id] = Date.now());
+      localStorage.setItem("wordMastered", JSON.stringify(o));
+      return o;
+    }
+    return v && typeof v === "object" ? v : {};
+  }catch(e){ return {}; }
 }
-function isMastered(id){ return getMastered().includes(id); }
-function toggleMaster(id, on){ setMastered(id, on); updateWordProgress(); }
+function getMastered(){ return Object.keys(getMasteredMap()); }
+function setMastered(id, on){
+  const m = getMasteredMap();
+  if(on) m[id] = Date.now(); else delete m[id];
+  try{ localStorage.setItem("wordMastered", JSON.stringify(m)); }catch(e){}
+}
+function isMastered(id){ return id in getMasteredMap(); }
+function getReviewMap(){
+  try{
+    const v = JSON.parse(localStorage.getItem("wordReview") || "{}");
+    if(Array.isArray(v)){
+      const o = {};
+      v.forEach(id => o[id] = Date.now());
+      localStorage.setItem("wordReview", JSON.stringify(o));
+      return o;
+    }
+    return v && typeof v === "object" ? v : {};
+  }catch(e){ return {}; }
+}
+function getReviewList(){ return Object.keys(getReviewMap()); }
+function setReview(id, on){
+  const m = getReviewMap();
+  if(on) m[id] = Date.now(); else delete m[id];
+  try{ localStorage.setItem("wordReview", JSON.stringify(m)); }catch(e){}
+}
+function isReview(id){ return id in getReviewMap(); }
+function markWord(id, kind){
+  if(kind === "master"){
+    if(isMastered(id)){ setMastered(id, false); }
+    else { setMastered(id, true); setReview(id, false); }
+  } else {
+    if(isReview(id)){ setReview(id, false); }
+    else { setReview(id, true); setMastered(id, false); }
+  }
+  document.querySelectorAll(`.word [data-wid="${id}"]`).forEach(btn => {
+    const m = btn.dataset.wkind === "master";
+    btn.classList.toggle("on-master", m && isMastered(id));
+    btn.classList.toggle("on-review", !m && isReview(id));
+  });
+  updateWordProgress();
+  renderReviewQueue();
+}
+
+function resetToday(){
+  if(!confirm("确定重置今天的所有点击吗？\n\n将撤销今天点过的“掌握/再复习”标记，并清空今天每日任务的打勾。之前几天的记录不受影响。")) return;
+  const start = new Date();
+  start.setHours(0, 0, 0, 0);
+  const t = start.getTime();
+  const mm = getMasteredMap();
+  const rr = getReviewMap();
+  let changed = false;
+  Object.keys(mm).forEach(id => { if(mm[id] >= t){ delete mm[id]; changed = true; } });
+  Object.keys(rr).forEach(id => { if(rr[id] >= t){ delete rr[id]; changed = true; } });
+  if(changed){
+    localStorage.setItem("wordMastered", JSON.stringify(mm));
+    localStorage.setItem("wordReview", JSON.stringify(rr));
+  }
+  const now = new Date();
+  const todayKey = (now.getMonth() + 1) + "/" + now.getDate();
+  try{
+    const all = JSON.parse(localStorage.getItem("dayTasks") || "{}");
+    if(all[todayKey]){
+      delete all[todayKey];
+      localStorage.setItem("dayTasks", JSON.stringify(all));
+    }
+  }catch(e){}
+  updateWordProgress();
+  renderReviewQueue();
+  if(currentWordDate) renderWordDay(currentWordDate);
+  if(currentDayDate === todayKey) renderDayPanel(currentDayDate);
+}
 
 let _wAudio = null;
 function playWord(aid){
@@ -684,10 +1017,15 @@ function playWord(aid){
 }
 
 function wordRow(e){
+  const m = isMastered(e.id);
+  const r = isReview(e.id);
   return `<div class="word">
-    <button class="play" onclick="playWord(${e.aid})">▶</button>
+    <button class="play" onclick="playWord(${e.aid})" aria-label="播放发音">${PLAY_SVG}</button>
     <b>${esc(e.w)}</b><span class="pos">${esc(e.p)}</span><span class="mean">${esc(e.m)}</span>
-    <label class="chk"><input type="checkbox" ${isMastered(e.id)?"checked":""} onchange="toggleMaster('${e.id}', this.checked)">掌握</label>
+    <span class="st">
+      <button class="st-btn ${m?"on-master":""}" data-wid="${e.id}" data-wkind="master" onclick="markWord('${e.id}','master')">✅ 掌握</button>
+      <button class="st-btn ${r?"on-review":""}" data-wid="${e.id}" data-wkind="review" onclick="markWord('${e.id}','review')">🔁 再复习</button>
+    </span>
   </div>`;
 }
 
@@ -699,20 +1037,21 @@ function updateWordProgress(){
     if(bar) bar.style.width = "0";
     return;
   }
-  const done = getMastered().filter(id => id.startsWith("u")).length;
-  if(el) el.textContent = "已掌握 " + done + " / 61";
-  if(bar) bar.style.width = Math.round(done/61*100) + "%";
+  const total = Object.keys(WORD_ALL).length;
+  const done = getMastered().length;
+  const reviewN = getReviewList().length;
+  if(el) el.textContent = "已掌握 " + done + " / " + total + " · 待复习 " + reviewN + " 个";
+  if(bar) bar.style.width = Math.round(done/total*100) + "%";
 }
 
 function renderWordDaybar(){
   const bar = document.getElementById("wordDaybar");
   if(!WORD_SYSTEM_OK){ bar.innerHTML = ""; return; }
-  const extra = ["9/1","9/2","9/3","9/4"];
-  bar.innerHTML = DAYS.map(d => `<button data-date="${d.date}" onclick="openWordDay('${d.date}')">${d.date}</button>`).join("")
-    + extra.map(d => `<button data-date="${d}" onclick="openWordDay('${d}')">${d}</button>`).join("");
+  bar.innerHTML = DAYS.map(d => `<button data-date="${d.date}" onclick="openWordDay('${d.date}')">${d.date}</button>`).join("");
 }
 
 function renderWordDay(date){
+  currentWordDate = date;
   const panel = document.getElementById("wordDayPanel");
   if(!WORD_SYSTEM_OK){
     renderWordMissing();
@@ -725,16 +1064,36 @@ function renderWordDay(date){
   if(nd && nd.words.length){
     html += `<div class="card"><h3>📖 今日新词（${nd.words.length} 个）· ${esc(nd.label)}</h3>${nd.words.map(wordRow).join("")}</div>`;
   }
-  if(rv.length){
-    html += `<div class="card"><h3>🔁 今日复习（${rv.reduce((s,r)=>s+r.words.length,0)} 个，艾宾浩斯节点）</h3>${rv.map(r =>
+  const reviewWords = [];
+  rv.forEach(r => {
+    const remain = r.words.filter(e => !isMastered(e.id));
+    if(remain.length) reviewWords.push({label:r.label, offset:r.offset, words:remain});
+  });
+  if(reviewWords.length){
+    html += `<div class="card"><h3>🔁 今日复习（${reviewWords.reduce((s,r)=>s+r.words.length,0)} 个，已掌握自动跳过）</h3>${reviewWords.map(r =>
       `<p class="note" style="margin:10px 0 2px"><b>${esc(r.label)}</b> · 第 ${r.offset} 天复习</p>${r.words.map(wordRow).join("")}`
     ).join("")}</div>`;
   }
-  if(!nd.words.length && !rv.length){
-    html = `<div class="card note">今天没有新词和复习任务，轻松休息或提前预习。</div>`;
+  if(!nd.words.length && !reviewWords.length){
+    html += `<div class="card note">今天没有新词和复习任务，轻松休息或提前预习。</div>`;
   }
   panel.innerHTML = html;
+  renderReviewQueue();
   startFlash(date);
+}
+
+function renderReviewQueue(){
+  if(!WORD_SYSTEM_OK) return;
+  const panel = document.getElementById("wordDayPanel");
+  const old = document.getElementById("reviewQueueCard");
+  if(old) old.remove();
+  const list = getReviewList().map(id => WORD_ALL[id]).filter(Boolean);
+  if(!list.length) return;
+  const card = document.createElement("div");
+  card.className = "card";
+  card.id = "reviewQueueCard";
+  card.innerHTML = `<h3>📌 待复习清单（${list.length} 个）</h3><p class="note">标了"再复习"的词会一直出现在这里，直到点"掌握"或评级通过。</p>${list.map(wordRow).join("")}`;
+  panel.appendChild(card);
 }
 
 function renderWordMissing(){
@@ -752,6 +1111,12 @@ function openWordDay(date){
   document.getElementById("words").scrollIntoView({behavior:"smooth", block:"start"});
 }
 
+function openMathDay(date){
+  switchTab("math");
+  renderMathPanel(date);
+  document.getElementById("math").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
 function renderWordBank(){
   const box = document.getElementById("wordBank");
   if(!WORD_SYSTEM_OK){
@@ -767,56 +1132,108 @@ function renderWordBank(){
 /* 闪卡 */
 let flashQueue = [];
 let flashIdx = 0;
+let flashFlipped = false;
+let flashAttempts = {};
+let currentWordDate = "8/18";
+let currentDayDate = "8/18";
+
+function setRateDisabled(off){
+  document.querySelectorAll(".rate-btns .btn").forEach(b => b.disabled = off);
+}
+
 function startFlash(date){
+  currentWordDate = date;
   if(!WORD_SYSTEM_OK){
     const el = document.getElementById("flashCard");
     if(el) el.innerHTML = "词库未加载，无法练习。";
+    setRateDisabled(true);
     return;
   }
   const nd = WORD_DAY_DATA.find(x => x.date === date);
   const rv = REVIEW_MAP[date] || [];
   const seen = new Set();
   flashQueue = [];
-  (nd ? nd.words : []).forEach(e => { if(!seen.has(e.id)){ seen.add(e.id); flashQueue.push(e); } });
-  rv.forEach(r => r.words.forEach(e => { if(!seen.has(e.id)){ seen.add(e.id); flashQueue.push(e); } }));
+  flashAttempts = {};
+  const add = (e) => { if(e && !seen.has(e.id) && !isMastered(e.id)){ seen.add(e.id); flashQueue.push(e); } };
+  (nd ? nd.words : []).forEach(add);
+  rv.forEach(r => r.words.forEach(add));
+  getReviewList().forEach(id => add(WORD_ALL[id]));
   flashIdx = 0;
+  flashFlipped = false;
   showFlash();
 }
+
 function showFlash(){
   const el = document.getElementById("flashCard");
   const prog = document.getElementById("flashProg");
-  const wrap = document.getElementById("flashWrap");
   if(!flashQueue.length){
     el.innerHTML = "今天的词都过完啦！🎉";
     if(prog) prog.textContent = "";
+    setRateDisabled(true);
     return;
   }
   const e = flashQueue[flashIdx];
-  el.innerHTML = `<div class="fc-front"><span style="font-size:15px">🔊 点下方喇叭听发音</span><br><button class="play" style="width:40px;height:40px;font-size:16px" onclick="playWord(${e.aid});event.stopPropagation()">▶</button><br>${esc(e.w)}</div>`;
+  el.innerHTML = `<div class="fc-front"><button class="play play-lg" onclick="playWord(${e.aid});event.stopPropagation()" aria-label="播放发音">${PLAY_SVG}</button><br>${esc(e.w)}</div>`;
   el.setAttribute("data-id", e.id);
+  flashFlipped = false;
+  setRateDisabled(true);
   if(prog) prog.textContent = (flashIdx+1) + " / " + flashQueue.length;
 }
+
 function flipFlash(){
   const el = document.getElementById("flashCard");
   const id = el.getAttribute("data-id");
   if(!id) return;
-  const e = WORD_DAY_DATA.flatMap(d => d.words).find(x => x.id === id);
-  el.innerHTML = `<div class="fc-back"><b>${esc(e.w)}</b><span class="pos">${esc(e.p)}</span><p>${esc(e.m)}</p><p class="note">再点一次翻回单词</p></div>`;
-}
-function knowFlash(){ flashIdx++; if(flashIdx >= flashQueue.length){ flashQueue = []; } showFlash(); }
-function retryFlash(){
-  if(flashQueue.length > 1){
-    const e = flashQueue.splice(flashIdx, 1)[0];
-    flashQueue.push(e);
+  const e = WORD_ALL[id];
+  if(!e) return;
+  if(!flashFlipped){
+    el.innerHTML = `<div class="fc-back"><b>${esc(e.w)}</b><span class="pos">${esc(e.p)}</span><p>${esc(e.m)}</p><p class="note">再点一下回到单词</p></div>`;
+    flashFlipped = true;
+    setRateDisabled(false);
+  } else {
+    el.innerHTML = `<div class="fc-front"><button class="play play-lg" onclick="playWord(${e.aid});event.stopPropagation()" aria-label="播放发音">${PLAY_SVG}</button><br>${esc(e.w)}</div>`;
+    flashFlipped = false;
+    setRateDisabled(true);
   }
+}
+
+function rateFlash(rating){
+  if(!flashFlipped || !flashQueue.length) return;
+  const e = flashQueue[flashIdx];
+  if(rating === "again" || rating === "hard"){
+    setReview(e.id, true);
+    flashAttempts[e.id] = (flashAttempts[e.id] || 0) + 1;
+  } else if(rating === "good"){
+    setReview(e.id, false);
+  } else if(rating === "easy"){
+    setReview(e.id, false);
+    setMastered(e.id, true);
+    updateWordProgress();
+  }
+  if(rating === "again" || rating === "hard"){
+    if((flashAttempts[e.id] || 0) >= 3){
+      flashQueue.splice(flashIdx, 1);
+    } else if(flashQueue.length > 1){
+      const x = flashQueue.splice(flashIdx, 1)[0];
+      flashQueue.push(x);
+    }
+  } else {
+    flashQueue.splice(flashIdx, 1);
+  }
+  if(flashIdx >= flashQueue.length) flashIdx = 0;
+  renderReviewQueue();
   showFlash();
 }
+
 document.getElementById("flashCard").addEventListener("click", flipFlash);
 
 renderOverview();
 renderDaybar();
 renderAudio();
-renderPractice();
+renderMathDaybar();
+renderMathPanel("8/18");
+renderMathList();
+renderWrongBook();
 renderMethods();
 renderBonus();
 renderWordDaybar();
