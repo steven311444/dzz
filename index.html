@@ -61,6 +61,11 @@
   .word .pos{font-size:12px; color:var(--muted);}
   .word .mean{color:#333;}
   .word .chk{margin-left:auto; font-size:13px; display:flex; align-items:center; gap:4px; cursor:pointer;}
+  .task-item{display:flex; gap:8px; align-items:flex-start; cursor:pointer; margin:4px 0;}
+  .task-item input{margin-top:4px; width:16px; height:16px; accent-color:var(--blue); flex:0 0 auto;}
+  .task-item.done{color:var(--muted); text-decoration:line-through;}
+  #dayEncourage{background:#eaf7f0; border:1px solid #b9e6cf; border-radius:12px; padding:12px 16px; margin-top:10px; font-weight:600; color:#1f7a4d; display:none;}
+  #dayEncourage.show{display:block;}
   .progress{height:10px; background:#e7ecf5; border-radius:8px; overflow:hidden; margin:6px 0;}
   .progress .bar{height:100%; width:0; background:linear-gradient(90deg,#2fa36b,#5bd08f); transition:width .3s;}
   .flashcard{min-height:120px; border:2px dashed var(--blue); border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; cursor:pointer; padding:16px; background:#fff; font-size:22px; font-weight:700; margin:10px 0;}
@@ -156,6 +161,19 @@
     <h2>每日一练（10 天计算练习）</h2>
     <div class="card note">
       按"四年级计算要求 + 五年级小数乘除法"混编：口算、竖式、简便计算、混合运算、应用题各 1–2 道。先做完，再点开答案对。全对可加积分。
+    </div>
+    <div class="card">
+      <h3>运算律 · 速查卡（做"运算律"题前先看）</h3>
+      <table>
+        <tr><th>名称</th><th>公式</th><th>例子</th></tr>
+        <tr><td>乘法交换律</td><td>a×b ＝ b×a</td><td>2.5×3.8×4 ＝ 2.5×4×3.8</td></tr>
+        <tr><td>乘法结合律</td><td>(a×b)×c ＝ a×(b×c)</td><td>2.5×3.6×0.4 ＝ 3.6×(2.5×0.4)</td></tr>
+        <tr><td>乘法分配律</td><td>a×(b＋c) ＝ a×b＋a×c；a×(b−c) ＝ a×b−a×c</td><td>6.5×10.2 ＝ 6.5×10＋6.5×0.2</td></tr>
+        <tr><td>除法运算性质</td><td>a÷b÷c ＝ a÷(b×c)；(a＋b)÷c ＝ a÷c＋b÷c</td><td>12.6÷2.5÷0.4 ＝ 12.6÷(2.5×0.4)</td></tr>
+        <tr><td>商不变性质</td><td>被除数、除数同时乘或除以相同的数（0 除外），商不变</td><td>4.5÷0.25 ＝ (4.5×4)÷(0.25×4) ＝ 18÷1</td></tr>
+        <tr><td>减法运算性质</td><td>a−b−c ＝ a−(b＋c)；a−(b−c) ＝ a−b＋c</td><td>18.4−3.7−6.3 ＝ 18.4−(3.7＋6.3)</td></tr>
+      </table>
+      <p class="note" style="margin-top:6px">每道"运算律"题做完，要能说出用了哪条律/性质。</p>
     </div>
     <div id="practiceList"></div>
   </section>
@@ -312,60 +330,70 @@ const PRACTICE = [
     {t:"口算", q:"0.4×0.5＝　　2.5×0.4＝　　1.25×8＝　　0.6×1.5＝", a:"0.2　1　10　0.9"},
     {t:"竖式", q:"2.05×3.6＝　　15.6÷12＝", a:"7.38　1.3"},
     {t:"简便计算", q:"2.5×3.7×0.4＝　　0.99×5.8＝", a:"3.7（2.5×0.4 凑 1）　5.742（0.99＝1−0.01）"},
+    {t:"运算律", q:"1.25×4.7×8＝（先想：先算哪两个数最方便？用了什么律？）", a:"1.25×8×4.7＝10×4.7＝47（乘法交换律＋结合律）"},
     {t:"混合运算", q:"6.4×1.5 − 3.6÷1.2＝", a:"9.6 − 3 ＝ 6.6"},
     {t:"应用题", q:"每千克苹果 8.6 元，买 2.5 千克要多少元？", a:"8.6×2.5 ＝ 21.5 元"}]},
   {day:2, date:"8/19", items:[
     {t:"口算", q:"0.25×0.4＝　　1.6×0.5＝　　7.2÷0.9＝　　0.48÷0.8＝", a:"0.1　0.8　8　0.6"},
     {t:"竖式", q:"4.8×1.25＝　　25.2÷0.6＝", a:"6　42"},
     {t:"简便计算", q:"12.5×0.96×0.8＝　　3.8×9.9＋0.38＝", a:"9.6（12.5×0.8 凑 10）　38（3.8×9.9＋3.8×0.1）"},
+    {t:"运算律", q:"7.5×10.1＝（把 10.1 拆开，用了什么律？）", a:"7.5×10＋7.5×0.1＝75＋0.75＝75.75（乘法分配律）"},
     {t:"混合运算", q:"(7.2＋2.8)×0.25÷2＝", a:"10×0.25÷2 ＝ 1.25"},
     {t:"应用题", q:"长方形草地长 12.5 米，宽 8.4 米，面积是多少平方米？", a:"12.5×8.4 ＝ 105 平方米"}]},
   {day:3, date:"8/20", items:[
     {t:"口算", q:"3.6÷1.2＝　　0.75×4＝　　1.2×0.8＝　　5.4÷0.6＝", a:"3　3　0.96　9"},
     {t:"竖式", q:"0.86×0.35＝　　34.8÷1.6＝", a:"0.301　21.75"},
     {t:"简便计算", q:"4.5×10.2＝　　1.25×2.5×32＝", a:"45.9（4.5×10＋4.5×0.2）　100（1.25×8 × 2.5×4）"},
+    {t:"运算律", q:"12.6÷2.5÷0.4＝（连续除以两个数可以怎么合并？）", a:"12.6÷(2.5×0.4)＝12.6÷1＝12.6（除法运算性质）"},
     {t:"混合运算", q:"3.2×5 − 8.4÷1.2＝", a:"16 − 7 ＝ 9"},
     {t:"应用题", q:"拖拉机 0.5 小时耕地 0.4 公顷，照这样计算，2.5 小时耕地多少公顷？", a:"0.4÷0.5×2.5 ＝ 2 公顷"}]},
   {day:4, date:"8/21", items:[
     {t:"口算", q:"0.56÷0.8＝　　4.5×0.6＝　　0.3×0.3＝　　6.4÷0.08＝", a:"0.7　2.7　0.09　80"},
     {t:"竖式", q:"5.76×0.25＝　　9.1÷2.6＝", a:"1.44　3.5"},
     {t:"简便计算", q:"(1.25＋2.5)×8＝　　8.8×1.25＝", a:"30（10＋20）　11（(8＋0.8)×1.25）"},
+    {t:"运算律", q:"18.4−3.7−6.3＝（连续减去两个数可以怎么算？）", a:"18.4−(3.7＋6.3)＝18.4−10＝8.4（减法运算性质）"},
     {t:"混合运算", q:"4.8÷0.4＋6.5×2＝", a:"12＋13 ＝ 25"},
     {t:"应用题", q:"丝带每米 2.4 元，买 0.75 米需要多少元？", a:"2.4×0.75 ＝ 1.8 元"}]},
   {day:5, date:"8/24", items:[
     {t:"口算", q:"0.25×16＝　　2.8÷0.7＝　　0.45÷0.9＝　　1.5×0.6＝", a:"4　4　0.5　0.9"},
     {t:"竖式", q:"3.14×2.5＝　　21.6÷3.6＝", a:"7.85　6"},
     {t:"简便计算", q:"7.2×6.8＋7.2×3.2＝　　0.125×0.25×80＝", a:"72（7.2×10）　2.5（0.125×80×0.25）"},
+    {t:"运算律", q:"4.8×6.7＋4.8×3.3＝（公因数是谁？用了什么律？）", a:"4.8×(6.7＋3.3)＝4.8×10＝48（乘法分配律）"},
     {t:"混合运算", q:"10.5 − 2.5×0.4÷0.5＝", a:"10.5 − 2 ＝ 8.5"},
     {t:"应用题", q:"声音在空气中每秒传播约 0.34 千米，4.5 秒传播多少千米？", a:"0.34×4.5 ＝ 1.53 千米"}]},
   {day:6, date:"8/25", items:[
     {t:"口算", q:"0.6×0.7＝　　9.6÷0.3＝　　2.5×0.8＝　　1.44÷1.2＝", a:"0.42　32　2　1.2"},
     {t:"竖式", q:"6.5×0.48＝　　18.9÷0.45＝", a:"3.12　42"},
     {t:"简便计算", q:"3.6×101 − 3.6＝　　2.5×7.6×0.4＝", a:"360（3.6×100）　7.6"},
+    {t:"运算律", q:"4.5÷0.25＝（用商不变性质，把 0.25 变成整数）", a:"(4.5×4)÷(0.25×4)＝18÷1＝18（商不变性质）"},
     {t:"混合运算", q:"1.25×8÷0.25＝", a:"10÷0.25 ＝ 40"},
     {t:"应用题", q:"一件衣服原价 120 元，打八五折（乘 0.85）后卖多少元？", a:"120×0.85 ＝ 102 元"}]},
   {day:7, date:"8/26", items:[
     {t:"口算", q:"0.12×5＝　　7.5÷1.5＝　　4.2×0.01＝　　3.6÷0.04＝", a:"0.6　5　0.042　90"},
     {t:"竖式", q:"8.4×0.65＝　　0.98÷3.5＝", a:"5.46　0.28"},
     {t:"简便计算", q:"5.6×9.9＝　　1.6×2.5×0.125×4＝", a:"55.44（5.6×10−0.56）　2（0.2×10）"},
+    {t:"运算律", q:"12.9−(2.9＋3.5)＝（去掉括号试试，用了什么性质？）", a:"12.9−2.9−3.5＝10−3.5＝6.5（减法运算性质）"},
     {t:"混合运算", q:"48÷1.6 − 3.5×2＝", a:"30 − 7 ＝ 23"},
     {t:"应用题", q:"一组 5 人共投中 27 个球，二组 4 人共投中 22 个球，哪组平均成绩高？", a:"一组 27÷5＝5.4；二组 22÷4＝5.5，二组略高"}]},
   {day:8, date:"8/27", items:[
     {t:"口算", q:"0.32×0.5＝　　8.8÷0.8＝　　0.25×0.4＝　　6.3÷0.07＝", a:"0.16　11　0.1　90"},
     {t:"竖式", q:"12.5×0.64＝　　0.672÷4.2＝", a:"8　0.16"},
     {t:"简便计算", q:"9.9×8.7＋0.87＝　　2.4×12.5＝", a:"87（8.7×(9.9＋0.1)）　30"},
+    {t:"运算律", q:"3.6÷0.4÷0.9＝（两个除数相乘是多少？）", a:"3.6÷(0.4×0.9)＝3.6÷0.36＝10（除法运算性质）"},
     {t:"混合运算", q:"(3.6＋1.4)÷0.5×2＝", a:"10÷0.5×2 ＝ 40"},
     {t:"应用题", q:"平行四边形菜地底 24 米、高 18 米，每平方米收菜 3.5 千克，共收多少千克？", a:"24×18×3.5 ＝ 1512 千克"}]},
   {day:9, date:"8/28", items:[
     {t:"口算", q:"0.7×0.9＝　　5.5÷0.5＝　　4.8×0.25＝　　2.6÷1.3＝", a:"0.63　11　1.2　2"},
     {t:"竖式", q:"3.7×0.54＝　　26.88÷0.96＝", a:"1.998　28"},
     {t:"简便计算", q:"1.01×7.8＝　　0.8×4.7×1.25＝", a:"7.878（7.8＋0.078）　4.7"},
+    {t:"运算律", q:"(8.4＋5.6)÷1.4＝（括号里的数能分别除以 1.4 吗？）", a:"8.4÷1.4＋5.6÷1.4＝6＋4＝10（除法运算性质）"},
     {t:"混合运算", q:"6.4×1.5＋3.6×1.5＝", a:"(6.4＋3.6)×1.5 ＝ 15"},
     {t:"应用题", q:"梯形上底 8 米、下底 12 米、高 6 米，面积是多少平方米？", a:"(8＋12)×6÷2 ＝ 60 平方米"}]},
   {day:10, date:"8/31", items:[
     {t:"口算", q:"0.45×0.2＝　　9.9÷0.9＝　　3.5×0.4＝　　0.72÷0.6＝", a:"0.09　11　1.4　1.2"},
     {t:"竖式", q:"7.06×0.35＝　　3.51÷2.7＝", a:"2.471　1.3"},
     {t:"简便计算", q:"4.6×2.5×0.4＝　　12.5×88＝", a:"4.6　1100（12.5×8×11）"},
+    {t:"运算律", q:"8.4÷0.35＝（商不变性质，把除数变成整数）", a:"(8.4×100)÷(0.35×100)＝840÷35＝24（商不变性质）"},
     {t:"混合运算", q:"2.5×4÷2.5×4＝", a:"10÷2.5×4 ＝ 16（注意：按顺序算，不能先约分！）"},
     {t:"应用题", q:"妈妈带 50 元买 2 盒牛奶（每盒 12.5 元），剩下的钱买每本 5 元的练习本，最多买几本？", a:"(50 − 12.5×2)÷5 ＝ 5 本（去尾法）"}]}
 ];
@@ -415,6 +443,9 @@ function renderDayPanel(date){
   const panel = document.getElementById("dayPanel");
   const btns = document.querySelectorAll("#daybar button");
   btns.forEach(b => b.classList.toggle("on", b.dataset.date === date));
+  const taskLi = (subj, tasks) => tasks.map((t,i) =>
+    `<li><label class="task-item ${taskDone(date,subj,i)?"done":""}"><input type="checkbox" data-k="${date}|${subj}|${i}" ${taskDone(date,subj,i)?"checked":""} onchange="toggleTask('${date}','${subj}',${i},this.checked)">${esc(t)}</label></li>`
+  ).join("");
   if(d.type === "work"){
     const mkAudio = (files) => files.map(f => {
       const info = AUDIO.find(a => a.file === f);
@@ -425,31 +456,94 @@ function renderDayPanel(date){
     panel.innerHTML = `
       <div class="subject" style="border-left:6px solid var(--orange)">
         <span class="tag t-math">数学</span><h3 style="display:inline;margin-left:6px">${esc(d.math.t)}</h3>
-        <ul>${d.math.tasks.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+        <ul>${taskLi("math", d.math.tasks)}</ul>
         <p class="note" style="margin-top:6px">配套练习：<b>每日一练 Day ${date2day(d.date)}</b></p>
       </div>
       <div class="subject" style="border-left:6px solid var(--green)">
         <span class="tag t-eng">英语</span><h3 style="display:inline;margin-left:6px">${esc(d.english.t)}</h3>
-        <ul>${d.english.tasks.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+        <ul>${taskLi("english", d.english.tasks)}</ul>
         ${wordInfo.ok ? `<p class="note" style="margin-top:6px">今日单词：${wordInfo.newN} 个新词 + ${wordInfo.reviewN} 个复习词（<a href="#" onclick="openWordDay('${d.date}');return false">打开单词记忆</a>）</p>` : ""}
         <div style="margin-top:8px">${mkAudio(d.english.audio)}</div>
       </div>
       <div class="subject" style="border-left:6px solid var(--red)">
         <span class="tag t-chi">语文</span><h3 style="display:inline;margin-left:6px">${esc(d.chinese.t)}</h3>
-        <ul>${d.chinese.tasks.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+        <ul>${taskLi("chinese", d.chinese.tasks)}</ul>
       </div>
-      <div class="card note">睡前 10 分钟：回忆今天学的 3 个知识点；不会的内容标“？”周末问家长。</div>`;
+      <div class="card note">睡前 10 分钟：回忆今天学的 3 个知识点；不会的内容标“？”周末问家长。</div>
+      <p id="dayProgress" class="note" style="margin-top:8px"></p>
+      <div id="dayEncourage"></div>`;
   } else {
     panel.innerHTML = `
       <div class="subject" style="border-left:6px solid var(--purple)">
         <span class="tag t-wk">周末</span><h3 style="display:inline;margin-left:6px">${d.date} ${d.dow}</h3>
-        <p style="margin-top:8px">${esc(d.check)}</p>
+        <ul style="margin-top:8px">${taskLi("check", [d.check])}</ul>
       </div>
       <div class="card">
         <span class="tag t-bonus">加分项目</span><h3 style="display:inline;margin-left:6px">自愿选做（每项 +20 分）</h3>
-        <ul>${d.bonus.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+        <ul>${taskLi("bonus", d.bonus)}</ul>
       </div>
-      <div class="card note">白天以锻炼和户外活动为主，不另外加学习任务。</div>`;
+      <div class="card note">白天以锻炼和户外活动为主，不另外加学习任务。</div>
+      <p id="dayProgress" class="note" style="margin-top:8px"></p>
+      <div id="dayEncourage"></div>`;
+  }
+  updateDayProgress(date);
+}
+
+const ENCOURAGE = [
+  "今天全部完成，太棒了！🌟",
+  "全勤打卡成功，你比昨天的自己又厉害了一点！💪",
+  "三项任务全部拿下，接下来尽情休息吧！🎉",
+  "今天的你，认真得发光！✨",
+  "坚持就是胜利，你已经做到了！🏆",
+  "任务全部清空，今天的你很了不起！🎯",
+  "完成度 100%，给自己一点掌声！👏",
+  "自律的小朋友最酷了，继续保持！😎",
+  "又完成了一天，离目标更近一步啦！🚀",
+  "你的努力我都看到了，超棒！❤️",
+  "全部打勾，今天的学习力满分！💯",
+  "收工！好好休息，明天继续加油！🌙"
+];
+
+function taskDone(date, subj, i){
+  try{
+    const all = JSON.parse(localStorage.getItem("dayTasks") || "{}");
+    return !!(all[date] && all[date][subj + ":" + i]);
+  }catch(e){ return false; }
+}
+
+function toggleTask(date, subj, i, on){
+  let all = {};
+  try{ all = JSON.parse(localStorage.getItem("dayTasks") || "{}"); }catch(e){}
+  if(!all[date]) all[date] = {};
+  const k = subj + ":" + i;
+  if(on) all[date][k] = true; else delete all[date][k];
+  try{ localStorage.setItem("dayTasks", JSON.stringify(all)); }catch(e){}
+  const inp = document.querySelector(`#dayPanel input[data-k="${date}|${subj}|${i}"]`);
+  if(inp && inp.closest("label")) inp.closest("label").classList.toggle("done", on);
+  updateDayProgress(date);
+}
+
+function updateDayProgress(date){
+  const panel = document.getElementById("dayPanel");
+  if(!panel) return;
+  const boxes = panel.querySelectorAll(".task-item input[type=checkbox]");
+  const total = boxes.length;
+  const done = panel.querySelectorAll(".task-item input[type=checkbox]:checked").length;
+  const p = document.getElementById("dayProgress");
+  if(p) p.textContent = total ? "今日完成 " + done + " / " + total : "";
+  const e = document.getElementById("dayEncourage");
+  if(e){
+    if(total && done === total){
+      if(e.dataset.shown !== "1"){
+        e.textContent = "🎉 " + ENCOURAGE[Math.floor(Math.random() * ENCOURAGE.length)];
+        e.dataset.shown = "1";
+      }
+      e.classList.add("show");
+    }else{
+      e.textContent = "";
+      e.dataset.shown = "";
+      e.classList.remove("show");
+    }
   }
 }
 
