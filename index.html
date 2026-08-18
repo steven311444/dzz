@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五年级上册暑假预习中心</title>
+<style>
+  :root{
+    --bg:#f4f6fb; --card:#ffffff; --ink:#27324d; --muted:#6b7692;
+    --blue:#2f6fed; --orange:#ff8f3d; --green:#2fa36b; --red:#e0526b; --purple:#8e6fc9;
+    --line:#e3e8f2; --shadow:0 2px 10px rgba(39,50,77,.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); line-height:1.65;}
+  header{background:linear-gradient(135deg,#2f6fed,#5b8cff); color:#fff; padding:28px 20px 22px; text-align:center;}
+  header h1{font-size:26px; letter-spacing:1px;}
+  header p{margin-top:6px; font-size:14px; opacity:.92;}
+  nav{position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid var(--line); display:flex; overflow-x:auto; padding:0 8px;}
+  nav button{flex:0 0 auto; border:none; background:none; padding:12px 16px; font-size:15px; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; white-space:nowrap;}
+  nav button.on{color:var(--blue); border-bottom-color:var(--blue); font-weight:600;}
+  main{max-width:1000px; margin:0 auto; padding:20px 16px 60px;}
+  .tab-section{display:none;}
+  .tab-section.on{display:block;}
+  h2{font-size:21px; margin:8px 0 14px;}
+  h3{font-size:17px; margin:0 0 8px;}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:var(--shadow); margin-bottom:14px;}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px;}
+  .mini{border:1px solid var(--line); border-radius:12px; padding:10px 12px; cursor:pointer; background:#fff; transition:.15s;}
+  .mini:hover{transform:translateY(-2px); box-shadow:var(--shadow);}
+  .mini .d{font-weight:700; font-size:15px;}
+  .mini .w{font-size:12px; color:var(--muted); margin-left:4px;}
+  .mini .s{font-size:13px; color:var(--muted); margin-top:3px;}
+  .tag{display:inline-block; font-size:12px; padding:2px 8px; border-radius:20px; color:#fff; margin-right:4px;}
+  .t-math{background:var(--orange);} .t-eng{background:var(--green);} .t-chi{background:var(--red);} .t-wk{background:var(--purple);} .t-bonus{background:var(--blue);}
+  .daybar{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;}
+  .daybar button{border:1px solid var(--line); background:#fff; border-radius:20px; padding:6px 12px; cursor:pointer; font-size:14px;}
+  .daybar button.on{background:var(--blue); color:#fff; border-color:var(--blue);}
+  .subject{border-radius:12px; padding:14px 16px; margin-bottom:12px; border:1px solid var(--line);}
+  .subject ul{margin:8px 0 0 18px;}
+  .subject li{margin:4px 0;}
+  audio{width:100%; max-width:360px; height:34px; margin:4px 0; display:block;}
+  .audio-track{display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:#fff;}
+  .audio-track .num{font-weight:700; color:var(--blue); min-width:34px;}
+  .audio-track .meta{flex:1; min-width:0;}
+  .audio-track .meta .nm{font-weight:600; font-size:14px;}
+  .audio-track .meta .ds{font-size:12px; color:var(--muted);}
+  .audio-track audio{width:200px; flex:0 0 auto;}
+  details{border:1px solid var(--line); border-radius:10px; padding:8px 12px; margin:6px 0; background:#fff;}
+  details summary{cursor:pointer; font-weight:600; color:var(--blue);}
+  .ans{margin-top:6px; color:#444; font-size:14px; white-space:pre-line;}
+  .method{display:flex; gap:10px; padding:10px 0; border-bottom:1px dashed var(--line);}
+  .method:last-child{border-bottom:none;}
+  .method .no{flex:0 0 30px; height:30px; border-radius:50%; background:var(--blue); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700;}
+  table{width:100%; border-collapse:collapse; font-size:14px;}
+  th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top;}
+  th{background:#eef3ff;}
+  .note{font-size:13px; color:var(--muted);}
+  .pill{display:inline-block; background:#eef3ff; color:var(--blue); border-radius:8px; padding:2px 8px; font-size:13px; margin:2px 4px 2px 0;}
+  .word{display:flex; align-items:center; gap:8px; padding:7px 10px; border:1px solid var(--line); border-radius:10px; margin:5px 0; background:#fbfcff; flex-wrap:wrap;}
+  .word .play{width:30px; height:30px; border:none; border-radius:50%; background:var(--blue); color:#fff; font-size:13px; cursor:pointer; flex:0 0 auto;}
+  .word .pos{font-size:12px; color:var(--muted);}
+  .word .mean{color:#333;}
+  .word .chk{margin-left:auto; font-size:13px; display:flex; align-items:center; gap:4px; cursor:pointer;}
+  .progress{height:10px; background:#e7ecf5; border-radius:8px; overflow:hidden; margin:6px 0;}
+  .progress .bar{height:100%; width:0; background:linear-gradient(90deg,#2fa36b,#5bd08f); transition:width .3s;}
+  .flashcard{min-height:120px; border:2px dashed var(--blue); border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; cursor:pointer; padding:16px; background:#fff; font-size:22px; font-weight:700; margin:10px 0;}
+  .flashcard .fc-back p{font-size:16px; font-weight:400; color:#333; margin-top:4px;}
+  .btn{border:none; border-radius:10px; padding:9px 18px; font-size:15px; cursor:pointer; margin:4px; font-weight:600;}
+  .btn-green{background:#2fa36b; color:#fff;} .btn-gray{background:#e7ecf5; color:#27324d;} .btn-blue{background:var(--blue); color:#fff;}
+  footer{text-align:center; color:var(--muted); font-size:13px; padding:24px 12px 40px;}
+  @media (max-width:640px){
+    .audio-track{flex-wrap:wrap;}
+    .audio-track audio{width:100%;}
+    header h1{font-size:21px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>五年级上册 · 暑假预习中心</h1>
+  <p>2026.8.18 – 8.31 ｜ 工作日自学 2 小时 ｜ 周末查漏补缺 + 锻炼 + 加分项目</p>
+</header>
+
+<nav id="nav">
+  <button class="on" data-tab="home">首页</button>
+  <button data-tab="days">每日任务</button>
+  <button data-tab="audio">英语音频</button>
+  <button data-tab="words">单词记忆</button>
+  <button data-tab="practice">每日一练</button>
+  <button data-tab="methods">科学方法</button>
+  <button data-tab="points">积分加分</button>
+  <button data-tab="review">复习表</button>
+</nav>
+
+<main>
+
+  <!-- ============ 首页 ============ -->
+  <section id="home" class="tab-section on">
+    <h2>使用说明</h2>
+    <div class="card">
+      <p>这个网页是给孩子的预习控制台，点上面的按钮切换板块。每天的任务在 <b>每日任务</b> 里，点日期就能看到当天的数学、英语、语文安排；英语音频可以在 <b>每日任务</b> 或 <b>英语音频</b> 里直接播放；<b>每日一练</b> 是每天的计算练习（含答案，做完再对）；<b>积分加分</b> 里有周末加分项目和积分规则。</p>
+      <p class="note" style="margin-top:8px">离线可用：直接用浏览器打开 index.html 即可，不需要联网。音频文件在同目录"英语音频"文件夹里。</p>
+    </div>
+    <h2>14 天总览（点日期看当天任务）</h2>
+    <div class="grid" id="overviewGrid"></div>
+  </section>
+
+  <!-- ============ 每日任务 ============ -->
+  <section id="days" class="tab-section">
+    <h2>每日任务</h2>
+    <div class="daybar" id="daybar"></div>
+    <div id="dayPanel"></div>
+  </section>
+
+  <!-- ============ 英语音频 ============ -->
+  <section id="audio" class="tab-section">
+    <h2>英语音频（微软 Jenny 女声 · 语速放慢 10%）</h2>
+    <div class="card note">
+      共 23 段，覆盖 Starter + Unit 1–5 的词汇、歌谣、对话和故事。用法：先听一遍，再跟读 2–3 遍，模仿语音语调。
+    </div>
+    <div id="audioList"></div>
+  </section>
+
+  <!-- ============ 单词记忆 ============ -->
+  <section id="words" class="tab-section">
+    <h2>英语单词 · 艾宾浩斯记忆系统</h2>
+    <div class="card">
+      <p>词库来自课本书末 "Words to use"（Unit 1–5 共 61 词）+ Starter 预热词（序数词、月份 22 词）。每天的新词和第 1/2/4/7 天的复习自动排好，点日期查看；每个词都能点 ▶ 听发音（微软 Jenny 女声），勾选"掌握"自动保存进度。</p>
+      <div class="progress"><div class="bar" id="wordBar"></div></div>
+      <p><b id="wordProg">已掌握 0 / 61</b>（统计 Unit 1–5 词库）</p>
+    </div>
+    <div class="daybar" id="wordDaybar"></div>
+    <div id="wordDayPanel"></div>
+    <div class="card">
+      <h3>闪卡练习（今日新词 + 复习词）</h3>
+      <div id="flashWrap">
+        <div class="flashcard" id="flashCard"></div>
+        <p style="text-align:center"><span id="flashProg"></span></p>
+        <p style="text-align:center">
+          <button class="btn btn-green" onclick="knowFlash()">认识 ✓</button>
+          <button class="btn btn-gray" onclick="retryFlash()">再看一遍 🔁</button>
+          <button class="btn btn-blue" onclick="startFlash()">重新开始</button>
+        </p>
+        <p class="note" style="text-align:center">点卡片翻面看中文意思；听完发音再判断认不认识。</p>
+      </div>
+    </div>
+    <details>
+      <summary style="cursor:pointer; font-weight:600; color:var(--blue); padding:8px 0">查看全部 83 词词库（含发音）</summary>
+      <div id="wordBank"></div>
+    </details>
+  </section>
+
+  <!-- ============ 每日一练 ============ -->
+  <section id="practice" class="tab-section">
+    <h2>每日一练（10 天计算练习）</h2>
+    <div class="card note">
+      按"四年级计算要求 + 五年级小数乘除法"混编：口算、竖式、简便计算、混合运算、应用题各 1–2 道。先做完，再点开答案对。全对可加积分。
+    </div>
+    <div id="practiceList"></div>
+  </section>
+
+  <!-- ============ 科学方法 ============ -->
+  <section id="methods" class="tab-section">
+    <h2>科学学习法（融进每天流程）</h2>
+    <div class="card" id="methodList"></div>
+  </section>
+
+  <!-- ============ 积分加分 ============ -->
+  <section id="points" class="tab-section">
+    <h2>积分制度</h2>
+    <div class="card">
+      <table>
+        <tr><th>项目</th><th>积分</th></tr>
+        <tr><td>完成一天三科任务</td><td>+10</td></tr>
+        <tr><td>费曼讲解到位（讲清 3 个知识点）</td><td>+5 / 次</td></tr>
+        <tr><td>每日一练全对</td><td>+3 / 天</td></tr>
+        <tr><td>主动订正错题</td><td>+2 / 题</td></tr>
+        <tr><td>周末加分项目</td><td>+20 / 项</td></tr>
+        <tr><td>英语进阶任务（1 分钟英语介绍/讲故事）</td><td>+10 / 次</td></tr>
+        <tr><td>锻炼打卡</td><td>+5 / 次</td></tr>
+      </table>
+      <p style="margin-top:10px"><b>兑换建议：</b>20 分＝小贴纸/小零食；50 分＝小文具；100 分＝心愿卡（玩具或 30 分钟游戏）；200 分＝大心愿（家长定）。</p>
+    </div>
+    <h2>周末加分项目（自愿，不强制）</h2>
+    <div class="card" id="bonusList"></div>
+    <h2>进阶任务（孩子基础好，选做加分）</h2>
+    <div class="card">
+      <ul>
+        <li>每单元学完，用 3–5 句英语介绍本单元主题（社团 / 传统游戏 / 植物 / 动物 / 健康），录音或讲给家长听。</li>
+        <li>英语故事复述：读完一个 Story，不看课本用英语讲 1 分钟。</li>
+        <li>数学：给家长出一道当天学的类型题，并讲解做法（费曼升级版）。</li>
+        <li>语文：把《示儿》《题临安邸》《己亥杂诗》连起来讲一个"南宋故事"。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 复习表 ============ -->
+  <section id="review" class="tab-section">
+    <h2>艾宾浩斯滚动复习表</h2>
+    <div class="card note">规则：新内容在第 1、2、4、7 天各复习一次。生字、单词、古诗都按这张表滚动。</div>
+    <div class="card" style="overflow-x:auto">
+      <table>
+        <tr><th>日期</th><th>英语滚动</th><th>语文滚动</th><th>古诗</th></tr>
+        <tr><td>8/19</td><td>复习 8/18 词汇</td><td>复习 8/18 生字</td><td>—</td></tr>
+        <tr><td>8/20</td><td>8/18+8/19 各抽 3 个</td><td>8/18+8/19 生字抽写</td><td>—</td></tr>
+        <tr><td>8/21</td><td>8/20 新词 + 抽查 8/18</td><td>8/20 内容 + 8/19 生字</td><td>—</td></tr>
+        <tr><td>8/22 周六</td><td>本周词汇快速过一遍</td><td>本周生字听写</td><td>—</td></tr>
+        <tr><td>8/24</td><td>复习 8/21 词汇</td><td>复习 8/21 词句</td><td>—</td></tr>
+        <tr><td>8/25</td><td>8/18 词汇（第 7 天节点）+ 8/24</td><td>8/18 生字（第 7 天节点）</td><td>—</td></tr>
+        <tr><td>8/26</td><td>8/25 新词 + 抽查 8/19</td><td>8/25 生字</td><td>—</td></tr>
+        <tr><td>8/27</td><td>8/26 新词</td><td>8/26 生字</td><td>学习 3 首古诗</td></tr>
+        <tr><td>8/28</td><td>8/27 新词 + 抽查 8/20</td><td>8/27 生字</td><td>复习 3 首</td></tr>
+        <tr><td>8/29 周六</td><td>8/24–8/28 词汇快速过</td><td>8/24–8/28 生字抽写</td><td>复习 3 首</td></tr>
+        <tr><td>8/31</td><td>8/28 词汇 + U1–U5 总抽查</td><td>第一单元生字</td><td>默写《示儿》</td></tr>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>五年级上册暑假预习中心 V2 ｜ 语文统编版五上 · 数学/英语沪教版五四学制五上 ｜ 打开即用，离线可看</footer>
+
+<script src="wordbank.js"></script>
+<script>
+const AUDIO_BASE = "英语音频/";
+const audioSrc = (name) => AUDIO_BASE + encodeURIComponent(name);
+
+const AUDIO = [
+  {n:1, label:"Starter · At School", file:"01 Starter - At School.mp3", desc:"上学场景 4 组对话"},
+  {n:2, label:"Starter · Study Skills", file:"02 Starter - Study Skills.mp3", desc:"学习方法 4 组对话"},
+  {n:3, label:"Starter · Numbers and Months", file:"03 Starter - Numbers and Months.mp3", desc:"序数词 + 12 个月份"},
+  {n:4, label:"Unit 1 · Topic Words", file:"04 Unit 1 - Topic Words.mp3", desc:"社团词汇：gardening / photography / art / storytelling / pottery"},
+  {n:5, label:"Unit 1 · Fun Time（社团海报）", file:"05 Unit 1 - Fun Time (Clubs).mp3", desc:"Come and join our clubs! + ph 音"},
+  {n:6, label:"Unit 1 · Talking Time", file:"06 Unit 1 - Talking Time.mp3", desc:"It's good to join clubs 对话"},
+  {n:7, label:"Unit 1 · Story（At the Pottery Club）", file:"07 Unit 1 - Story (At the Pottery Club).mp3", desc:"陶艺社故事"},
+  {n:8, label:"Unit 2 · Topic Words", file:"08 Unit 2 - Topic Words.mp3", desc:"传统游戏词汇"},
+  {n:9, label:"Unit 2 · Fun Time（游园会）", file:"09 Unit 2 - Fun Time (Garden Party).mp3", desc:"Welcome to our garden party! + ar 音"},
+  {n:10, label:"Unit 2 · Talking Time", file:"10 Unit 2 - Talking Time (As Fast as the Wind).mp3", desc:"As fast as the wind 武术对话"},
+  {n:11, label:"Unit 2 · Story（The Dragon Dance）", file:"11 Unit 2 - Story (The Dragon Dance).mp3", desc:"舞龙故事"},
+  {n:12, label:"Unit 3 · Topic Words", file:"12 Unit 3 - Topic Words.mp3", desc:"植物词汇：stem / soil / root / leaf / water lily / pine cone / morning glory"},
+  {n:13, label:"Unit 3 · Chant（Parts of Plants）", file:"13 Unit 3 - Chant (Parts of Plants).mp3", desc:"植物歌谣 + ow/ou 音"},
+  {n:14, label:"Unit 3 · Talking Time", file:"14 Unit 3 - Talking Time (Botanical Gardens).mp3", desc:"植物园参观对话"},
+  {n:15, label:"Unit 3 · Reading（Plants and the Weather）", file:"15 Unit 3 - Reading (Plants and the Weather).mp3", desc:"植物预报天气信息文本"},
+  {n:16, label:"Unit 4 · Topic Words", file:"16 Unit 4 - Topic Words.mp3", desc:"动物词汇：tiger / lion / whale / protect / safari park / giraffe / panda / hippo / elephant"},
+  {n:17, label:"Unit 4 · Fun Time（Safari Park）", file:"17 Unit 4 - Fun Time (Safari Park).mp3", desc:"野生动物园通知 + ear/air 音"},
+  {n:18, label:"Unit 4 · Talking Time", file:"18 Unit 4 - Talking Time (In a Safari Park).mp3", desc:"In a safari park 对话"},
+  {n:19, label:"Unit 4 · Reading（动物观察日记）", file:"19 Unit 4 - Reading (Animal Observation Diary).mp3", desc:"熊猫、河马、大象观察日记"},
+  {n:20, label:"Unit 5 · Topic Words", file:"20 Unit 5 - Topic Words.mp3", desc:"看病词汇：doctor / nurse / fever / runny nose / cough / flu / medicine"},
+  {n:21, label:"Unit 5 · Rhyme（Nice Doctors）", file:"21 Unit 5 - Rhyme (Nice Doctors).mp3", desc:"好医生歌谣"},
+  {n:22, label:"Unit 5 · Talking Time", file:"22 Unit 5 - Talking Time (At the Eye Clinic).mp3", desc:"眼科诊所对话"},
+  {n:23, label:"Unit 5 · Story（The Story of Hua Tuo）", file:"23 Unit 5 - Story (The Story of Hua Tuo).mp3", desc:"华佗与麻沸散故事"}
+];
+
+const DAYS = [
+  {date:"8/18", dow:"周二", type:"work",
+   math:{t:"小数乘法验收 + 除法起步", tasks:["每日一练 Day 1（口算+竖式验收小数乘法）","读 p8–11 例题：除数是整数的小数除法，自己讲一遍","课本练一练：除数是整数的小数除法","口算 5 分钟"]},
+   english:{t:"Starter：At School + Numbers/Months", tasks:["听音频 01、03 跟读 2–3 遍","序数词 first–tenth、12 个月份认读","用英语做 2 句自我介绍"], audio:["01 Starter - At School.mp3","03 Starter - Numbers and Months.mp3"]},
+   chinese:{t:"1 桂花雨", tasks:["朗读 3 遍，标出不懂的词","生字注音组词，抄写 2 遍","想一想课后题","讲一讲：《桂花雨》讲了什么"]}},
+  {date:"8/19", dow:"周三", type:"work",
+   math:{t:"整数除法巩固 + 小数除法起步", tasks:["每日一练 Day 2","复习 p8–13 错题","读 p14–17 例题：除数怎么变整数","口算 5 分钟"]},
+   english:{t:"Starter：Study Skills + Unit 1 词汇", tasks:["听音频 02、04 跟读","U1 词汇：gardening / photography / art / storytelling / pottery","用 be going to 造句 3 句"], audio:["02 Starter - Study Skills.mp3","04 Unit 1 - Topic Words.mp3"]},
+   chinese:{t:"2 落花生 + 3* 珍珠鸟（略读）", tasks:["朗读《落花生》，圈出“借物喻人”的句子","略读《珍珠鸟》","生字抄写 2 遍","讲一讲：花生和珍珠鸟分别借什么物、喻什么理"]}},
+  {date:"8/20", dow:"周四", type:"work",
+   math:{t:"小数除法巩固 + 商的近似数", tasks:["每日一练 Day 3","练一练：除数是小数的除法","读 p20–21：四舍五入取商的近似数","口算 5 分钟"]},
+   english:{t:"Unit 1 Fun time + Talking time", tasks:["听音频 05、06 跟读","读社团海报，说出 6 个社团","角色扮演：It's good to join clubs 对话"], audio:["05 Unit 1 - Fun Time (Clubs).mp3","06 Unit 1 - Talking Time.mp3"]},
+   chinese:{t:"口语交际 + 习作构思", tasks:["想一想班级公约要定哪些方面","口述 3 分钟：我的心爱之物","把想法写成 1 页提纲"]}},
+  {date:"8/21", dow:"周五", type:"work",
+   math:{t:"近似数巩固 + 小数的应用", tasks:["每日一练 Day 4","p20–23 小练习 3","读 p24–25：去尾法/进一法（够不够、最多能做几个）","口算 5 分钟"]},
+   english:{t:"Unit 1 Story（At the Pottery Club）", tasks:["听音频 07 跟读","读故事，回答：James 遇到什么困难？怎么解决？","用英语复述 5 句话","预告周末任务：做一张社团海报（加分项）"], audio:["07 Unit 1 - Story (At the Pottery Club).mp3"]},
+   chinese:{t:"语文园地一 + 第一单元回顾", tasks:["语文园地：词句段运用、日积月累","费曼：把第一单元讲给家人听","生字听写（复习表节点）"]}},
+  {date:"8/22", dow:"周六", type:"weekend",
+   check:"家长查漏补缺 40 分钟：孩子当“小老师”讲本周 3 个知识点（费曼），一起订正错题本",
+   bonus:["数学：用小数乘除法算一次购物清单","英语：做一张“我的社团”海报","语文：把《桂花雨》讲给家人听","体育：锻炼打卡（+5 分）"]},
+  {date:"8/23", dow:"周日", type:"weekend",
+   check:"晚上 20:00–20:20：艾宾浩斯滚动复习（本周词汇、生字）+ 积分结算",
+   bonus:["英语：录 1 分钟英语介绍一个社团","数学：读家里水电费单，算一算金额","体育：锻炼打卡（+5 分）"]},
+  {date:"8/24", dow:"周一", type:"work",
+   math:{t:"平均数", tasks:["每日一练 Day 5","读 p30–33：平均数＝总和÷个数","练一练 + 找基准数 p34–36","口算 5 分钟"]},
+   english:{t:"Unit 2 词汇 + Fun time", tasks:["听音频 08、09 跟读","U2 词汇：traditional / Chinese yo-yo / kite-flying / dragon dance / tug of war / hopscotch","祈使句 Come and have a go! 造句 3 句"], audio:["08 Unit 2 - Topic Words.mp3","09 Unit 2 - Fun Time (Garden Party).mp3"]},
+   chinese:{t:"4 冀中的地道战 + 5 将相和（前半）", tasks:["带着问题读《冀中的地道战》","读《将相和》前半，标出人物和事件","生字抄写 2 遍"]}},
+  {date:"8/25", dow:"周二", type:"work",
+   math:{t:"平行四边形的面积", tasks:["每日一练 Day 6","读 p44–45：剪拼转化成长方形","公式 S=底×高，做练一练","口算 5 分钟"]},
+   english:{t:"Unit 2 Talking time + Story", tasks:["听音频 10、11 跟读","读 As fast as the wind 对话","读 The dragon dance 故事，讲给家人听"], audio:["10 Unit 2 - Talking Time (As Fast as the Wind).mp3","11 Unit 2 - Story (The Dragon Dance).mp3"]},
+   chinese:{t:"5 将相和（后半）+ 6 什么比猎豹的速度更快", tasks:["读完《将相和》，复述完璧归赵 / 渑池会面 / 负荆请罪","《什么比猎豹的速度更快》：计时读，练阅读速度","生字抄写 2 遍"]}},
+  {date:"8/26", dow:"周三", type:"work",
+   math:{t:"三角形的面积", tasks:["每日一练 Day 7","读 p51–52：两个相同三角形拼平行四边形","S=底×高÷2，做练一练","口算 5 分钟"]},
+   english:{t:"Unit 3 词汇 + Chant + Talking time", tasks:["听音频 12、13、14 跟读","U3 词汇：stem / soil / root / leaf / water lily / pine cone / morning glory","背诵 chant：Parts of plants","look like... 造句 3 句"], audio:["12 Unit 3 - Topic Words.mp3","13 Unit 3 - Chant (Parts of Plants).mp3","14 Unit 3 - Talking Time (Botanical Gardens).mp3"]},
+   chinese:{t:"8 猎人海力布 + 9 牛郎织女（一）开头", tasks:["读《猎人海力布》，能完整复述","读《牛郎织女》开头","感受民间故事特点","生字抄写 2 遍"]}},
+  {date:"8/27", dow:"周四", type:"work",
+   math:{t:"梯形的面积", tasks:["每日一练 Day 8","读 p55–56：S=(上底+下底)×高÷2","练一练 + 小练习 6","口算 5 分钟"]},
+   english:{t:"Unit 3 Reading + Unit 4 词汇", tasks:["听音频 15、16 跟读","读 Plants and the weather 信息文本","U4 词汇：tiger / lion / whale / protect / safari park / giraffe / panda / hippo / elephant","找 2 个“植物预报天气”的例子"], audio:["15 Unit 3 - Reading (Plants and the Weather).mp3","16 Unit 4 - Topic Words.mp3"]},
+   chinese:{t:"11 古诗三首：示儿 / 题临安邸 / 己亥杂诗", tasks:["读古诗，结合注释理解意思","背诵 3 首（艾宾浩斯第 1 天）","默写《示儿》"]}},
+  {date:"8/28", dow:"周五", type:"work",
+   math:{t:"组合图形 + 平方千米与公顷", tasks:["每日一练 Day 9","读 p60–61：分割 / 补全算组合图形","认识平方千米、公顷 p62–63","口算 5 分钟"]},
+   english:{t:"Unit 4 Fun time + Talking time", tasks:["听音频 17、18 跟读","读 Safari Park 通知：安全提示","In a safari park 对话角色扮演"], audio:["17 Unit 4 - Fun Time (Safari Park).mp3","18 Unit 4 - Talking Time (In a Safari Park).mp3"]},
+   chinese:{t:"12 少年中国说（节选）+ 13 圆明园的毁灭", tasks:["朗读《少年中国说》并背诵节选","读《圆明园的毁灭》，说说感受","生字抄写 2 遍","古诗复习（第 2 天节点）"]}},
+  {date:"8/29", dow:"周六", type:"weekend",
+   check:"家长查漏补缺 40 分钟：孩子讲本周 3 个知识点，订正错题本",
+   bonus:["数学：量家里一个房间的面积并画图","英语：录 1 分钟介绍一种植物或动物","语文：给古诗《示儿》配一幅画","体育：锻炼打卡（+5 分）"]},
+  {date:"8/30", dow:"周日", type:"weekend",
+   check:"晚上 20:00–20:20：滚动复习（8/24–8/28 内容）+ 积分结算",
+   bonus:["英语：把 Unit 2 的舞龙故事讲给家人听","语文：采访家长“心爱之物”，写一段话","体育：锻炼打卡（+5 分）"]},
+  {date:"8/31", dow:"周一", type:"work",
+   math:{t:"因数与倍数概念 + 全册总复习", tasks:["每日一练 Day 10","读 p69–77：因数、倍数、奇数、偶数","回顾全册错题本","口算 5 分钟"]},
+   english:{t:"Unit 5 词汇 + Rhyme + Talking + Story", tasks:["听音频 20–23 跟读","U5 词汇：doctor / nurse / fever / runny nose / cough / flu / medicine","读 Nice doctors 歌谣","At the eye clinic 角色扮演","Don't forget to... 造句 3 句"], audio:["20 Unit 5 - Topic Words.mp3","21 Unit 5 - Rhyme (Nice Doctors).mp3","22 Unit 5 - Talking Time (At the Eye Clinic).mp3","23 Unit 5 - Story (The Story of Hua Tuo).mp3"]},
+   chinese:{t:"快乐读书吧 + 第一单元复习", tasks:["启动《中国民间故事》阅读（每天 15 分钟）","第一单元生字听写（第 7 天节点）","默写《示儿》检查","核对开学物品清单"]}}
+];
+
+const PRACTICE = [
+  {day:1, date:"8/18", items:[
+    {t:"口算", q:"0.4×0.5＝　　2.5×0.4＝　　1.25×8＝　　0.6×1.5＝", a:"0.2　1　10　0.9"},
+    {t:"竖式", q:"2.05×3.6＝　　15.6÷12＝", a:"7.38　1.3"},
+    {t:"简便计算", q:"2.5×3.7×0.4＝　　0.99×5.8＝", a:"3.7（2.5×0.4 凑 1）　5.742（0.99＝1−0.01）"},
+    {t:"混合运算", q:"6.4×1.5 − 3.6÷1.2＝", a:"9.6 − 3 ＝ 6.6"},
+    {t:"应用题", q:"每千克苹果 8.6 元，买 2.5 千克要多少元？", a:"8.6×2.5 ＝ 21.5 元"}]},
+  {day:2, date:"8/19", items:[
+    {t:"口算", q:"0.25×0.4＝　　1.6×0.5＝　　7.2÷0.9＝　　0.48÷0.8＝", a:"0.1　0.8　8　0.6"},
+    {t:"竖式", q:"4.8×1.25＝　　25.2÷0.6＝", a:"6　42"},
+    {t:"简便计算", q:"12.5×0.96×0.8＝　　3.8×9.9＋0.38＝", a:"9.6（12.5×0.8 凑 10）　38（3.8×9.9＋3.8×0.1）"},
+    {t:"混合运算", q:"(7.2＋2.8)×0.25÷2＝", a:"10×0.25÷2 ＝ 1.25"},
+    {t:"应用题", q:"长方形草地长 12.5 米，宽 8.4 米，面积是多少平方米？", a:"12.5×8.4 ＝ 105 平方米"}]},
+  {day:3, date:"8/20", items:[
+    {t:"口算", q:"3.6÷1.2＝　　0.75×4＝　　1.2×0.8＝　　5.4÷0.6＝", a:"3　3　0.96　9"},
+    {t:"竖式", q:"0.86×0.35＝　　34.8÷1.6＝", a:"0.301　21.75"},
+    {t:"简便计算", q:"4.5×10.2＝　　1.25×2.5×32＝", a:"45.9（4.5×10＋4.5×0.2）　100（1.25×8 × 2.5×4）"},
+    {t:"混合运算", q:"3.2×5 − 8.4÷1.2＝", a:"16 − 7 ＝ 9"},
+    {t:"应用题", q:"拖拉机 0.5 小时耕地 0.4 公顷，照这样计算，2.5 小时耕地多少公顷？", a:"0.4÷0.5×2.5 ＝ 2 公顷"}]},
+  {day:4, date:"8/21", items:[
+    {t:"口算", q:"0.56÷0.8＝　　4.5×0.6＝　　0.3×0.3＝　　6.4÷0.08＝", a:"0.7　2.7　0.09　80"},
+    {t:"竖式", q:"5.76×0.25＝　　9.1÷2.6＝", a:"1.44　3.5"},
+    {t:"简便计算", q:"(1.25＋2.5)×8＝　　8.8×1.25＝", a:"30（10＋20）　11（(8＋0.8)×1.25）"},
+    {t:"混合运算", q:"4.8÷0.4＋6.5×2＝", a:"12＋13 ＝ 25"},
+    {t:"应用题", q:"丝带每米 2.4 元，买 0.75 米需要多少元？", a:"2.4×0.75 ＝ 1.8 元"}]},
+  {day:5, date:"8/24", items:[
+    {t:"口算", q:"0.25×16＝　　2.8÷0.7＝　　0.45÷0.9＝　　1.5×0.6＝", a:"4　4　0.5　0.9"},
+    {t:"竖式", q:"3.14×2.5＝　　21.6÷3.6＝", a:"7.85　6"},
+    {t:"简便计算", q:"7.2×6.8＋7.2×3.2＝　　0.125×0.25×80＝", a:"72（7.2×10）　2.5（0.125×80×0.25）"},
+    {t:"混合运算", q:"10.5 − 2.5×0.4÷0.5＝", a:"10.5 − 2 ＝ 8.5"},
+    {t:"应用题", q:"声音在空气中每秒传播约 0.34 千米，4.5 秒传播多少千米？", a:"0.34×4.5 ＝ 1.53 千米"}]},
+  {day:6, date:"8/25", items:[
+    {t:"口算", q:"0.6×0.7＝　　9.6÷0.3＝　　2.5×0.8＝　　1.44÷1.2＝", a:"0.42　32　2　1.2"},
+    {t:"竖式", q:"6.5×0.48＝　　18.9÷0.45＝", a:"3.12　42"},
+    {t:"简便计算", q:"3.6×101 − 3.6＝　　2.5×7.6×0.4＝", a:"360（3.6×100）　7.6"},
+    {t:"混合运算", q:"1.25×8÷0.25＝", a:"10÷0.25 ＝ 40"},
+    {t:"应用题", q:"一件衣服原价 120 元，打八五折（乘 0.85）后卖多少元？", a:"120×0.85 ＝ 102 元"}]},
+  {day:7, date:"8/26", items:[
+    {t:"口算", q:"0.12×5＝　　7.5÷1.5＝　　4.2×0.01＝　　3.6÷0.04＝", a:"0.6　5　0.042　90"},
+    {t:"竖式", q:"8.4×0.65＝　　0.98÷3.5＝", a:"5.46　0.28"},
+    {t:"简便计算", q:"5.6×9.9＝　　1.6×2.5×0.125×4＝", a:"55.44（5.6×10−0.56）　2（0.2×10）"},
+    {t:"混合运算", q:"48÷1.6 − 3.5×2＝", a:"30 − 7 ＝ 23"},
+    {t:"应用题", q:"一组 5 人共投中 27 个球，二组 4 人共投中 22 个球，哪组平均成绩高？", a:"一组 27÷5＝5.4；二组 22÷4＝5.5，二组略高"}]},
+  {day:8, date:"8/27", items:[
+    {t:"口算", q:"0.32×0.5＝　　8.8÷0.8＝　　0.25×0.4＝　　6.3÷0.07＝", a:"0.16　11　0.1　90"},
+    {t:"竖式", q:"12.5×0.64＝　　0.672÷4.2＝", a:"8　0.16"},
+    {t:"简便计算", q:"9.9×8.7＋0.87＝　　2.4×12.5＝", a:"87（8.7×(9.9＋0.1)）　30"},
+    {t:"混合运算", q:"(3.6＋1.4)÷0.5×2＝", a:"10÷0.5×2 ＝ 40"},
+    {t:"应用题", q:"平行四边形菜地底 24 米、高 18 米，每平方米收菜 3.5 千克，共收多少千克？", a:"24×18×3.5 ＝ 1512 千克"}]},
+  {day:9, date:"8/28", items:[
+    {t:"口算", q:"0.7×0.9＝　　5.5÷0.5＝　　4.8×0.25＝　　2.6÷1.3＝", a:"0.63　11　1.2　2"},
+    {t:"竖式", q:"3.7×0.54＝　　26.88÷0.96＝", a:"1.998　28"},
+    {t:"简便计算", q:"1.01×7.8＝　　0.8×4.7×1.25＝", a:"7.878（7.8＋0.078）　4.7"},
+    {t:"混合运算", q:"6.4×1.5＋3.6×1.5＝", a:"(6.4＋3.6)×1.5 ＝ 15"},
+    {t:"应用题", q:"梯形上底 8 米、下底 12 米、高 6 米，面积是多少平方米？", a:"(8＋12)×6÷2 ＝ 60 平方米"}]},
+  {day:10, date:"8/31", items:[
+    {t:"口算", q:"0.45×0.2＝　　9.9÷0.9＝　　3.5×0.4＝　　0.72÷0.6＝", a:"0.09　11　1.4　1.2"},
+    {t:"竖式", q:"7.06×0.35＝　　3.51÷2.7＝", a:"2.471　1.3"},
+    {t:"简便计算", q:"4.6×2.5×0.4＝　　12.5×88＝", a:"4.6　1100（12.5×8×11）"},
+    {t:"混合运算", q:"2.5×4÷2.5×4＝", a:"10÷2.5×4 ＝ 16（注意：按顺序算，不能先约分！）"},
+    {t:"应用题", q:"妈妈带 50 元买 2 盒牛奶（每盒 12.5 元），剩下的钱买每本 5 元的练习本，最多买几本？", a:"(50 − 12.5×2)÷5 ＝ 5 本（去尾法）"}]}
+];
+
+const METHODS = [
+  ["费曼学习法","每天最后 5 分钟，把今天学的东西讲给家人听或录音。讲不清楚的地方＝没真懂，标记后重学。"],
+  ["艾宾浩斯遗忘曲线","生字、单词、古诗按第 1、2、4、7 天节点滚动复习，不靠一遍背熟。"],
+  ["刻意练习","每次练习只有一个明确目标（先算对、再提速），有即时反馈，错了立刻订正并写错因。"],
+  ["主动回忆","先合上书回想、复述、自测，再翻书核对，比反复重读有效得多。"],
+  ["番茄工作法","40 分钟内只专注一件事；走神时把念头写在小纸条上，继续做当前任务。"],
+  ["交叉练习","数学新知识和旧题混着做，避免“学的时候会、考的时候不会”。"],
+  ["最近发展区","每天只学比现在难一点点内容，不贪多、不超纲。"],
+  ["输出式学习","讲、写、画、录、演——正好对应英语 Project、语文口语交际和习作。"],
+  ["睡眠巩固","睡前 10 分钟回忆当天学的 3 个知识点，尽量 21:30 前睡觉。"],
+  ["错题本","每科一个小本，只记错题＋错因＋正确解法，周末统一订正。"],
+  ["情境学习","数学用在超市、账单、旅行预算；英语用在社团、看病、动物观察等真实场景。"],
+  ["游戏化激励","积分制，让复习像通关打怪。"],
+  ["成长型思维","把“我不会”换成“我还没学会”，把“太难了”换成“需要多练”。"],
+];
+
+const BONUS = [
+  ["数学","用小数乘除法算一次购物清单；读家里水电费单算账；量房间面积并画图。"],
+  ["英语","录 1 分钟英语介绍（社团/植物/动物）；把 Unit 1 或 Unit 2 的故事讲给家人听。"],
+  ["语文","把《桂花雨》或民间故事讲给家长听；古诗配画；采访家长“心爱之物”写一段话。"],
+  ["体育","锻炼打卡（跳绳、跑步、球类等），每次 +5 分。"],
+];
+
+/* ---------- 渲染 ---------- */
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function renderOverview(){
+  const g = document.getElementById("overviewGrid");
+  g.innerHTML = DAYS.map(d =>
+    `<div class="mini" onclick="openDay('${d.date}')">
+       <div><span class="d">${d.date}</span><span class="w">${d.dow}</span></div>
+       <div class="s">${d.type==="work" ? "数学 · 英语 · 语文" : "查漏补缺 · 加分项"}</div>
+     </div>`).join("");
+}
+
+function renderDaybar(){
+  const bar = document.getElementById("daybar");
+  bar.innerHTML = DAYS.map(d => `<button data-date="${d.date}" onclick="openDay('${d.date}')">${d.date} ${d.dow}</button>`).join("");
+}
+
+function renderDayPanel(date){
+  const d = DAYS.find(x => x.date === date);
+  const panel = document.getElementById("dayPanel");
+  const btns = document.querySelectorAll("#daybar button");
+  btns.forEach(b => b.classList.toggle("on", b.dataset.date === date));
+  if(d.type === "work"){
+    const mkAudio = (files) => files.map(f => {
+      const info = AUDIO.find(a => a.file === f);
+      return `<audio controls preload="none" src="${audioSrc(f)}"></audio>
+              <div class="note">${info ? info.label + " · " + info.desc : f}</div>`;
+    }).join("");
+    const wordInfo = getWordInfo(date);
+    panel.innerHTML = `
+      <div class="subject" style="border-left:6px solid var(--orange)">
+        <span class="tag t-math">数学</span><h3 style="display:inline;margin-left:6px">${esc(d.math.t)}</h3>
+        <ul>${d.math.tasks.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+        <p class="note" style="margin-top:6px">配套练习：<b>每日一练 Day ${date2day(d.date)}</b></p>
+      </div>
+      <div class="subject" style="border-left:6px solid var(--green)">
+        <span class="tag t-eng">英语</span><h3 style="display:inline;margin-left:6px">${esc(d.english.t)}</h3>
+        <ul>${d.english.tasks.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+        ${wordInfo.ok ? `<p class="note" style="margin-top:6px">今日单词：${wordInfo.newN} 个新词 + ${wordInfo.reviewN} 个复习词（<a href="#" onclick="openWordDay('${d.date}');return false">打开单词记忆</a>）</p>` : ""}
+        <div style="margin-top:8px">${mkAudio(d.english.audio)}</div>
+      </div>
+      <div class="subject" style="border-left:6px solid var(--red)">
+        <span class="tag t-chi">语文</span><h3 style="display:inline;margin-left:6px">${esc(d.chinese.t)}</h3>
+        <ul>${d.chinese.tasks.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+      </div>
+      <div class="card note">睡前 10 分钟：回忆今天学的 3 个知识点；不会的内容标“？”周末问家长。</div>`;
+  } else {
+    panel.innerHTML = `
+      <div class="subject" style="border-left:6px solid var(--purple)">
+        <span class="tag t-wk">周末</span><h3 style="display:inline;margin-left:6px">${d.date} ${d.dow}</h3>
+        <p style="margin-top:8px">${esc(d.check)}</p>
+      </div>
+      <div class="card">
+        <span class="tag t-bonus">加分项目</span><h3 style="display:inline;margin-left:6px">自愿选做（每项 +20 分）</h3>
+        <ul>${d.bonus.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
+      </div>
+      <div class="card note">白天以锻炼和户外活动为主，不另外加学习任务。</div>`;
+  }
+}
+
+function date2day(date){
+  const idx = DAYS.findIndex(x => x.date === date);
+  return idx >= 0 ? idx + 1 : 1;
+}
+
+function renderAudio(){
+  const list = document.getElementById("audioList");
+  list.innerHTML = AUDIO.map(a =>
+    `<div class="audio-track">
+       <div class="num">${a.n}</div>
+       <div class="meta"><div class="nm">${esc(a.label)}</div><div class="ds">${esc(a.desc)}</div></div>
+       <audio controls preload="none" src="${audioSrc(a.file)}"></audio>
+     </div>`).join("");
+}
+
+function renderPractice(){
+  const list = document.getElementById("practiceList");
+  list.innerHTML = PRACTICE.map(p => `
+    <div class="card">
+      <h3>Day ${p.day}（${p.date}）</h3>
+      ${p.items.map(it => `
+        <div style="margin:8px 0">
+          <span class="pill">${esc(it.t)}</span> ${esc(it.q)}
+          <details><summary>答案</summary><div class="ans">${esc(it.a)}</div></details>
+        </div>`).join("")}
+    </div>`).join("");
+}
+
+function renderMethods(){
+  const list = document.getElementById("methodList");
+  list.innerHTML = METHODS.map((m,i) =>
+    `<div class="method"><div class="no">${i+1}</div><div><b>${esc(m[0])}</b><br>${esc(m[1])}</div></div>`).join("");
+}
+
+function renderBonus(){
+  const list = document.getElementById("bonusList");
+  list.innerHTML = BONUS.map(b =>
+    `<div style="padding:6px 0;border-bottom:1px dashed var(--line)">
+       <span class="tag ${b[0]==="数学"?"t-math":b[0]==="英语"?"t-eng":b[0]==="语文"?"t-chi":"t-wk"}">${b[0]}</span>
+       <span>${esc(b[1])}</span>
+     </div>`).join("");
+}
+
+/* ---------- 导航 ---------- */
+function switchTab(tab){
+  document.querySelectorAll("#nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
+  document.querySelectorAll(".tab-section").forEach(s => s.classList.toggle("on", s.id === tab));
+  if(tab === "days" && !document.querySelector("#daybar button.on")) renderDayPanel(DAYS[0].date);
+  if(tab === "words" && !WORD_SYSTEM_OK) renderWordMissing();
+}
+
+function openDay(date){
+  switchTab("days");
+  renderDayPanel(date);
+  document.getElementById("days").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+document.getElementById("nav").addEventListener("click", e => {
+  if(e.target.tagName === "BUTTON") switchTab(e.target.dataset.tab);
+});
+
+/* ================= 单词艾宾浩斯记忆系统 ================= */
+const WORD_GROUPS = [
+  {key:"starter", label:"Starter 预热 · 序数词与月份", color:"var(--blue)"},
+  {key:"u1", label:"Unit 1 · 社团", color:"var(--green)"},
+  {key:"u2", label:"Unit 2 · 传统游戏", color:"var(--orange)"},
+  {key:"u3", label:"Unit 3 · 奇妙植物", color:"var(--red)"},
+  {key:"u4", label:"Unit 4 · 与动物同行", color:"var(--purple)"},
+  {key:"u5", label:"Unit 5 · 看病就医", color:"var(--blue)"}
+];
+
+function wordAid(group, idx){
+  let aid = 0;
+  for(const g of WORD_GROUPS){
+    if(g.key === group){ aid += idx + 1; break; }
+    aid += WORD_BANK[g.key].length;
+  }
+  return aid;
+}
+
+let WORD_SYSTEM_OK = false;
+let WORD_DAY_DATA = [];
+const REVIEW_MAP = {};
+try {
+  if(typeof WORD_BANK === "undefined" || typeof WORD_DAYS === "undefined") throw new Error("缺少 wordbank.js");
+  WORD_DAY_DATA = WORD_DAYS.map(d => {
+    let words = [];
+    if(d.group){
+      words = WORD_BANK[d.group].map((e,i) => ({...e, id:d.group+"_"+(i+1), aid:wordAid(d.group,i)}))
+        .filter((e,i) => i >= d.range[0] && i <= d.range[1]);
+    }
+    return {...d, words};
+  });
+  WORD_DAY_DATA.forEach(d => {
+    if(!d.words.length) return;
+    const offsets = d.kind === "preview" ? [1] : [1,2,4,7];
+    offsets.forEach(o => {
+      const rd = dateAdd(d.date, o);
+      if(!REVIEW_MAP[rd]) REVIEW_MAP[rd] = [];
+      REVIEW_MAP[rd].push({label:d.label, offset:o, words:d.words});
+    });
+  });
+  WORD_SYSTEM_OK = true;
+} catch(e){
+  console.warn("单词记忆系统未启用：" + e.message);
+}
+
+function parseDate(s){ const p = s.split("/").map(Number); return new Date(2026, p[0]-1, p[1]); }
+function fmtDate(dt){ return (dt.getMonth()+1) + "/" + dt.getDate(); }
+function dateAdd(s, n){ const dt = parseDate(s); dt.setDate(dt.getDate()+n); return fmtDate(dt); }
+
+function getWordInfo(date){
+  if(!WORD_SYSTEM_OK) return {newN:0, reviewN:0, ok:false};
+  const nd = WORD_DAY_DATA.find(x => x.date === date);
+  const rv = REVIEW_MAP[date] || [];
+  return {newN: nd ? nd.words.length : 0, reviewN: rv.reduce((s,r)=>s+r.words.length,0), ok:true};
+}
+
+function getMastered(){ try{ return JSON.parse(localStorage.getItem("wordMastered")||"[]"); }catch(e){ return []; } }
+function setMastered(id, on){
+  let arr = getMastered();
+  if(on){ if(!arr.includes(id)) arr.push(id); }
+  else { arr = arr.filter(x => x !== id); }
+  try{ localStorage.setItem("wordMastered", JSON.stringify(arr)); }catch(e){}
+}
+function isMastered(id){ return getMastered().includes(id); }
+function toggleMaster(id, on){ setMastered(id, on); updateWordProgress(); }
+
+let _wAudio = null;
+function playWord(aid){
+  if(!_wAudio) _wAudio = new Audio();
+  _wAudio.pause();
+  _wAudio.src = "英语音频/单词音频/w" + String(aid).padStart(3,"0") + ".mp3";
+  _wAudio.play();
+}
+
+function wordRow(e){
+  return `<div class="word">
+    <button class="play" onclick="playWord(${e.aid})">▶</button>
+    <b>${esc(e.w)}</b><span class="pos">${esc(e.p)}</span><span class="mean">${esc(e.m)}</span>
+    <label class="chk"><input type="checkbox" ${isMastered(e.id)?"checked":""} onchange="toggleMaster('${e.id}', this.checked)">掌握</label>
+  </div>`;
+}
+
+function updateWordProgress(){
+  const el = document.getElementById("wordProg");
+  const bar = document.getElementById("wordBar");
+  if(!WORD_SYSTEM_OK){
+    if(el) el.textContent = "词库未加载（缺 wordbank.js）";
+    if(bar) bar.style.width = "0";
+    return;
+  }
+  const done = getMastered().filter(id => id.startsWith("u")).length;
+  if(el) el.textContent = "已掌握 " + done + " / 61";
+  if(bar) bar.style.width = Math.round(done/61*100) + "%";
+}
+
+function renderWordDaybar(){
+  const bar = document.getElementById("wordDaybar");
+  if(!WORD_SYSTEM_OK){ bar.innerHTML = ""; return; }
+  const extra = ["9/1","9/2","9/3","9/4"];
+  bar.innerHTML = DAYS.map(d => `<button data-date="${d.date}" onclick="openWordDay('${d.date}')">${d.date}</button>`).join("")
+    + extra.map(d => `<button data-date="${d}" onclick="openWordDay('${d}')">${d}</button>`).join("");
+}
+
+function renderWordDay(date){
+  const panel = document.getElementById("wordDayPanel");
+  if(!WORD_SYSTEM_OK){
+    renderWordMissing();
+    return;
+  }
+  const nd = WORD_DAY_DATA.find(x => x.date === date);
+  const rv = REVIEW_MAP[date] || [];
+  document.querySelectorAll("#wordDaybar button").forEach(b => b.classList.toggle("on", b.dataset.date === date));
+  let html = "";
+  if(nd && nd.words.length){
+    html += `<div class="card"><h3>📖 今日新词（${nd.words.length} 个）· ${esc(nd.label)}</h3>${nd.words.map(wordRow).join("")}</div>`;
+  }
+  if(rv.length){
+    html += `<div class="card"><h3>🔁 今日复习（${rv.reduce((s,r)=>s+r.words.length,0)} 个，艾宾浩斯节点）</h3>${rv.map(r =>
+      `<p class="note" style="margin:10px 0 2px"><b>${esc(r.label)}</b> · 第 ${r.offset} 天复习</p>${r.words.map(wordRow).join("")}`
+    ).join("")}</div>`;
+  }
+  if(!nd.words.length && !rv.length){
+    html = `<div class="card note">今天没有新词和复习任务，轻松休息或提前预习。</div>`;
+  }
+  panel.innerHTML = html;
+  startFlash(date);
+}
+
+function renderWordMissing(){
+  const panel = document.getElementById("wordDayPanel");
+  if(panel) panel.innerHTML = `<div class="card" style="border-color:#e0526b"><h3>⚠️ 单词系统未加载</h3><p>缺少词库文件 <b>wordbank.js</b>，所以单词记忆用不了。请把整个文件夹（index.html + wordbank.js + 英语音频/）一起发给小朋友，或直接用部署包。</p></div>`;
+  const box = document.getElementById("wordBank");
+  if(box) box.innerHTML = `<p class="note">词库文件（wordbank.js）未加载，请把整个文件夹一起发送。</p>`;
+  const fc = document.getElementById("flashCard");
+  if(fc) fc.innerHTML = "词库未加载，无法练习。";
+}
+
+function openWordDay(date){
+  switchTab("words");
+  renderWordDay(date);
+  document.getElementById("words").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function renderWordBank(){
+  const box = document.getElementById("wordBank");
+  if(!WORD_SYSTEM_OK){
+    box.innerHTML = `<p class="note">词库文件（wordbank.js）未加载，请把整个文件夹一起发送。</p>`;
+    return;
+  }
+  box.innerHTML = WORD_GROUPS.map(g =>
+    `<div style="margin-bottom:14px"><h3>${g.label}（${WORD_BANK[g.key].length} 词）</h3>
+      ${WORD_BANK[g.key].map((e,i) => wordRow({...e, id:g.key+"_"+(i+1), aid:wordAid(g.key,i)})).join("")}
+    </div>`).join("");
+}
+
+/* 闪卡 */
+let flashQueue = [];
+let flashIdx = 0;
+function startFlash(date){
+  if(!WORD_SYSTEM_OK){
+    const el = document.getElementById("flashCard");
+    if(el) el.innerHTML = "词库未加载，无法练习。";
+    return;
+  }
+  const nd = WORD_DAY_DATA.find(x => x.date === date);
+  const rv = REVIEW_MAP[date] || [];
+  const seen = new Set();
+  flashQueue = [];
+  (nd ? nd.words : []).forEach(e => { if(!seen.has(e.id)){ seen.add(e.id); flashQueue.push(e); } });
+  rv.forEach(r => r.words.forEach(e => { if(!seen.has(e.id)){ seen.add(e.id); flashQueue.push(e); } }));
+  flashIdx = 0;
+  showFlash();
+}
+function showFlash(){
+  const el = document.getElementById("flashCard");
+  const prog = document.getElementById("flashProg");
+  const wrap = document.getElementById("flashWrap");
+  if(!flashQueue.length){
+    el.innerHTML = "今天的词都过完啦！🎉";
+    if(prog) prog.textContent = "";
+    return;
+  }
+  const e = flashQueue[flashIdx];
+  el.innerHTML = `<div class="fc-front"><span style="font-size:15px">🔊 点下方喇叭听发音</span><br><button class="play" style="width:40px;height:40px;font-size:16px" onclick="playWord(${e.aid});event.stopPropagation()">▶</button><br>${esc(e.w)}</div>`;
+  el.setAttribute("data-id", e.id);
+  if(prog) prog.textContent = (flashIdx+1) + " / " + flashQueue.length;
+}
+function flipFlash(){
+  const el = document.getElementById("flashCard");
+  const id = el.getAttribute("data-id");
+  if(!id) return;
+  const e = WORD_DAY_DATA.flatMap(d => d.words).find(x => x.id === id);
+  el.innerHTML = `<div class="fc-back"><b>${esc(e.w)}</b><span class="pos">${esc(e.p)}</span><p>${esc(e.m)}</p><p class="note">再点一次翻回单词</p></div>`;
+}
+function knowFlash(){ flashIdx++; if(flashIdx >= flashQueue.length){ flashQueue = []; } showFlash(); }
+function retryFlash(){
+  if(flashQueue.length > 1){
+    const e = flashQueue.splice(flashIdx, 1)[0];
+    flashQueue.push(e);
+  }
+  showFlash();
+}
+document.getElementById("flashCard").addEventListener("click", flipFlash);
+
+renderOverview();
+renderDaybar();
+renderAudio();
+renderPractice();
+renderMethods();
+renderBonus();
+renderWordDaybar();
+renderWordBank();
+updateWordProgress();
+openDay("8/18");
+</script>
+</body>
+</html>

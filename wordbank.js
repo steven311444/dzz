@@ -1,0 +1,112 @@
+/* 词库：来自英语课本 5A 书末 "Words to use"（Unit 1–5）+ Starter 预热词 */
+const WORD_BANK = {
+  starter: [
+    {w:"first", p:"序数词", m:"第一"},
+    {w:"second", p:"序数词", m:"第二"},
+    {w:"third", p:"序数词", m:"第三"},
+    {w:"fourth", p:"序数词", m:"第四"},
+    {w:"fifth", p:"序数词", m:"第五"},
+    {w:"sixth", p:"序数词", m:"第六"},
+    {w:"seventh", p:"序数词", m:"第七"},
+    {w:"eighth", p:"序数词", m:"第八"},
+    {w:"ninth", p:"序数词", m:"第九"},
+    {w:"tenth", p:"序数词", m:"第十"},
+    {w:"January", p:"n.", m:"一月"},
+    {w:"February", p:"n.", m:"二月"},
+    {w:"March", p:"n.", m:"三月"},
+    {w:"April", p:"n.", m:"四月"},
+    {w:"May", p:"n.", m:"五月"},
+    {w:"June", p:"n.", m:"六月"},
+    {w:"July", p:"n.", m:"七月"},
+    {w:"August", p:"n.", m:"八月"},
+    {w:"September", p:"n.", m:"九月"},
+    {w:"October", p:"n.", m:"十月"},
+    {w:"November", p:"n.", m:"十一月"},
+    {w:"December", p:"n.", m:"十二月"}
+  ],
+  u1: [
+    {w:"gardening", p:"n.", m:"园艺"},
+    {w:"storytelling", p:"n.", m:"讲故事"},
+    {w:"photography", p:"n.", m:"摄影"},
+    {w:"join", p:"v.", m:"参加；成为……的一员"},
+    {w:"view", p:"n.", m:"（从某处看到的）景色"},
+    {w:"pottery", p:"n.", m:"制陶手艺"},
+    {w:"how about", p:"短语", m:"……怎么样？"}
+  ],
+  u2: [
+    {w:"traditional", p:"adj.", m:"传统的"},
+    {w:"Chinese yo-yo", p:"n.", m:"空竹"},
+    {w:"kite-flying", p:"n.", m:"放风筝"},
+    {w:"dragon dance", p:"n.", m:"舞龙"},
+    {w:"tug of war", p:"n.", m:"拔河"},
+    {w:"hopscotch", p:"n.", m:"跳房子"},
+    {w:"stamp", p:"v.", m:"盖章；盖印"},
+    {w:"prize", p:"n.", m:"奖励；奖品"},
+    {w:"style", p:"n.", m:"风格"},
+    {w:"action", p:"n.", m:"动作"},
+    {w:"straight", p:"adj.", m:"直的"},
+    {w:"keep up with", p:"短语", m:"跟上"},
+    {w:"control", p:"n.", m:"控制"},
+    {w:"pace", p:"n.", m:"（移动的）速度；步速"}
+  ],
+  u3: [
+    {w:"root", p:"n.", m:"根；根茎"},
+    {w:"take in", p:"短语", m:"吸入"},
+    {w:"stem", p:"n.", m:"（花草的）茎"},
+    {w:"thick", p:"adj.", m:"厚的；粗的"},
+    {w:"water lily", p:"n.", m:"睡莲"},
+    {w:"react", p:"v.", m:"（对……）作出反应"},
+    {w:"pine cone", p:"n.", m:"松果"},
+    {w:"scale", p:"n.", m:"鳞片"},
+    {w:"morning glory", p:"n.", m:"牵牛花"}
+  ],
+  u4: [
+    {w:"safari park", p:"n.", m:"野生动物园"},
+    {w:"tiger", p:"n.", m:"虎；老虎"},
+    {w:"lion", p:"n.", m:"狮子"},
+    {w:"threat", p:"n.", m:"威胁"},
+    {w:"whale", p:"n.", m:"鲸"},
+    {w:"toe", p:"n.", m:"脚趾"},
+    {w:"protect", p:"v.", m:"保护"},
+    {w:"truck tour", p:"n.", m:"卡车游览"},
+    {w:"giraffe", p:"n.", m:"长颈鹿"},
+    {w:"keeper", p:"n.", m:"饲养员"},
+    {w:"get close to", p:"短语", m:"靠近"},
+    {w:"hair", p:"n.", m:"毛发"},
+    {w:"hippo", p:"n.", m:"河马"},
+    {w:"dive", p:"v.", m:"跳水"}
+  ],
+  u5: [
+    {w:"treat", p:"v.", m:"治疗"},
+    {w:"runny nose", p:"n.", m:"流鼻涕"},
+    {w:"cough", p:"n./v.", m:"咳嗽"},
+    {w:"nurse", p:"n.", m:"护士"},
+    {w:"temperature", p:"n.", m:"体温"},
+    {w:"fever", p:"n.", m:"发烧；发热"},
+    {w:"flu", p:"n.", m:"流行性感冒；流感"},
+    {w:"medicine", p:"n.", m:"药"},
+    {w:"take it easy", p:"短语", m:"别急；从容点"},
+    {w:"check", p:"v.", m:"检查"},
+    {w:"cycling", p:"n.", m:"骑自行车运动"},
+    {w:"patient", p:"n.", m:"病人"},
+    {w:"reduce", p:"v.", m:"减少"},
+    {w:"pain", p:"n.", m:"疼痛"},
+    {w:"treatment", p:"n.", m:"治疗"},
+    {w:"by mistake", p:"短语", m:"错误地"},
+    {w:"operation", p:"n.", m:"手术"}
+  ]
+};
+
+/* 每天的新词分配（艾宾浩斯复习由网页自动按 +1/+2/+4/+7 天计算） */
+const WORD_DAYS = [
+  {date:"8/18", label:"Starter 预热（序数词 + 月份）", group:"starter", range:[0,21], kind:"preview"},
+  {date:"8/19", label:"Unit 1 词库", group:"u1", range:[0,6]},
+  {date:"8/20", label:"Unit 2 词库（前半）", group:"u2", range:[0,6]},
+  {date:"8/21", label:"Unit 2 词库（后半）", group:"u2", range:[7,13]},
+  {date:"8/24", label:"Unit 3 词库", group:"u3", range:[0,8]},
+  {date:"8/25", label:"Unit 4 词库（前半）", group:"u4", range:[0,6]},
+  {date:"8/26", label:"Unit 4 词库（后半）", group:"u4", range:[7,13]},
+  {date:"8/27", label:"Unit 5 词库（前半）", group:"u5", range:[0,7]},
+  {date:"8/28", label:"Unit 5 词库（后半）", group:"u5", range:[8,16]},
+  {date:"8/31", label:"总复习（无新词）", group:null, range:[]}
+];
