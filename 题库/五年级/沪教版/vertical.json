@@ -1,0 +1,202 @@
+[
+  {
+    "id": "SH5-vertical-0001",
+    "q": "360×0.15",
+    "a": "54",
+    "src": "A",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "乘"
+  },
+  {
+    "id": "SH5-vertical-0002",
+    "q": "48÷0.53≈（四舍五入到百分位）",
+    "a": "90.57",
+    "src": "A",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "除"
+  },
+  {
+    "id": "SH5-vertical-0003",
+    "q": "1.2÷3.7＝（商用循环小数简便形式）",
+    "a": "0.324（324 循环）",
+    "src": "A",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "除"
+  },
+  {
+    "id": "SH5-vertical-0004",
+    "q": "1.65×2.06≈（精确到百分位）",
+    "a": "3.40",
+    "src": "B",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "乘"
+  },
+  {
+    "id": "SH5-vertical-0005",
+    "q": "2.43÷0.6",
+    "a": "4.05",
+    "src": "B",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "除"
+  },
+  {
+    "id": "SH5-vertical-0006",
+    "q": "7.8÷1.1＝（循环小数简便形式）",
+    "a": "7.09（09 循环）",
+    "src": "B",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "除"
+  },
+  {
+    "id": "SH5-vertical-0007",
+    "q": "0.94×3.25",
+    "a": "3.055",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "乘"
+  },
+  {
+    "id": "SH5-vertical-0008",
+    "q": "2.832÷0.12（验算）",
+    "a": "23.6",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "除"
+  },
+  {
+    "id": "SH5-vertical-0009",
+    "q": "2.1÷9＝（商用循环小数表示）",
+    "a": "0.2（3 循环）",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "除"
+  },
+  {
+    "id": "SH5-vertical-0010",
+    "q": "0.27×3.8≈（保留两位小数）",
+    "a": "1.03",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "乘"
+  },
+  {
+    "id": "SH5-vertical-0011",
+    "q": "4.82×2.5",
+    "a": "12.05",
+    "src": "D",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "乘"
+  },
+  {
+    "id": "SH5-vertical-0012",
+    "q": "3.792÷79≈（保留两位小数）",
+    "a": "0.05",
+    "src": "D",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "除"
+  },
+  {
+    "id": "SH5-vertical-0013",
+    "q": "25÷4",
+    "a": "6.25",
+    "src": "E",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "除"
+  },
+  {
+    "id": "SH5-vertical-0014",
+    "q": "0.063÷0.21（验算）",
+    "a": "0.3",
+    "src": "E",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "除"
+  },
+  {
+    "id": "SH5-vertical-0015",
+    "q": "20.9÷3＝（商用循环小数简便形式）",
+    "a": "6.9（6 循环）",
+    "src": "E",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "除"
+  },
+  {
+    "id": "SH5-vertical-0016",
+    "q": "2.05×2.04",
+    "a": "4.182",
+    "src": "E",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "乘"
+  },
+  {
+    "id": "SH5-vertical-0017",
+    "q": "2.08×550（验算）",
+    "a": "1144",
+    "src": "E",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "乘"
+  },
+  {
+    "id": "SH5-vertical-0018",
+    "q": "0.85×3.18≈（精确到百分位）",
+    "a": "2.70",
+    "src": "E",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "乘"
+  },
+  {
+    "id": "SH5-vertical-0019",
+    "q": "2.1×1.52≈（保留一位小数）",
+    "a": "3.2",
+    "src": "J",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "乘"
+  },
+  {
+    "id": "SH5-vertical-0020",
+    "q": "9.67÷0.9＝（商用循环小数简便形式）",
+    "a": "10.7（4 循环）",
+    "src": "J",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版",
+    "tag": "除"
+  }
+]

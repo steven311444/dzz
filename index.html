@@ -141,6 +141,7 @@
   <button data-tab="methods">科学方法</button>
   <button data-tab="points">积分加分</button>
   <button data-tab="review">复习表</button>
+  <button id="adminTabBtn" data-tab="admin" style="display:none">管理</button>
 </nav>
 
 <main>
@@ -150,7 +151,8 @@
     <h2>使用说明</h2>
     <div class="card">
       <p>这个网页是给孩子的预习控制台，点上面的按钮切换板块。每天的任务在 <b>每日任务</b> 里，点日期就能看到当天的数学、英语、语文安排；英语音频可以在 <b>每日任务</b> 或 <b>英语音频</b> 里直接播放；<b>数学练习</b> 是每天的真题计算题包（口算 10＋竖式 4＋递等式 4＋列式 2，共 20 题），抄到练习本上做，做完对答案、错题进错题本；<b>积分加分</b> 里有周末加分项目和积分规则。</p>
-      <p class="note" style="margin-top:8px">离线可用：直接用浏览器打开 index.html 即可，不需要联网。音频文件在同目录"英语音频"文件夹里。</p>
+      <p class="note" style="margin-top:8px">离线可用：直接用浏览器打开 index.html 即可，不需要联网。音频文件在上一级"英语音频"文件夹里。登录学习账号后以云端为准同步，换设备不丢；本机试用数据与账号数据相互独立，需要合并时点下面的按钮。</p>
+      <p style="margin-top:8px"><button id="importGuestBtn" style="display:none" onclick="clickImportGuest()">把本机试用数据导入当前账号</button></p>
     </div>
     <h2>14 天总览（点日期看当天任务）</h2>
     <div class="grid" id="overviewGrid"></div>
@@ -304,15 +306,555 @@
     </div>
   </section>
 
+  <!-- ============ 管理（仅管理员可见） ============ -->
+  <section id="admin" class="tab-section">
+    <h2>账号管理</h2>
+    <div class="card">
+      <h3>新建账号</h3>
+      <div class="parent-form">
+        <input id="admNick" placeholder="昵称（1–20 位中文/字母/数字）" maxlength="20" autocomplete="off">
+        <input id="admPwd" type="password" placeholder="密码（至少 3 位）" maxlength="64" autocomplete="new-password">
+        <div style="display:flex;gap:8px;margin:6px 0">
+          <select id="admRole" style="flex:1;padding:6px;border:1px solid #ccc;border-radius:8px;font-size:13px">
+            <option value="student">孩子</option>
+            <option value="guardian">家长</option>
+            <option value="admin">管理员</option>
+          </select>
+          <button onclick="adminCreateUser()" style="flex:1;padding:6px;border:none;border-radius:8px;background:#2e86de;color:#fff;cursor:pointer;font-size:13px">创建账号</button>
+        </div>
+        <div id="admCreateMsg" style="min-height:16px;font-size:12px;color:#c0392b"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>用户列表</h3>
+      <div id="adminUsers" style="overflow:auto"></div>
+    </div>
+  </section>
+
 </main>
 
 <footer>五年级上册暑假预习中心 V1.2 ｜ 语文统编版五上 · 数学/英语沪教版五四学制五上 ｜ 打开即用，离线可看</footer>
 
+<style>
+.user-bar{position:fixed;top:8px;right:10px;z-index:999;background:rgba(255,255,255,.94);border:1px solid #d8dee6;border-radius:20px;padding:4px 10px;font-size:12px;display:flex;gap:8px;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.user-bar button{border:1px solid #c8d6e5;background:#fff;border-radius:12px;padding:2px 10px;font-size:12px;cursor:pointer}
+.user-bar button:hover{background:#f0f6ff}
+.login-mask{position:fixed;inset:0;background:rgba(30,45,70,.45);z-index:1000;display:flex;align-items:center;justify-content:center}
+.login-card{background:#fff;border-radius:14px;padding:22px 24px;width:300px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.login-card h3{margin:0 0 8px}
+.login-card input{width:100%;box-sizing:border-box;margin:6px 0;padding:8px;border:1px solid #ccc;border-radius:8px;font-size:14px}
+.login-msg{min-height:18px;font-size:12px;color:#c0392b;margin:2px 0}
+.login-actions{display:flex;gap:8px;margin-top:8px}
+.login-actions button{flex:1;padding:8px;border:none;border-radius:8px;background:#2e86de;color:#fff;cursor:pointer;font-size:14px}
+.login-actions button:last-child{background:#eee;color:#333}
+#syncState.online{color:#27ae60}
+#syncState.offline{color:#e67e22}
+.parent-child{padding:8px 0;border-bottom:1px solid #eee;display:flex;justify-content:space-between;gap:10px;font-size:13px}
+.parent-child .pc-name{font-weight:600}
+.parent-child .pc-stats{color:#57606f}
+.admin-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.admin-tbl th,.admin-tbl td{border:1px solid #e0e4e8;padding:6px 8px;text-align:left}
+.admin-tbl th{background:#f4f7fa}
+.admin-tbl button{margin-right:6px;padding:3px 10px;border:1px solid #c8d6e5;background:#fff;border-radius:8px;font-size:12px;cursor:pointer}
+.admin-tbl .btn-danger{border-color:#e8b4b4;color:#c0392b}
+</style>
+<div id="userBar" class="user-bar">
+  <span id="userState">本地模式</span>
+  <span id="syncState"></span>
+  <button id="loginBtn" onclick="openLogin()">登录</button>
+  <button id="parentBtn" onclick="showParent()" style="display:none">孩子进度</button>
+  <button id="logoutBtn" onclick="doLogout()" style="display:none">退出</button>
+</div>
+<div id="loginOverlay" class="login-mask" style="display:none">
+  <div class="login-card">
+    <h3>登录学习账号</h3>
+    <p class="note">家长统一建号；孩子输入昵称和密码登录。不登录也能用，数据只存在本机；登录后账号数据与本地试用数据相互独立，需要时可手动导入。</p>
+    <input id="loginNick" placeholder="昵称" maxlength="20" autocomplete="username" onkeydown="loginKey(event)">
+    <input id="loginPwd" type="password" placeholder="密码" maxlength="64" autocomplete="current-password" onkeydown="loginKey(event)">
+    <div id="loginMsg" class="login-msg"></div>
+    <div class="login-actions">
+      <button onclick="doLogin()">登录</button>
+      <button onclick="closeLogin()">返回本地模式</button>
+    </div>
+  </div>
+</div>
+<div id="parentOverlay" class="login-mask" style="display:none">
+  <div class="login-card" style="width:380px">
+    <h3>孩子进度</h3>
+    <div class="parent-form">
+      <input id="newNick" placeholder="新账号昵称" maxlength="20" autocomplete="off">
+      <input id="newPwd" type="password" placeholder="密码（至少 3 位）" maxlength="64" autocomplete="new-password">
+      <div style="display:flex;gap:8px;margin:6px 0">
+        <select id="newRole" style="flex:1;padding:6px;border:1px solid #ccc;border-radius:8px;font-size:13px">
+          <option value="student">孩子</option>
+          <option value="guardian">家长</option>
+        </select>
+        <button onclick="createAccount()" style="flex:1;padding:6px;border:none;border-radius:8px;background:#2e86de;color:#fff;cursor:pointer;font-size:13px">创建账号</button>
+      </div>
+      <div id="createMsg" style="min-height:16px;font-size:12px;color:#c0392b"></div>
+    </div>
+    <div id="parentList" style="max-height:45vh;overflow:auto;border-top:1px solid #eee;margin-top:4px"></div>
+    <div class="login-actions">
+      <button onclick="closeParent()">关闭</button>
+    </div>
+  </div>
+</div>
+<div id="mergeOverlay" class="login-mask" style="display:none">
+  <div class="login-card" style="width:360px">
+    <h3>导入本机数据？</h3>
+    <p id="mergeInfo" class="note"></p>
+    <div class="login-actions">
+      <button onclick="chooseMerge(true)">合并到账号</button>
+      <button onclick="chooseMerge(false)">不合并，保留本机</button>
+    </div>
+  </div>
+</div>
 <script src="wordbank.js"></script>
 <script src="真题题库.js"></script>
+<script src="题库/manifest.js"></script>
 <script>
 const AUDIO_BASE = "英语音频/";
 const audioSrc = (name) => AUDIO_BASE + encodeURIComponent(name);
+
+/* ============ V2.0 多用户：登录 + 云端同步（本地改造） ============ */
+const API_BASE = (new URLSearchParams(location.search).get("api") || localStorage.getItem("zongzi_api_base") || "https://api.study.yuvoralife.com").replace(/\/+$/, "");
+const SYNC_DEBOUNCE = 1500;
+let SESSION = null;
+let CURRENT_UID = null;
+let syncTimer = null;
+let syncDirty = false;
+let ACTIVE_BANK_KEY = "五沪";
+
+async function apiJson(path, options = {}) {
+  const init = { method: options.method || "GET", credentials: "include", headers: { "content-type": "application/json" } };
+  if (options.body !== undefined) init.body = options.body;
+  const res = await fetch(API_BASE + path, init);
+  let body = null;
+  try { body = await res.json(); } catch (e) {}
+  return { ok: res.ok, status: res.status, body };
+}
+
+function readLocal(key, fallback) {
+  try { const v = JSON.parse(localStorage.getItem(key)); return v == null ? fallback : v; } catch (e) { return fallback; }
+}
+function writeLocal(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
+
+function dataKey(k) { return CURRENT_UID ? "z:" + CURRENT_UID + ":" + k : k; }
+function getStore(key, fallback) { return readLocal(dataKey(key), fallback); }
+function setStore(key, val) { writeLocal(dataKey(key), val); }
+
+function cloudSnap() {
+  return {
+    dayTasks: getStore("dayTasks", {}),
+    mathWrong: getStore("mathWrong", []),
+    wordMastered: getStore("wordMastered", {}),
+    wordReview: getStore("wordReview", {})
+  };
+}
+function isNonEmpty(v) { return Array.isArray(v) ? v.length > 0 : Object.keys(v || {}).length > 0; }
+function cloudEmpty(snap) {
+  return !isNonEmpty(snap.dayTasks) && !isNonEmpty(snap.mathWrong) && !isNonEmpty(snap.wordMastered) && !isNonEmpty(snap.wordReview);
+}
+
+function setUserUI() {
+  const state = document.getElementById("userState");
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const parentBtn = document.getElementById("parentBtn");
+  const adminTab = document.getElementById("adminTabBtn");
+  if (!state) return;
+  if (SESSION) {
+    state.textContent = "已登录：" + (SESSION.profile ? SESSION.profile.nickname : "");
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "";
+    if (parentBtn) parentBtn.style.display = (SESSION.profile && (SESSION.profile.role === "guardian" || SESSION.profile.role === "admin")) ? "" : "none";
+    if (adminTab) adminTab.style.display = (SESSION.profile && SESSION.profile.role === "admin") ? "" : "none";
+  } else {
+    state.textContent = "本地模式";
+    loginBtn.style.display = "";
+    logoutBtn.style.display = "none";
+    if (parentBtn) parentBtn.style.display = "none";
+    if (adminTab) adminTab.style.display = "none";
+  }
+  refreshImportBtn();
+}
+function setSyncState(txt, cls) {
+  const el = document.getElementById("syncState");
+  if (!el) return;
+  el.textContent = txt;
+  el.className = cls || "";
+}
+
+function mergeDatasets(local, cloud) {
+  const out = {};
+  for (const k of ["dayTasks", "mathWrong", "wordMastered", "wordReview"]) {
+    const l = local[k] || (Array.isArray(local[k]) ? [] : {});
+    const c = cloud[k] || (Array.isArray(cloud[k]) ? [] : {});
+    if (k === "dayTasks") {
+      const m = {};
+      for (const [date, keys] of Object.entries(c)) for (const tk of Object.keys(keys || {})) (m[date] ||= {})[tk] = true;
+      for (const [date, keys] of Object.entries(l)) for (const tk of Object.keys(keys || {})) (m[date] ||= {})[tk] = true;
+      out[k] = m;
+    } else if (k === "mathWrong") {
+      const byId = new Map();
+      for (const w of c) byId.set(w.id, w);
+      for (const w of l) byId.set(w.id, w);   // 本地覆盖云端
+      out[k] = Array.from(byId.values());
+    } else {
+      out[k] = Object.assign({}, c, l);       // 本地时间戳覆盖云端
+    }
+  }
+  return out;
+}
+
+function clearGuest() {
+  try { ["dayTasks", "mathWrong", "wordMastered", "wordReview"].forEach((k) => localStorage.removeItem(k)); } catch (e) {}
+}
+
+function pendingKey() { return CURRENT_UID ? "zongzi_sync_pending:" + CURRENT_UID : null; }
+function markPending() { const k = pendingKey(); if (k) { try { localStorage.setItem(k, "1"); } catch (e) {} } }
+function clearPending() { const k = pendingKey(); if (k) { try { localStorage.removeItem(k); } catch (e) {} } }
+function hasPending() { const k = pendingKey(); if (!k) return false; try { return !!localStorage.getItem(k); } catch (e) { return false; } }
+
+function guestSnap() {
+  return {
+    dayTasks: readLocal("dayTasks", {}),
+    mathWrong: readLocal("mathWrong", []),
+    wordMastered: readLocal("wordMastered", {}),
+    wordReview: readLocal("wordReview", {})
+  };
+}
+
+let mergeResolver = null;
+function promptMerge(guest, nickname) {
+  return new Promise((resolve) => {
+    mergeResolver = resolve;
+    const el = document.getElementById("mergeOverlay");
+    const info = document.getElementById("mergeInfo");
+    if (!el || !info) { resolve(false); return; }
+    const tasks = Object.values(guest.dayTasks || {}).reduce((n, ks) => n + Object.keys(ks || {}).length, 0);
+    const wrong = (guest.mathWrong || []).length;
+    const words = Object.keys(guest.wordMastered || {}).length + Object.keys(guest.wordReview || {}).length;
+    info.textContent = `本机试用数据：任务 ${tasks} 项、错题 ${wrong} 条、单词 ${words} 个。确认导入到「${nickname}」的账号吗？导入后本机试用数据会清空。`;
+    el.style.display = "flex";
+  });
+}
+function chooseMerge(merge) {
+  const el = document.getElementById("mergeOverlay");
+  if (el) el.style.display = "none";
+  if (mergeResolver) { mergeResolver(!!merge); mergeResolver = null; }
+}
+
+async function pullCloud() {
+  if (!SESSION) return;
+  CURRENT_UID = SESSION.profile ? SESSION.profile.id : null;
+  setSyncState("同步中…", "online");
+  let r;
+  try { r = await apiJson("/api/data"); } catch (e) { setSyncState("离线，恢复后自动同步", "offline"); return; }
+  if (!r.ok || !r.body || !r.body.data) { setSyncState("同步失败", "offline"); return; }
+  let cloud = r.body.data;
+
+  // 上次离线未同步的镜像：以本机最后状态覆盖上传，再重新拉取
+  if (hasPending()) {
+    await pushCloudNow();
+    clearPending();
+    try {
+      const r2 = await apiJson("/api/data");
+      if (r2.ok && r2.body && r2.body.data) cloud = r2.body.data;
+    } catch (e) {}
+  }
+
+  // 云端是唯一事实源：本机试用数据与账号数据完全独立，不做任何自动合并
+  for (const k of Object.keys(cloud)) setStore(k, cloud[k]);
+  await pushCloudNow();   // 把最终结果写回云端，两边一致
+  setSyncState("已同步", "online");
+  refreshAllViews();      // 无论数据是否变化，登录后都强制刷新界面
+  refreshImportBtn();
+  const bk = SESSION.profile && SESSION.profile.textbook_key;
+  if (bk && bk !== ACTIVE_BANK_KEY) await loadBank(bk);
+}
+
+function refreshImportBtn() {
+  const btn = document.getElementById("importGuestBtn");
+  if (!btn) return;
+  btn.style.display = (SESSION && !cloudEmpty(guestSnap())) ? "" : "none";
+}
+async function clickImportGuest() {
+  if (!SESSION) return;
+  const guest = guestSnap();
+  if (cloudEmpty(guest)) { refreshImportBtn(); return; }
+  const doMerge = await promptMerge(guest, SESSION.profile ? SESSION.profile.nickname : "");
+  if (!doMerge) return;
+  let cloud = {};
+  try {
+    const g = await apiJson("/api/data");
+    if (g.ok && g.body && g.body.data) cloud = g.body.data;
+  } catch (e) {}
+  const merged = mergeDatasets(guest, cloud);
+  for (const k of Object.keys(merged)) setStore(k, merged[k]);
+  await pushCloudNow();
+  clearGuest();
+  refreshImportBtn();
+  refreshAllViews();
+}
+
+async function pushCloudNow() {
+  if (!SESSION) return;
+  setSyncState("同步中…", "online");
+  let r;
+  // 整包快照覆盖：以本机最后状态为准（勾选、取消勾选都会同步）
+  try { r = await apiJson("/api/data", { method: "PUT", body: JSON.stringify({ data: cloudSnap() }) }); }
+  catch (e) { r = { ok: false }; }
+  if (r.ok) {
+    setSyncState("已同步", "online");
+    clearPending();
+    try { localStorage.removeItem("zongzi_sync_pending"); } catch (e) {}
+  } else {
+    setSyncState("离线，恢复后自动同步", "offline");
+    markPending();
+  }
+}
+
+function scheduleSync() {
+  if (!SESSION) return;
+  syncDirty = true;
+  markPending();
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(() => { if (syncDirty) { syncDirty = false; pushCloudNow(); } }, SYNC_DEBOUNCE);
+}
+
+async function flushPending() {
+  if (!SESSION) return;
+  if (hasPending() || syncDirty) await pushCloudNow();
+}
+window.addEventListener("online", flushPending);
+window.addEventListener("pagehide", () => {
+  if (SESSION && syncDirty) {
+    try {
+      fetch(API_BASE + "/api/data", {
+        method: "PUT", credentials: "include", keepalive: true,
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ data: cloudSnap() })
+      });
+    } catch (e) {}
+  }
+});
+
+async function loadSession() {
+  try {
+    const r = await apiJson("/api/me");
+    if (r.ok && r.body && r.body.loggedIn) { SESSION = r.body; setUserUI(); await pullCloud(); return; }
+  } catch (e) {}
+  SESSION = null;
+  setUserUI();
+}
+
+function openLogin() {
+  const m = document.getElementById("loginOverlay");
+  if (!m) return;
+  document.getElementById("loginMsg").textContent = "";
+  m.style.display = "flex";
+  document.getElementById("loginNick").focus();
+}
+function closeLogin() { const m = document.getElementById("loginOverlay"); if (m) m.style.display = "none"; }
+function loginKey(e) { if (e.key === "Enter") doLogin(); }
+
+async function renderParentList() {
+  const list = document.getElementById("parentList");
+  if (!list) return;
+  list.innerHTML = "加载中…";
+  try {
+    const r = await apiJson("/api/children");
+    if (!r.ok || !r.body || !r.body.children || !r.body.children.length) { list.innerHTML = "还没有关联的孩子账号。"; return; }
+    const now = new Date();
+    const todayKey = (now.getMonth() + 1) + "/" + now.getDate();
+    list.innerHTML = "";
+    for (const c of r.body.children) {
+      let tasks = 0, wrong = 0, words = 0;
+      try {
+        const dr = await apiJson("/api/data?user=" + encodeURIComponent(c.id));
+        if (dr.ok && dr.body && dr.body.data) {
+          const d = dr.body.data;
+          tasks = Object.keys((d.dayTasks || {})[todayKey] || {}).length;
+          wrong = (d.mathWrong || []).length;
+          words = Object.keys(d.wordMastered || {}).length;
+        }
+      } catch (e) {}
+      const row = document.createElement("div");
+      row.className = "parent-child";
+      row.innerHTML = `<span class="pc-name">${esc(c.nickname)}</span><span class="pc-stats">今日 ${tasks} 项 · 错题 ${wrong} · 掌握 ${words} 词</span>`;
+      list.appendChild(row);
+    }
+  } catch (e) {
+    list.innerHTML = "加载失败，请检查网络";
+  }
+}
+async function showParent() {
+  const ov = document.getElementById("parentOverlay");
+  if (!ov) return;
+  ov.style.display = "flex";
+  const roleSel = document.getElementById("newRole");
+  if (roleSel) roleSel.style.display = (SESSION.profile && SESSION.profile.role === "admin") ? "" : "none";
+  const msg = document.getElementById("createMsg");
+  if (msg) msg.textContent = "";
+  await renderParentList();
+}
+async function createAccount() {
+  const nick = document.getElementById("newNick").value.trim();
+  const pwd = document.getElementById("newPwd").value;
+  const role = document.getElementById("newRole").value;
+  const msg = document.getElementById("createMsg");
+  if (!msg) return;
+  msg.textContent = "";
+  if (!nick || pwd.length < 3) { msg.textContent = "昵称必填，密码至少 3 位"; return; }
+  msg.textContent = "创建中…";
+  try {
+    const r = await apiJson("/api/auth/register", { method: "POST", body: JSON.stringify({ nickname: nick, password: pwd, role }) });
+    if (!r.ok) { msg.textContent = (r.body && r.body.error) || "创建失败"; return; }
+    document.getElementById("newNick").value = "";
+    document.getElementById("newPwd").value = "";
+    await renderParentList();
+    msg.textContent = "已创建账号：" + nick;
+  } catch (e) {
+    msg.textContent = "网络异常，请重试";
+  }
+}
+function closeParent() { const m = document.getElementById("parentOverlay"); if (m) m.style.display = "none"; }
+
+/* ---------- 管理页（仅管理员） ---------- */
+let ADMIN_USERS = [];
+async function renderAdminUsers() {
+  const box = document.getElementById("adminUsers");
+  if (!box) return;
+  box.innerHTML = "加载中…";
+  try {
+    const r = await apiJson("/api/admin/users");
+    if (!r.ok || !r.body || !r.body.users) { box.innerHTML = "加载失败"; return; }
+    ADMIN_USERS = r.body.users;
+    const rows = ADMIN_USERS.map((u) => {
+      const roleName = { student: "孩子", guardian: "家长", admin: "管理员" }[u.role] || u.role;
+      const date = new Date(u.created_at).toLocaleDateString("zh-CN");
+      const canDelete = !(u.role === "admin" && SESSION && SESSION.profile && u.id === SESSION.profile.id);
+      const ops = `<button onclick="adminResetPwd('${u.id}')">重置密码</button> ${canDelete ? `<button class="btn-danger" onclick="adminDeleteUser('${u.id}')">删除</button>` : ""}`;
+      return `<tr><td>${esc(u.nickname)}</td><td>${roleName}</td><td>${date}</td><td>${ops}</td></tr>`;
+    }).join("");
+    box.innerHTML = `<table class="admin-tbl"><tr><th>昵称</th><th>角色</th><th>创建时间</th><th>操作</th></tr>${rows}</table>`;
+  } catch (e) {
+    box.innerHTML = "加载失败，请检查网络";
+  }
+}
+function adminUserNick(id) {
+  const u = ADMIN_USERS.find((x) => x.id === id);
+  return u ? u.nickname : id;
+}
+async function adminCreateUser() {
+  const nick = document.getElementById("admNick").value.trim();
+  const pwd = document.getElementById("admPwd").value;
+  const role = document.getElementById("admRole").value;
+  const msg = document.getElementById("admCreateMsg");
+  if (!msg) return;
+  msg.textContent = "";
+  if (!nick || pwd.length < 3) { msg.textContent = "昵称必填，密码至少 3 位"; return; }
+  msg.textContent = "创建中…";
+  try {
+    const r = await apiJson("/api/auth/register", { method: "POST", body: JSON.stringify({ nickname: nick, password: pwd, role }) });
+    if (!r.ok) { msg.textContent = (r.body && r.body.error) || "创建失败"; return; }
+    document.getElementById("admNick").value = "";
+    document.getElementById("admPwd").value = "";
+    await renderAdminUsers();
+    msg.textContent = "已创建账号：" + nick;
+  } catch (e) {
+    msg.textContent = "网络异常，请重试";
+  }
+}
+async function adminResetPwd(id) {
+  const nick = adminUserNick(id);
+  const pwd = prompt(`为「${nick}」设置新密码（至少 3 位）：`);
+  if (!pwd) return;
+  if (pwd.length < 3) { alert("密码至少 3 位"); return; }
+  const r = await apiJson("/api/admin/users/" + encodeURIComponent(id) + "/reset-password", { method: "POST", body: JSON.stringify({ password: pwd }) });
+  alert(r.ok ? "已重置「" + nick + "」的密码" : ((r.body && r.body.error) || "操作失败"));
+}
+async function adminDeleteUser(id) {
+  const nick = adminUserNick(id);
+  if (!confirm(`确定删除账号「${nick}」吗？该账号的所有进度将一并删除，无法恢复。`)) return;
+  const r = await apiJson("/api/admin/users/" + encodeURIComponent(id), { method: "DELETE" });
+  if (r.ok) {
+    await renderAdminUsers();
+    alert("已删除「" + nick + "」");
+  } else {
+    alert((r.body && r.body.error) || "操作失败");
+  }
+}
+
+async function doLogin() {
+  const nickname = document.getElementById("loginNick").value.trim();
+  const password = document.getElementById("loginPwd").value;
+  const msg = document.getElementById("loginMsg");
+  if (!nickname || !password) { msg.textContent = "请输入昵称和密码"; return; }
+  msg.textContent = "登录中…";
+  try {
+    const r = await apiJson("/api/auth/login", { method: "POST", body: JSON.stringify({ nickname, password }) });
+    if (!r.ok) { msg.textContent = (r.body && r.body.error) || "登录失败，请稍后重试"; return; }
+    SESSION = r.body;
+    closeLogin();
+    setUserUI();
+    await pullCloud();
+  } catch (e) {
+    msg.textContent = "网络异常，请检查网络后重试";
+  }
+}
+
+async function doLogout() {
+  if (SESSION && (syncDirty || hasPending())) {
+    try { await pushCloudNow(); } catch (e) {}
+  }
+  clearTimeout(syncTimer);
+  syncDirty = false;
+  try { await apiJson("/api/auth/logout", { method: "POST" }); } catch (e) {}
+  SESSION = null;
+  CURRENT_UID = null;
+  setUserUI();
+}
+
+function refreshAllViews() {
+  try { if (typeof renderDaybar === "function") renderDaybar(); } catch (e) {}
+  try { if (typeof renderDayPanel === "function" && typeof currentDayDate !== "undefined") renderDayPanel(currentDayDate); } catch (e) {}
+  try { if (typeof renderWrongBook === "function") renderWrongBook(); } catch (e) {}
+  try { if (typeof renderWordBank === "function") renderWordBank(); } catch (e) {}
+  try { if (typeof updateWordProgress === "function") updateWordProgress(); } catch (e) {}
+  try { if (typeof renderReviewQueue === "function") renderReviewQueue(); } catch (e) {}
+}
+
+function refreshMathViews() {
+  try { if (typeof renderMathDaybar === "function") renderMathDaybar(); } catch (e) {}
+  try { if (typeof renderMathPanel === "function" && typeof currentMathDate !== "undefined") renderMathPanel(currentMathDate); } catch (e) {}
+  try { if (typeof renderMathList === "function") renderMathList(); } catch (e) {}
+}
+
+async function loadBank(key) {
+  const banks = (window.CONTENT_MANIFEST || {}).banks || {};
+  const b = banks[key];
+  if (!b) return false;
+  if (key === "五沪") {
+    ZHEN_BANK = window.ZHEN_BANK || {};
+  } else {
+    const bank = { oral: [], vertical: [], step: [], text: [] };
+    for (const cat of ["oral", "vertical", "step", "text"]) {
+      try {
+        const r = await fetch(b.files[cat]);
+        if (r.ok) bank[cat] = await r.json();
+      } catch (e) {}
+    }
+    ZHEN_BANK = bank;
+  }
+  ACTIVE_BANK_KEY = key;
+  refreshMathViews();
+  return true;
+}
+
+setUserUI();
+loadSession();
 
 const PLAY_SVG = `<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
 
@@ -530,18 +1072,18 @@ const ENCOURAGE = [
 
 function taskDone(date, subj, i){
   try{
-    const all = JSON.parse(localStorage.getItem("dayTasks") || "{}");
+    const all = getStore("dayTasks", {});
     return !!(all[date] && all[date][subj + ":" + i]);
   }catch(e){ return false; }
 }
 
 function toggleTask(date, subj, i, on){
-  let all = {};
-  try{ all = JSON.parse(localStorage.getItem("dayTasks") || "{}"); }catch(e){}
+  let all = getStore("dayTasks", {});
   if(!all[date]) all[date] = {};
   const k = subj + ":" + i;
   if(on) all[date][k] = true; else delete all[date][k];
-  try{ localStorage.setItem("dayTasks", JSON.stringify(all)); }catch(e){}
+  setStore("dayTasks", all);
+  scheduleSync();
   const inp = document.querySelector(`#dayPanel input[data-k="${date}|${subj}|${i}"]`);
   if(inp && inp.closest("label")) inp.closest("label").classList.toggle("done", on);
   updateDayProgress(date);
@@ -684,10 +1226,11 @@ function renderMathList(){
 
 /* ---------- 错题本 ---------- */
 function getWrong(){
-  try{ return JSON.parse(localStorage.getItem("mathWrong") || "[]"); }catch(e){ return []; }
+  return getStore("mathWrong", []);
 }
 function saveWrong(list){
-  try{ localStorage.setItem("mathWrong", JSON.stringify(list)); }catch(e){}
+  setStore("mathWrong", list);
+  scheduleSync();
 }
 function markWrong(date, cat, i){
   const pack = getMathPack(date);
@@ -858,7 +1401,11 @@ function openDay(date){
 }
 
 document.getElementById("nav").addEventListener("click", e => {
-  if(e.target.tagName === "BUTTON") switchTab(e.target.dataset.tab);
+  if(e.target.tagName === "BUTTON"){
+    const t = e.target.dataset.tab;
+    switchTab(t);
+    if (t === "admin" && typeof renderAdminUsers === "function") renderAdminUsers();
+  }
 });
 
 /* ================= 单词艾宾浩斯记忆系统 ================= */
@@ -926,11 +1473,11 @@ function getWordInfo(date){
 
 function getMasteredMap(){
   try{
-    const v = JSON.parse(localStorage.getItem("wordMastered") || "{}");
+    const v = getStore("wordMastered", {});
     if(Array.isArray(v)){ // 旧版数组数据迁移：标记时间未知，按"今天"处理，重置今天可清掉
       const o = {};
       v.forEach(id => o[id] = Date.now());
-      localStorage.setItem("wordMastered", JSON.stringify(o));
+      setStore("wordMastered", o);
       return o;
     }
     return v && typeof v === "object" ? v : {};
@@ -940,16 +1487,17 @@ function getMastered(){ return Object.keys(getMasteredMap()); }
 function setMastered(id, on){
   const m = getMasteredMap();
   if(on) m[id] = Date.now(); else delete m[id];
-  try{ localStorage.setItem("wordMastered", JSON.stringify(m)); }catch(e){}
+  setStore("wordMastered", m);
+  scheduleSync();
 }
 function isMastered(id){ return id in getMasteredMap(); }
 function getReviewMap(){
   try{
-    const v = JSON.parse(localStorage.getItem("wordReview") || "{}");
+    const v = getStore("wordReview", {});
     if(Array.isArray(v)){
       const o = {};
       v.forEach(id => o[id] = Date.now());
-      localStorage.setItem("wordReview", JSON.stringify(o));
+      setStore("wordReview", o);
       return o;
     }
     return v && typeof v === "object" ? v : {};
@@ -959,7 +1507,8 @@ function getReviewList(){ return Object.keys(getReviewMap()); }
 function setReview(id, on){
   const m = getReviewMap();
   if(on) m[id] = Date.now(); else delete m[id];
-  try{ localStorage.setItem("wordReview", JSON.stringify(m)); }catch(e){}
+  setStore("wordReview", m);
+  scheduleSync();
 }
 function isReview(id){ return id in getReviewMap(); }
 function markWord(id, kind){
@@ -990,18 +1539,19 @@ function resetToday(){
   Object.keys(mm).forEach(id => { if(mm[id] >= t){ delete mm[id]; changed = true; } });
   Object.keys(rr).forEach(id => { if(rr[id] >= t){ delete rr[id]; changed = true; } });
   if(changed){
-    localStorage.setItem("wordMastered", JSON.stringify(mm));
-    localStorage.setItem("wordReview", JSON.stringify(rr));
+    setStore("wordMastered", mm);
+    setStore("wordReview", rr);
   }
   const now = new Date();
   const todayKey = (now.getMonth() + 1) + "/" + now.getDate();
   try{
-    const all = JSON.parse(localStorage.getItem("dayTasks") || "{}");
+    const all = getStore("dayTasks", {});
     if(all[todayKey]){
       delete all[todayKey];
-      localStorage.setItem("dayTasks", JSON.stringify(all));
+      setStore("dayTasks", all);
     }
   }catch(e){}
+  scheduleSync();
   updateWordProgress();
   renderReviewQueue();
   if(currentWordDate) renderWordDay(currentWordDate);

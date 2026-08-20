@@ -1,0 +1,344 @@
+[
+  {
+    "id": "SH5-oral-0001",
+    "q": "1.4＋0.96",
+    "a": "2.36",
+    "src": "A",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0002",
+    "q": "10－0.75",
+    "a": "9.25",
+    "src": "A",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0003",
+    "q": "0.24×5",
+    "a": "1.2",
+    "src": "A",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0004",
+    "q": "9.4÷0.5",
+    "a": "18.8",
+    "src": "A",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0005",
+    "q": "62.7÷6.27",
+    "a": "10",
+    "src": "A",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0006",
+    "q": "4.6＋5.4×10",
+    "a": "58.6",
+    "src": "A",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0007",
+    "q": "1.25×0.8÷1.25×0.8",
+    "a": "0.64",
+    "src": "A",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0008",
+    "q": "（2.5＋25）×4",
+    "a": "110",
+    "src": "A",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0009",
+    "q": "20×1.8×0.5",
+    "a": "18",
+    "src": "A",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0010",
+    "q": "2.4×0.5",
+    "a": "1.2",
+    "src": "B",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0011",
+    "q": "9.9×10.1",
+    "a": "99.99",
+    "src": "B",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0012",
+    "q": "7.5×9＋7.5",
+    "a": "75",
+    "src": "B",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0013",
+    "q": "4.2÷0.5",
+    "a": "8.4",
+    "src": "B",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0014",
+    "q": "3.9×2.5",
+    "a": "9.75",
+    "src": "B",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0015",
+    "q": "12.5×0.25×8",
+    "a": "25",
+    "src": "B",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0016",
+    "q": "8.7÷0.01",
+    "a": "870",
+    "src": "B",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0017",
+    "q": "6÷1.25",
+    "a": "4.8",
+    "src": "B",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0018",
+    "q": "9.6÷（4.8×5）",
+    "a": "0.4",
+    "src": "B",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0019",
+    "q": "1.88＋2.2",
+    "a": "4.08",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0020",
+    "q": "0.18×5",
+    "a": "0.9",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0021",
+    "q": "7.2÷0.6",
+    "a": "12",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0022",
+    "q": "10÷8",
+    "a": "1.25",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0023",
+    "q": "13－4.29",
+    "a": "8.71",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0024",
+    "q": "0.8÷0.01",
+    "a": "80",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0025",
+    "q": "12.5×0.8",
+    "a": "10",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0026",
+    "q": "3÷0.6",
+    "a": "5",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0027",
+    "q": "2.5×4÷2.5",
+    "a": "4",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0028",
+    "q": "14.38×0＋5.62",
+    "a": "5.62",
+    "src": "C",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0029",
+    "q": "10－0.01",
+    "a": "9.99",
+    "src": "D",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0030",
+    "q": "3.29×1000",
+    "a": "3290",
+    "src": "D",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0031",
+    "q": "200×1.5",
+    "a": "300",
+    "src": "D",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0032",
+    "q": "2.6×12－2.6",
+    "a": "28.6",
+    "src": "D",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0033",
+    "q": "14.4÷12",
+    "a": "1.2",
+    "src": "D",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0034",
+    "q": "7－2.9＋2.9",
+    "a": "7",
+    "src": "D",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0035",
+    "q": "3.5×20÷10",
+    "a": "7",
+    "src": "D",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0036",
+    "q": "2.5×（1÷2.5）",
+    "a": "1",
+    "src": "D",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0037",
+    "q": "1.6×0.8",
+    "a": "1.28",
+    "src": "E",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  },
+  {
+    "id": "SH5-oral-0038",
+    "q": "9.6÷0.8",
+    "a": "12",
+    "src": "E",
+    "grade": 5,
+    "region": "sh",
+    "textbook": "沪教版"
+  }
+]
