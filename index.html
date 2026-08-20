@@ -123,9 +123,98 @@
     header h1{font-size:23px;}
     h2{font-size:21px;}
   }
+#loginScreen{position:fixed;inset:0;z-index:2000;background:#fff;display:flex;flex-direction:column;align-items:center;overflow:auto;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.ls-hero{width:100%;min-height:340px;background:radial-gradient(120% 130% at 50% 0%,#1d6fff 0%,#0b4fd6 52%,#0a3ea8 100%);color:#fff;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:72px 24px;box-sizing:border-box;position:relative;overflow:hidden}
+.ls-hero::before{content:"";position:absolute;left:50%;top:-220px;width:720px;height:720px;transform:translateX(-50%);background:radial-gradient(circle,rgba(255,255,255,.16) 0%,transparent 62%);pointer-events:none;z-index:0}
+.ls-hero h1{position:relative;z-index:1;font-size:clamp(34px,5.5vw,52px);line-height:1.15;margin:0 0 16px;font-weight:700;letter-spacing:-0.5px;text-wrap:balance}
+.ls-hero .sub{position:relative;z-index:1;font-size:18px;opacity:.92;margin:0 auto;max-width:540px;line-height:1.6}
+.ls-main{width:100%;max-width:1080px;padding:64px 24px 96px;box-sizing:border-box;display:flex;gap:52px;align-items:flex-start}
+.ls-feat{flex:1 1 auto;min-width:0}
+.ls-feat h2{font-size:30px;margin:0 0 8px;color:#1d1d1f;font-weight:700;letter-spacing:-0.3px}
+.ls-feat-sub{margin:0 0 30px;color:#6e6e73;font-size:14px}
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.feat-card{background:#fbfbfd;border:1px solid #e8e8ed;border-radius:16px;padding:18px 16px;display:flex;gap:12px;align-items:flex-start;transition:transform .2s,box-shadow .2s}
+.feat-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.07)}
+.feat-card .ic{width:38px;height:38px;border-radius:11px;background:#eaf2ff;display:flex;align-items:center;justify-content:center;font-size:18px;flex:0 0 auto}
+.feat-card .fc-body b{display:block;font-size:14.5px;color:#1d1d1f;margin-bottom:3px}
+.feat-card .fc-body span{font-size:12.5px;color:#6e6e73;line-height:1.45}
+.ls-login{flex:0 0 390px}
+.ls-login-card{background:#fff;border:1px solid #e8e8ed;border-radius:20px;padding:34px 30px;box-shadow:0 14px 40px rgba(0,0,0,.08)}
+.ls-login-card h3{margin:0 0 6px;font-size:24px;color:#1d1d1f;letter-spacing:-0.2px}
+.ls-login-card .ls-hint{font-size:13.5px;color:#6e6e73;margin:0 0 24px}
+.ls-login-card input{width:100%;box-sizing:border-box;margin:6px 0;padding:13px 15px;border:1px solid #d2d2d7;border-radius:12px;font-size:15px;outline:none;background:#fbfbfd}
+.ls-login-card input:focus{border-color:#0071e3;background:#fff;box-shadow:0 0 0 3px rgba(0,113,227,.16)}
+.btn-main{width:100%;padding:14px;border:none;border-radius:12px;background:#0071e3;color:#fff;font-size:16px;font-weight:600;cursor:pointer;margin-top:10px;transition:background .15s}
+.btn-main:hover{background:#0077ed}
+.btn-ghost{width:100%;padding:13px;border:1px solid #d2d2d7;background:#fff;border-radius:12px;color:#1d1d1f;font-size:14px;cursor:pointer;margin-top:10px;transition:background .15s}
+.btn-ghost:hover{background:#f5f5f7}
+.ls-divider{display:flex;align-items:center;gap:12px;margin:20px 0 2px;color:#c7c7cc;font-size:12px}
+.ls-divider::before,.ls-divider::after{content:"";flex:1;height:1px;background:#e8e8ed}
+.ls-link-row{display:flex;justify-content:center;gap:22px;margin-top:14px;font-size:13px}
+.ls-link-row a{color:#0071e3;text-decoration:none}
+.ls-link-row a:hover{text-decoration:underline}
+@media (max-width:900px){
+  .ls-main{flex-direction:column;gap:44px}
+  .ls-login{flex:1 1 auto;width:100%;max-width:460px;margin:0 auto}
+}
+@media (max-width:560px){
+  .ls-hero h1{font-size:36px}
+  .feat-grid{grid-template-columns:1fr}
+  .ls-login-card{padding:30px 22px}
+}
 </style>
 </head>
 <body>
+
+<!-- ============ 登录门禁（未登录时显示） ============ -->
+<div id="loginScreen" style="display:flex">
+  <div class="ls-hero">
+    <h1>快乐预习，每天进步一点点</h1>
+    <p class="sub">五年级上册 · 语文 / 数学 / 英语 一站式预习与复习</p>
+  </div>
+  <div class="ls-main">
+    <div class="ls-feat">
+      <h2>探索全部功能</h2>
+      <p class="ls-feat-sub">为孩子量身打造的预习与复习体验</p>
+      <div class="feat-grid">
+        <div class="feat-card"><span class="ic">📅</span><div class="fc-body"><b>每日任务</b><span>14 天预习计划，逐项打勾</span></div></div>
+        <div class="feat-card"><span class="ic">🔢</span><div class="fc-body"><b>数学练习</b><span>上海真实真题，每日 20 题</span></div></div>
+        <div class="feat-card"><span class="ic">🔤</span><div class="fc-body"><b>单词记忆</b><span>艾宾浩斯滚动复习，83 词发音</span></div></div>
+        <div class="feat-card"><span class="ic">🎧</span><div class="fc-body"><b>英语音频</b><span>课文 / 歌谣 / 故事跟读</span></div></div>
+        <div class="feat-card"><span class="ic">⭐</span><div class="fc-body"><b>积分激励</b><span>完成任务攒积分，兑换心愿</span></div></div>
+        <div class="feat-card"><span class="ic">☁️</span><div class="fc-body"><b>云端同步</b><span>登录自动保存，换设备不丢</span></div></div>
+      </div>
+    </div>
+    <div class="ls-login">
+      <div class="ls-login-card">
+        <h3>登录</h3>
+        <p class="ls-hint">输入账号密码，继续孩子的学习</p>
+        <input id="lsNick" placeholder="昵称" maxlength="20" autocomplete="username" onkeydown="loginScreenKey(event)">
+        <input id="lsPwd" type="password" placeholder="密码" maxlength="64" autocomplete="current-password" onkeydown="loginScreenKey(event)">
+        <div id="lsMsg" class="login-msg"></div>
+        <button class="btn-main" onclick="doLoginScreen()">登录</button>
+        <button class="btn-ghost" onclick="trialLogin()">🎮 公共试用（任何人可点，数据共享）</button>
+        <div class="ls-divider">还没有账号？</div>
+        <div class="ls-link-row">
+          <a href="javascript:showWechat()">💬 获取正式账号</a>
+          <a href="javascript:enterLocalMode()">本机试用</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 微信二维码（获取正式账号） ============ -->
+<div id="wechatOverlay" class="login-mask" style="display:none">
+  <div class="login-card" style="width:330px;text-align:center">
+    <h3>获取免费账号</h3>
+    <p class="note">扫码添加微信，免费获取孩子专属账号</p>
+    <img src="微信二维码.jpg" alt="微信二维码" style="width:230px;height:auto;border:1px solid #eee;border-radius:10px">
+    <div class="login-actions">
+      <button onclick="closeWechat()">关闭</button>
+    </div>
+  </div>
+</div>
 
 <header>
   <h1>五年级上册 · 暑假预习中心</h1>
@@ -151,7 +240,7 @@
     <h2>使用说明</h2>
     <div class="card">
       <p>这个网页是给孩子的预习控制台，点上面的按钮切换板块。每天的任务在 <b>每日任务</b> 里，点日期就能看到当天的数学、英语、语文安排；英语音频可以在 <b>每日任务</b> 或 <b>英语音频</b> 里直接播放；<b>数学练习</b> 是每天的真题计算题包（口算 10＋竖式 4＋递等式 4＋列式 2，共 20 题），抄到练习本上做，做完对答案、错题进错题本；<b>积分加分</b> 里有周末加分项目和积分规则。</p>
-      <p class="note" style="margin-top:8px">离线可用：直接用浏览器打开 index.html 即可，不需要联网。音频文件在上一级"英语音频"文件夹里。登录学习账号后以云端为准同步，换设备不丢；本机试用数据与账号数据相互独立，需要合并时点下面的按钮。</p>
+      <p class="note" style="margin-top:8px">打开页面后先进入登录界面：登录账号即自动云端同步，换设备不丢；点"公共试用"可快速体验；点"本机试用"可离线使用（数据仅存本机，音频在上一级"英语音频"文件夹里）。本机试用数据与账号数据相互独立，需要合并时点下面的按钮。</p>
       <p style="margin-top:8px"><button id="importGuestBtn" style="display:none" onclick="clickImportGuest()">把本机试用数据导入当前账号</button></p>
     </div>
     <h2>14 天总览（点日期看当天任务）</h2>
@@ -424,6 +513,53 @@ let CURRENT_UID = null;
 let syncTimer = null;
 let syncDirty = false;
 let ACTIVE_BANK_KEY = "五沪";
+let LOCAL_MODE_ACTIVE = false;
+
+const TRIAL_NICK = "试用";
+const TRIAL_PWD = "demo123";
+
+function loginScreenKey(e) { if (e.key === "Enter") doLoginScreen(); }
+async function doLoginScreen() {
+  const nickname = document.getElementById("lsNick").value.trim();
+  const password = document.getElementById("lsPwd").value;
+  const msg = document.getElementById("lsMsg");
+  if (!msg) return;
+  msg.textContent = "";
+  if (!nickname || !password) { msg.textContent = "请输入昵称和密码"; return; }
+  msg.textContent = "登录中…";
+  try {
+    const r = await apiJson("/api/auth/login", { method: "POST", body: JSON.stringify({ nickname, password }) });
+    if (!r.ok) { msg.textContent = (r.body && r.body.error) || "登录失败，请稍后重试"; return; }
+    SESSION = r.body;
+    LOCAL_MODE_ACTIVE = false;
+    setUserUI();
+    await pullCloud();
+  } catch (e) {
+    msg.textContent = "网络异常，请检查网络后重试";
+  }
+}
+async function trialLogin() {
+  const msg = document.getElementById("lsMsg");
+  if (msg) msg.textContent = "进入公共试用…";
+  try {
+    const r = await apiJson("/api/auth/login", { method: "POST", body: JSON.stringify({ nickname: TRIAL_NICK, password: TRIAL_PWD }) });
+    if (!r.ok) { if (msg) msg.textContent = "试用账号暂时不可用，请联系管理员"; return; }
+    SESSION = r.body;
+    LOCAL_MODE_ACTIVE = false;
+    setUserUI();
+    await pullCloud();
+  } catch (e) {
+    if (msg) msg.textContent = "网络异常，请检查网络后重试";
+  }
+}
+function enterLocalMode() {
+  SESSION = null;
+  CURRENT_UID = null;
+  LOCAL_MODE_ACTIVE = true;
+  setUserUI();
+}
+function showWechat() { const m = document.getElementById("wechatOverlay"); if (m) m.style.display = "flex"; }
+function closeWechat() { const m = document.getElementById("wechatOverlay"); if (m) m.style.display = "none"; }
 
 async function apiJson(path, options = {}) {
   const init = { method: options.method || "GET", credentials: "include", headers: { "content-type": "application/json" } };
@@ -477,6 +613,8 @@ function setUserUI() {
     if (adminTab) adminTab.style.display = "none";
   }
   refreshImportBtn();
+  const ls = document.getElementById("loginScreen");
+  if (ls) ls.style.display = SESSION ? "none" : (LOCAL_MODE_ACTIVE ? "none" : "flex");
 }
 function setSyncState(txt, cls) {
   const el = document.getElementById("syncState");
@@ -797,6 +935,7 @@ async function doLogin() {
     const r = await apiJson("/api/auth/login", { method: "POST", body: JSON.stringify({ nickname, password }) });
     if (!r.ok) { msg.textContent = (r.body && r.body.error) || "登录失败，请稍后重试"; return; }
     SESSION = r.body;
+    LOCAL_MODE_ACTIVE = false;
     closeLogin();
     setUserUI();
     await pullCloud();
@@ -814,6 +953,7 @@ async function doLogout() {
   try { await apiJson("/api/auth/logout", { method: "POST" }); } catch (e) {}
   SESSION = null;
   CURRENT_UID = null;
+  LOCAL_MODE_ACTIVE = false;
   setUserUI();
 }
 
